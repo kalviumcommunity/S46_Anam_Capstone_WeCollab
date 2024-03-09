@@ -15,3 +15,28 @@ WeCollab is an online platform that helps find collaborators among individuals a
 4. Open Idea Section: In one section, users may post their ideas while other users might express interest in taking it up. Once an idea is chosen, it will be marked as closed.
 
 5. Project Showcase: Users can show off completed projects and get feedback.
+
+## Daily Plan
+
+Day 1
+
+Setup github repository and initiate the project with readme
+Research suitable designs
+Low-fid design
+
+Day 2
+
+
+High-fid design
+Create database schema
+
+
+Day 3
+
+Setup back-end
+Setup front-end
+Create landing page
+
+
+
+
