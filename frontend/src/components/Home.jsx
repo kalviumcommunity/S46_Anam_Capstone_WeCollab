@@ -33,7 +33,7 @@ export default function Home() {
                 <button className="text-[0.7rem] lg:text-2xl border-black border-2 lg:border-4 py-1 px-1 bg-yellow-300 w-1/2 lg:w-1/3">Go There ↗</button>
             </div>
             <div className="flex w-1/2 bg-[#FFECA8]">
-                <img className="px-4 lg:px-24" src="../../public/idea-stack.png" alt="A shelf which has open shelves" />
+                <img className="px-4 lg:px-24" src="./assets/idea-stack.png" alt="A shelf which has open shelves" />
             </div>
         </div>
 
