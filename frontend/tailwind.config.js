@@ -12,6 +12,7 @@ export default {
         "Poppins": ["Poppins", "sans-serif"]
       },
       backgroundImage: {
+        "thumbnail": "url(./src/assets/Thumbnail.svg)",
         "wavy" : "url(./src/assets/wavy-bgm.png)"
       }
     },
