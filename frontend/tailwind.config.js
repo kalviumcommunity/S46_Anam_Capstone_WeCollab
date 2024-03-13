@@ -13,8 +13,7 @@ export default {
       },
       backgroundImage: {
         "thumbnail": "url(./src/assets/Thumbnail.svg)",
-        "wavy" : "url(./src/assets/wavy-bgm.png)",
-        "thumb": "url(./src/assets/thumbnail-mobile.svg)"
+        "wavy" : "url(./src/assets/wavy-bgm.png)"
       }
     },
   },
