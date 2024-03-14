@@ -22,6 +22,6 @@ const showcaseSchema = new mongoose.Schema({
     }
 })
 
-const showcaseModel = mongoose.model("users", showcaseSchema)
+const showcaseModel = mongoose.model("showcase", showcaseSchema)
 
 module.exports = showcaseModel
