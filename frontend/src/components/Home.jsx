@@ -1,5 +1,6 @@
 import Footer from "./Footer"
 import Navbar from "./Navbar"
+import { Link } from "react-router-dom"
 
 export default function Home() {
   return (
@@ -18,13 +19,15 @@ export default function Home() {
             <div className="flex flex-col gap-5 lg:gap-10 items-center bg-white border-black border-2 lg:border-4 font-space h-fit px-4 lg:px-20 py-10 w-4/5 lg:w-1/2">
                 <h1 className="text-xl lg:text-3xl font-bold">"Welcome to WeCollab"</h1>
                 <p className="text-center text-[0.7rem] lg:text-[1.1rem] leading-[1.4rem] lg:leading-7">WeCollab is An online platform connecting passionate minds for collaborative projects. Create detailed profiles, discover project opportunities tailored to your skills, and build lasting partnerships with like-minded individuals worldwide. Join our vibrant community, unlock the power of collaboration.</p>
-                <button className="bg-yellow-300 w-5/12 lg:w-3/12 lg:py-2 lg:text-2xl border-black border-2 lg:border-4">Join Now</button>
+                <Link className="w-5/12 lg:w-3/12 lg:text-2xl" to="/signup">
+                    <button className="bg-yellow-300 lg:p-2 border-black border-2 lg:border-4">Join Now</button>
+                </Link>
             </div>
         </div>
 
         {/* Open Idea Section */}
 
-        <div className="flex items-center bg-[#FFECA8] border-black border-b-2">
+        <div className="flex items-center bg-[#FFECA8]">
             <div className="flex flex-col bg-purple-300 gap-5 lg:gap-20 font-space lg:p-24 border-black border-r-2 w-1/2 py-10 p-5">
                 <h1 className="text-xl lg:text-7xl">
                     <span className="text-yellow-300 underline underline-offset-8 decoration-yellow-300 decoration-2">OPEN</span> IDEAS
