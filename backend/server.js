@@ -1,6 +1,10 @@
-require("dotenv").config()
-const mongoose = require("mongoose")
-const express = require("express")
+import dotenv from "dotenv"
+dotenv.config()
+import { ApolloServer } from "@apollo/server"
+import {expressMiddleware} from "@apollo/server/express4"
+import mongoose from "mongoose"
+import express from "express"
+import { typeDefs } from "./graphql/typeDefs.js"
 const app = express()
 
 const connectDB = async () => {
@@ -14,6 +18,19 @@ const connectDB = async () => {
 }
 
 connectDB()
+
+const server = new ApolloServer({
+    typeDefs
+})
+
+const startServer = async () => {
+
+    await server.start()
+    app.use("/graphql",express.json(),expressMiddleware(server))
+
+}
+
+startServer()
 
 app.get("/",(req,res) => {
     res.send("Welcome to WeCollab")

@@ -1,5 +1,16 @@
 const mongoose = require("mongoose")
 
+const experienceSchema = new mongoose.Schema({
+    role: {
+      type: String,
+      required: true,
+    },
+    duration: {
+      type: String,
+      required: true,
+    }
+  });
+
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -29,7 +40,7 @@ const userSchema = new mongoose.Schema({
             required: true
         },
         experience: {
-            type: Array
+            type: [experienceSchema]
         },
         skills: {
             type: Array,
