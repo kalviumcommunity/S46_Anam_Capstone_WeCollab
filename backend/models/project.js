@@ -37,7 +37,7 @@ const projectSchema = new mongoose.Schema({
         required: true
     },
     carousel: {
-        type: Array
+        type: [String]
     },
     presentation: {
         type: String
