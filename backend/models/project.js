@@ -1,5 +1,28 @@
 const mongoose = require("mongoose")
 
+const seekingSchema = new mongoose.Schema({
+    role: {
+        type: String,
+        required: true
+    },
+    vacancy: {
+        type: String,
+        required: true
+    },
+    skills: {
+        type: Array,
+        required: true
+    },
+    responsibilities: {
+        type: String,
+        required: true
+    },
+    experience: {
+        type: String,
+        required: true
+    }
+})
+
 const projectSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -14,35 +37,14 @@ const projectSchema = new mongoose.Schema({
         required: true
     },
     carousel: {
-        type: Array
+        type: [String]
     },
     presentation: {
         type: String
     },
-    details: {
-        type: Object,
-        currentposition: {
-            type: String,
-            required: true
-        },
-        about: {
-            type: String,
-            required: true
-        },
-        status: {
-            type: String,
-            required: true
-        },
-        experience: {
-            type: Array
-        },
-        skills: {
-            type: Array,
-            required: true
-        },
-        projects: {
-            type: Array
-        }
+    seeking: {
+        type:[seekingSchema],
+        required: true
     }
 })
 
