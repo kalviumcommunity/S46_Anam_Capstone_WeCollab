@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
     },
     details: {
         type: Object,
-        currentposition: {
+        currentPosition: {
             type: String,
             required: true
         },
@@ -43,11 +43,11 @@ const userSchema = new mongoose.Schema({
             type: [experienceSchema]
         },
         skills: {
-            type: Array,
+            type: [String],
             required: true
         },
         projects: {
-            type: Array
+            type: [String]
         }
     }
 })

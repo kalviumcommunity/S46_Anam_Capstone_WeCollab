@@ -8,7 +8,7 @@ type User {
 }
 
 type Details {
-    currentposition: String!
+    currentPosition: String!
     about: String!
     status: String!
     experience: [ExperienceType!]
