@@ -6,62 +6,122 @@ import ideaModel from "../models/idea.js"
 export const resolvers = {
     Query: {
         async ideas() {
-            return await ideaModel.find()
+            try{
+                return await ideaModel.find()
+            }catch(err){
+                return err
+            }
         },
         async users() {
-            return await userModel.find()
+            try{
+                return await userModel.find()
+            }catch(err){
+                return err
+            }
         },
         async projects() {
-            return await projectModel.find()
+            try{
+                return await projectModel.find()
+            }catch(err){
+                return err
+            }
         },
         async showcases() {
-            return await showcaseModel.find()
+            try{
+                return await showcaseModel.find()
+            }catch(err){
+                return err
+            }
         },
         async idea(_,args) {
-            return await ideaModel.findById(args.id)
+            try{
+                return await ideaModel.findById(args.id)
+            }catch(err){
+                return err
+            }
         },
         async project(_,args) {
-            return await projectModel.findById(args.id)
+            try{
+                return await projectModel.findById(args.id)
+            }catch(err){
+                return err
+            }
         },
         async showcase(_,args) {
-            return await showcaseModel.findById(args.id)
+            try{
+                return await showcaseModel.findById(args.id)
+            }catch(err){
+                return err
+            }
         }
     },
     Mutation: {
         async deleteProject(_,args){
-            const wasDeleted = (await projectModel.deleteOne({_id: args.id})).deletedCount
-            return wasDeleted
+            try{
+                const wasDeleted = (await projectModel.deleteOne({_id: args.id})).deletedCount
+                return wasDeleted
+            }catch(err){
+                return err
+            }
         },
         async deleteShowcase(_,args){
-            const wasDeleted = (await showcaseModel.deleteOne({_id: args.id})).deletedCount
-            return wasDeleted
+            try{
+                const wasDeleted = (await showcaseModel.deleteOne({_id: args.id})).deletedCount
+                return wasDeleted
+            }catch(err){
+                return err
+            }
         },
         async createUser(_,args){
-            const newUser = new userModel(args.user)
-            const res = await newUser.save()
-            return {id:res.id,...res._doc}
+            try{
+                const newUser = new userModel(args.user)
+                const res = await newUser.save()
+                return {id:res.id,...res._doc}
+            }catch(err){
+                return err
+            }
         },
         async createIdea(_,args){
-            const newIdea = new ideaModel(args.idea)
-            const res = await newIdea.save()
-            return{id:res.id,...res._doc}
+            try{
+                const newIdea = new ideaModel(args.idea)
+                const res = await newIdea.save()
+                return{id:res.id,...res._doc}
+            }catch(err){
+                return err
+            }
         },
         async createProject(_,args){
-            const newProject = new projectModel(args.project)
-            const res = await newIdea.save()
-            return{id:res.id,...res._doc}
+            try{
+                const newProject = new projectModel(args.project)
+                const res = await newProject.save()
+                return{id:res.id,...res._doc}
+            }catch(err){
+                return err
+            }
         },
         async updateUser(_,{id,userData}){
-            const res = userModel.findByIdAndUpdate(id,userData,{new: true})
-            return res
+            try{
+                const res = userModel.findByIdAndUpdate(id,userData,{new: true})
+                return res
+            }catch(err){
+                return err
+            }
         },
         async updateProject(_,{id,projectData}){
-            const res = projectModel.findByIdAndUpdate(id,projectData,{new: true})
-            return res
+            try{
+                const res = projectModel.findByIdAndUpdate(id,projectData,{new: true})
+                return res
+            }catch(err){
+                return err
+            }
         },
         async updateShowcase(_,{id,showcaseData}){
-            const res = showcaseModel.findByIdAndUpdate(id,showcaseData,{new: true})
-            return res
+            try{
+                const res = showcaseModel.findByIdAndUpdate(id,showcaseData,{new: true})
+                return res
+            }catch(err){
+                return err
+            }
         }
     }
 }
