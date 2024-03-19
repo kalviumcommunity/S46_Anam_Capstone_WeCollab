@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 
 const ideaSchema = new mongoose.Schema({
     userId: {
@@ -21,8 +21,8 @@ const ideaSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-})
+},{timestamps: true})
 
 const ideaModel = mongoose.model("ideas", ideaSchema)
 
-module.exports = ideaModel
+export default ideaModel

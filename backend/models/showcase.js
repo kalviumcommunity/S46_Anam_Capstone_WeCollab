@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 
 const showcaseSchema = new mongoose.Schema({
     title: {
@@ -20,8 +20,8 @@ const showcaseSchema = new mongoose.Schema({
     link: {
         type: String
     }
-})
+},{timestamps: true})
 
 const showcaseModel = mongoose.model("showcase", showcaseSchema)
 
-module.exports = showcaseModel
+export default showcaseModel

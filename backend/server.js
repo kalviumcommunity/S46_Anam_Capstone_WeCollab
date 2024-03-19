@@ -5,6 +5,7 @@ import {expressMiddleware} from "@apollo/server/express4"
 import mongoose from "mongoose"
 import express from "express"
 import { typeDefs } from "./graphql/typeDefs.js"
+import { resolvers } from "./graphql/resolvers.js"
 const app = express()
 
 const connectDB = async () => {
@@ -20,7 +21,8 @@ const connectDB = async () => {
 connectDB()
 
 const server = new ApolloServer({
-    typeDefs
+    typeDefs,
+    resolvers
 })
 
 const startServer = async () => {

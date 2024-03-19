@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 
 const experienceSchema = new mongoose.Schema({
     role: {
@@ -50,8 +50,8 @@ const userSchema = new mongoose.Schema({
             type: [String]
         }
     }
-})
+},{ timestamps: true})
 
 const userModel = mongoose.model("users", userSchema)
 
-module.exports = userModel
+export default userModel
