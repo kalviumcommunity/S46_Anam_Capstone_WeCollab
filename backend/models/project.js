@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 
 const seekingSchema = new mongoose.Schema({
     role: {
@@ -21,7 +21,7 @@ const seekingSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-})
+},{timestamps: true})
 
 const projectSchema = new mongoose.Schema({
     title: {
@@ -50,4 +50,4 @@ const projectSchema = new mongoose.Schema({
 
 const projectModel = mongoose.model("projects", projectSchema)
 
-module.exports = projectModel
+export default projectModel

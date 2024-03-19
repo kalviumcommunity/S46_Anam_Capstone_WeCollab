@@ -22,7 +22,6 @@ type ExperienceType {
 }
 
 type Showcase {
-  _id: ID!
   title: String!
   thumbnail: String!
   description: String!
@@ -31,7 +30,6 @@ type Showcase {
 }
 
 type Project {
-  _id: ID!
   title: String!
   about: String!
   thumbnail: String!
@@ -49,8 +47,7 @@ type Seeking {
 }
 
 type Idea {
-  _id: ID!
-  userId: ID!
+  userId: String!
   title: String!
   description: String!
   status: String!
@@ -58,10 +55,126 @@ type Idea {
 }
 
 type Query {
-    idea: [Idea]
-    project: [Project]
-    showcase: [Showcase]
-    user: [User]
+  ideas: [Idea]
+  projects: [Project]
+  showcases: [Showcase]
+  users: [User]
+  project(id: ID!): Project
+  showcase(id: ID!): Showcase
+  idea(id: ID!): Idea
 }
+
+type Mutation {
+  deleteProject(id: ID!): Boolean
+  deleteShowcase(id: ID!): Boolean
+  createUser(user: addUser): User!
+  createIdea(idea: addIdea): Idea!
+  createProject(project: addProject): Project!
+  createShowcase(id: ID!,showcase: addShowcase): Showcase!
+  updateUser(id: ID!, userData: updateUser): User
+  updateProject(id: ID!, projectData: updateProject): Project
+  updateShowcase(id: ID!, showcaseData: updateShowcase): Showcase
+}
+
+input addUser {
+  name: String!
+  email: String!
+  password: String!
+  details: addDetails!
+}
+
+input addDetails {
+  currentPosition: String!
+  about: String!
+  status: String!
+  experience: [addExperienceType!]
+  skills: [String!]!
+  projects: [String!]!
+}
+
+input addExperienceType {
+  role: String!
+  duration: String!
+}
+
+input addIdea {
+  userId: String!
+  title: String!
+  description: String!
+  status: String!
+  category: String!
+}
+
+input addProject {
+  title: String!
+  about: String!
+  thumbnail: String!
+  carousel: [String!]
+  presentation: String
+  seeking: [addSeeking!]!
+}
+
+input addSeeking {
+  role: String!
+  vacancy: String!
+  skills: [String!]!
+  responsibilities: String!
+  experience: String!
+}
+
+input addShowcase {
+  title: String!
+  thumbnail: String!
+  description: String!
+  category: String!
+  link: String
+}
+
+input updateUser {
+  name: String
+  email: String
+  password: String
+  details: updateDetails
+}
+
+input updateDetails {
+  currentPosition: String
+  about: String
+  status: String
+  experience: [updateExperience]
+  skills: [String]
+  projects: [String]
+}
+
+input updateExperience {
+  role: String
+  duration: String
+}
+
+input updateProject {
+  title: String
+  about: String
+  thumbnail: String
+  carousel: [String]
+  presentation: String
+  seeking: [updateSeeking]
+}
+
+input updateSeeking {
+  role: String
+  vacancy: String
+  skills: [String]
+  responsibilities: String
+  experience: String
+}
+
+input updateShowcase {
+  title: String
+  thumbnail: String
+  description: String
+  category: String
+  link: String
+}
+
 
 `
