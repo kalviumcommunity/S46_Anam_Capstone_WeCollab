@@ -74,13 +74,19 @@ type Mutation {
   updateUser(id: ID!, userData: updateUser): User
   updateProject(id: ID!, projectData: updateProject): Project
   updateShowcase(id: ID!, showcaseData: updateShowcase): Showcase
+  loginUser(userData: userLogin): Boolean
+}
+
+input userLogin {
+  email: String!
+  password: String!
 }
 
 input addUser {
   name: String!
   email: String!
   password: String!
-  details: addDetails!
+  details: addDetails
 }
 
 input addDetails {

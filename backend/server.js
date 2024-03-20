@@ -6,6 +6,7 @@ import mongoose from "mongoose"
 import express from "express"
 import { typeDefs } from "./graphql/typeDefs.js"
 import { resolvers } from "./graphql/resolvers.js"
+import CORS from "cors"
 const app = express()
 
 const connectDB = async () => {
@@ -28,7 +29,7 @@ const server = new ApolloServer({
 const startServer = async () => {
 
     await server.start()
-    app.use("/graphql",express.json(),expressMiddleware(server))
+    app.use("/graphql",CORS(),express.json(),expressMiddleware(server))
 
 }
 

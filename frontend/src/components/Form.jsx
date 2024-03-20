@@ -1,12 +1,25 @@
 import {useFormik} from "formik"
 import * as Yup from "yup"
 import Navbar from "./Navbar"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Footer from "./Footer"
+import { useMutation } from '@apollo/client';
+import { CREATE_USER, LOGIN_USER } from "../graphql/CRUD"
 
 export default function Form() {
 
     const {form} = useParams()
+    const navigate = useNavigate()
+
+    const [createUser, { data: createUserData, loading: createUserLoading, error: createUserError }] = useMutation(CREATE_USER);
+    const [loginUser, { data: loginUserData, loading: loginUserLoading, error: loginUserError }] = useMutation(LOGIN_USER);
+
+    const setCookie = (cookieName,value,daysToLive) => {
+        const date = new Date()
+        date.setTime(date.getTime() + (daysToLive * 24 * 60 * 60 * 1000))
+        let expires = "expires=" + date.toUTCString()
+        document.cookie = `${cookieName}=${value}; ${expires}; path=/`
+    }    
 
     const initialValues = {
         name:"",
@@ -35,7 +48,20 @@ export default function Form() {
         initialValues,
         validationSchema,
         onSubmit:(values) => {
-            console.log(values)
+            console.log({user: values})
+            if(form === "signup"){
+                createUser({ variables: { user: values } })
+                .then(
+                    setCookie("user",values.name,1),
+                    navigate("/home")
+                )
+            }else{
+                loginUser({variables: {userData: {email: values.email.toLowerCase(),password: values.password}}})
+                .then(
+                    setCookie("user",values.email,1),
+                    navigate("/home")
+                )
+            }
         }
     })
 
@@ -143,7 +169,7 @@ export default function Form() {
                     </>
                     }
                 </form>
-                <Footer/>
+            <Footer/>
         </>
     )
 }
