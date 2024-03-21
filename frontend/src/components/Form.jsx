@@ -60,7 +60,8 @@ export default function Form() {
             if (form === "signup") {
                 try {
                     await createUser({ variables: { userInput: { name:name, email:email, password:password } } })
-                        .then(() => {
+                        .then(({data}) => {
+                            setCookie("token",data.createUser.token,30)
                             setCookie("user", name, 1);
                             navigate("/home");
                         })
@@ -75,7 +76,8 @@ export default function Form() {
             } else {
                 try {
                     await loginUser({ variables: { loginData: { email, password } } })
-                        .then(() => {
+                        .then(({data}) => {
+                            setCookie("token",data.loginUser.token,30)
                             setCookie("user", email, 1);
                             navigate("/home");
                         })

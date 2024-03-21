@@ -5,7 +5,19 @@ import showcaseModel from "../models/showcase.js"
 import projectModel from "../models/project.js"
 import ideaModel from "../models/idea.js"
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 import { GraphQLError } from 'graphql';
+
+function generateAccessToken(payload){
+    const token = jwt.sign(payload,process.env.ACCESS_TOKEN,{expiresIn: "1h"})
+    return token
+}
+
+function authenticateToken(token){
+    jwt.verify(token,process.env.ACCESS_TOKEN,(err,user) => {
+        if(err) return err
+    })
+}
 
 export const resolvers = {
     Query: {
@@ -91,8 +103,9 @@ export const resolvers = {
                 email: email.toLowerCase(),
                 password: encryptedPassword,
               });
+              const token = generateAccessToken({user_id: newUser._id, email: newUser.email})
               const res = await newUser.save();
-              return { id: res.id, ...res._doc};
+              return { id: res.id, ...res._doc,token};
             } catch (err) {
               return err;
             }
@@ -100,6 +113,7 @@ export const resolvers = {
         async loginUser(_,{loginData: {email,password}}){
             try{
                 const userExists = await userModel.findOne({email})
+                console.log(userExists._doc)
                 if(userExists){
                     const passwordMatch = await bcrypt.compare(password,userExists.password)
                     if(!passwordMatch){
@@ -107,7 +121,8 @@ export const resolvers = {
                             extensions: {code: "INCORRECT_PASSWORD"}
                         })
                     }
-                    return userExists
+                    const token = generateAccessToken({user_id: userExists._id, email: userExists.email})
+                    return {...userExists._doc,token}
                 }
                 throw new GraphQLError(("User does not exist, please sign up"),{
                     extensions: {code: 'USER_DOES_NOT_EXIST'}
