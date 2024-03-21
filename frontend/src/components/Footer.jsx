@@ -1,6 +1,22 @@
 
 
 export default function Footer() {
+
+    const getCookie = (cookieName) => {
+
+        const cDecoded = decodeURIComponent(document.cookie)
+        const cArray = cDecoded.split("; ")
+        let result;
+    
+        cArray.forEach(cookie => {
+            if(cookie.indexOf(cookieName) == 0){
+                result = cookie.substring(cookieName.length + 1)
+            }
+        })
+    
+        return result
+    }
+
   return (
     <>
         <footer className="flex flex-col-reverse gap-10 lg:flex-row lg:gap-0 items-center justify-between p-10 border-black border-t-2">
@@ -28,10 +44,10 @@ export default function Footer() {
                     </ul>
                 </div>
             </div>
-            <div className="hidden lg:flex flex-col items-end gap-5 font-raleway">
+            {!getCookie("username") && <div className="hidden lg:flex flex-col items-end gap-5 font-raleway">
                 <h1 className="text-2xl w-3/4 text-right">Are you excited to collaborate?</h1>
                 <button className="bg-orange-600 text-white px-4 py-2 w-1/3 font-bold">Join Now</button>
-            </div>
+            </div>}
         </footer>
     </>
   )
