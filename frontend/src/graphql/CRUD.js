@@ -7,6 +7,7 @@ export const CREATE_USER = gql `
             name
             email
             password
+            token
     }
 }
 `
@@ -15,6 +16,7 @@ export const LOGIN_USER = gql `
         loginUser(loginData: $loginData){
             email
             password
+            token
         }
 }
 `
