@@ -47,20 +47,33 @@ export default function Form() {
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit:(values) => {
-            console.log({user: values})
-            if(form === "signup"){
-                createUser({ variables: { user: values } })
-                .then(
-                    setCookie("user",values.name,1),
-                    navigate("/home")
-                )
-            }else{
-                loginUser({variables: {userData: {email: values.email.toLowerCase(),password: values.password}}})
-                .then(
-                    setCookie("user",values.email,1),
-                    navigate("/home")
-                )
+        onSubmit: async ({ name, email, password }) => {
+            if (form === "signup") {
+                try {
+                    await createUser({ variables: { userInput: { name:name, email:email, password:password } } })
+                        .then(() => {
+                            setCookie("user", name, 1);
+                            navigate("/home");
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        });
+                } catch (err) {
+                    console.error(err);
+                }
+            } else {
+                try {
+                    await loginUser({ variables: { loginData: { email, password } } })
+                        .then(() => {
+                            setCookie("user", email, 1);
+                            navigate("/home");
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                        });
+                } catch (err) {
+                    console.error(err);
+                }
             }
         }
     })
