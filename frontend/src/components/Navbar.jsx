@@ -34,6 +34,7 @@ export default function Navbar() {
     }
 
     const handleLogout = () => {
+        deleteCookie("token")
         deleteCookie("user")
         navigate("/")
     }
