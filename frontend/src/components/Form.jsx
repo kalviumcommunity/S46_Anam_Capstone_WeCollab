@@ -5,11 +5,20 @@ import { useNavigate, useParams } from "react-router-dom"
 import Footer from "./Footer"
 import { useMutation } from '@apollo/client';
 import { CREATE_USER, LOGIN_USER } from "../graphql/CRUD"
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css';
 
 export default function Form() {
 
     const {form} = useParams()
     const navigate = useNavigate()
+    const notyf = new Notyf({
+        duration: "2000",
+        position: {
+            x: "right",
+            y: "top"
+        }
+    })
 
     const [createUser, { data: createUserData, loading: createUserLoading, error: createUserError }] = useMutation(CREATE_USER);
     const [loginUser, { data: loginUserData, loading: loginUserLoading, error: loginUserError }] = useMutation(LOGIN_USER);
@@ -57,9 +66,11 @@ export default function Form() {
                         })
                         .catch((err) => {
                             console.error(err);
+                            notyf.error(err)
                         });
                 } catch (err) {
                     console.error(err);
+                    notyf.error(err)
                 }
             } else {
                 try {
@@ -70,9 +81,11 @@ export default function Form() {
                         })
                         .catch((err) => {
                             console.error(err);
+                            notyf.error(err)
                         });
                 } catch (err) {
                     console.error(err);
+                    notyf.error(err)
                 }
             }
         }
