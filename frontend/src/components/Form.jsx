@@ -1,12 +1,34 @@
 import {useFormik} from "formik"
 import * as Yup from "yup"
 import Navbar from "./Navbar"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Footer from "./Footer"
+import { useMutation } from '@apollo/client';
+import { CREATE_USER, LOGIN_USER } from "../graphql/CRUD"
+import { Notyf } from 'notyf';
+import 'notyf/notyf.min.css';
 
 export default function Form() {
 
     const {form} = useParams()
+    const navigate = useNavigate()
+    const notyf = new Notyf({
+        duration: "2000",
+        position: {
+            x: "right",
+            y: "top"
+        }
+    })
+
+    const [createUser, { data: createUserData, loading: createUserLoading, error: createUserError }] = useMutation(CREATE_USER);
+    const [loginUser, { data: loginUserData, loading: loginUserLoading, error: loginUserError }] = useMutation(LOGIN_USER);
+
+    const setCookie = (cookieName,value,daysToLive) => {
+        const date = new Date()
+        date.setTime(date.getTime() + (daysToLive * 24 * 60 * 60 * 1000))
+        let expires = "expires=" + date.toUTCString()
+        document.cookie = `${cookieName}=${value}; ${expires}; path=/`
+    }    
 
     const initialValues = {
         name:"",
@@ -34,8 +56,38 @@ export default function Form() {
     const formik = useFormik({
         initialValues,
         validationSchema,
-        onSubmit:(values) => {
-            console.log(values)
+        onSubmit: async ({ name, email, password }) => {
+            if (form === "signup") {
+                try {
+                    await createUser({ variables: { userInput: { name:name, email:email, password:password } } })
+                        .then(() => {
+                            setCookie("user", name, 1);
+                            navigate("/home");
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                            notyf.error(err)
+                        });
+                } catch (err) {
+                    console.error(err);
+                    notyf.error(err)
+                }
+            } else {
+                try {
+                    await loginUser({ variables: { loginData: { email, password } } })
+                        .then(() => {
+                            setCookie("user", email, 1);
+                            navigate("/home");
+                        })
+                        .catch((err) => {
+                            console.error(err);
+                            notyf.error(err)
+                        });
+                } catch (err) {
+                    console.error(err);
+                    notyf.error(err)
+                }
+            }
         }
     })
 
@@ -143,7 +195,7 @@ export default function Form() {
                     </>
                     }
                 </form>
-                <Footer/>
+            <Footer/>
         </>
     )
 }

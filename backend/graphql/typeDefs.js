@@ -1,17 +1,18 @@
 
 export const typeDefs = `#graphql
 type User {
+    id: ID!
     name: String!
     email: String!
     password: String!
-    details: Details!
+    details: Details
 }
 
 type Details {
     currentPosition: String!
     about: String!
     status: String!
-    experience: [ExperienceType!]
+    experience: [ExperienceType!]!
     skills: [String!]!
     projects: [String!]!
 }
@@ -67,20 +68,26 @@ type Query {
 type Mutation {
   deleteProject(id: ID!): Boolean
   deleteShowcase(id: ID!): Boolean
-  createUser(user: addUser): User!
-  createIdea(idea: addIdea): Idea!
-  createProject(project: addProject): Project!
+  createUser(userInput: addUser!): User!
+  createIdea(ideaInput: addIdea!): Idea!
+  createProject(projectInput: addProject): Project!
   createShowcase(id: ID!,showcase: addShowcase): Showcase!
   updateUser(id: ID!, userData: updateUser): User
   updateProject(id: ID!, projectData: updateProject): Project
   updateShowcase(id: ID!, showcaseData: updateShowcase): Showcase
+  loginUser(loginData: loginInput!): User!
+}
+
+input loginInput {
+  email: String!
+  password: String!
 }
 
 input addUser {
   name: String!
   email: String!
   password: String!
-  details: addDetails!
+  details: addDetails
 }
 
 input addDetails {

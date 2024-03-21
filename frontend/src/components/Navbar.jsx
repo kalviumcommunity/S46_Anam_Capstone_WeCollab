@@ -1,8 +1,42 @@
-import { Link, useParams } from "react-router-dom"
+import { useState } from "react"
+import { Link, useNavigate, useParams } from "react-router-dom"
 
 export default function Navbar() {
 
     const {form} = useParams()
+    const navigate = useNavigate()
+    const [isVisible,setVisible] = useState(false)
+
+    const setCookie = (cookieName,value,daysToLive) => {
+        const date = new Date()
+        date.setTime(date.getTime() + (daysToLive * 24 * 60 * 60 * 1000))
+        let expires = "expires=" + date.toUTCString()
+        document.cookie = `${cookieName}=${value}; ${expires}; path=/`
+    }
+    
+    const deleteCookie = (cookieName) => {
+        setCookie(cookieName,null,0)
+    }
+    
+    const getCookie = (cookieName) => {
+
+        const cDecoded = decodeURIComponent(document.cookie)
+        const cArray = cDecoded.split("; ")
+        let result;
+    
+        cArray.forEach(cookie => {
+            if(cookie.indexOf(cookieName) == 0){
+                result = cookie.substring(cookieName.length + 1)
+            }
+        })
+    
+        return result
+    }
+
+    const handleLogout = () => {
+        deleteCookie("user")
+        navigate("/")
+    }
 
     return (
         <>
@@ -28,7 +62,13 @@ export default function Navbar() {
                 <Link to="/signup">
                     <button className="rounded-full font-raleway font-bold border-black border-2 hover:bg-slate-200 px-5 py-1">Sign-up</button>
                 </Link>
-                :  
+                :  getCookie("user") ? 
+                <>
+                   <div onClick={() => setVisible(!isVisible)} className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
+                        <p>{getCookie("user")[0].toUpperCase()}</p>
+                    </div>
+                </> 
+                :
                 <>
                     <div className="hidden md:block lg:block text-xl text-white font-raleway font-bold">
                         <Link to="/signup">
@@ -39,6 +79,9 @@ export default function Navbar() {
                 </>
                 }
             </nav>
+            <div className={`${isVisible ? "": "hidden"} fixed right-3 top-[5.5rem] flex justify-end border-black rounded-md border-2 shadow-lg w-1/3 lg:w-1/6 p-3`}>
+                <button onClick={handleLogout} className="bg-red-600 text-white p-2 rounded-md">Log Out</button>
+            </div>
         </>
     )
 }

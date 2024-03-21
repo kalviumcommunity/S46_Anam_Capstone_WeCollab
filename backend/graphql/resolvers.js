@@ -1,7 +1,11 @@
+import dotenv from "dotenv"
+dotenv.config()
 import userModel from "../models/user.js"
 import showcaseModel from "../models/showcase.js"
 import projectModel from "../models/project.js"
 import ideaModel from "../models/idea.js"
+import bcrypt from "bcryptjs"
+import { GraphQLError } from 'graphql';
 
 export const resolvers = {
     Query: {
@@ -72,12 +76,43 @@ export const resolvers = {
                 return err
             }
         },
-        async createUser(_,args){
+        async createUser(_, { userInput: {name,email,password} }) {
+            try {
+              const userExists = await userModel.findOne({ email });
+              if (userExists) {
+                throw new GraphQLError(`A user already exists with email ${email}`, {
+                  extensions: { code: 'USER_ALREADY_EXISTS' },
+                });
+              }
+          
+              const encryptedPassword = await bcrypt.hash(password, 10);
+              const newUser = new userModel({
+                name,
+                email: email.toLowerCase(),
+                password: encryptedPassword,
+              });
+              const res = await newUser.save();
+              return { id: res.id, ...res._doc};
+            } catch (err) {
+              return err;
+            }
+          },
+        async loginUser(_,{loginData: {email,password}}){
             try{
-                const newUser = new userModel(args.user)
-                const res = await newUser.save()
-                return {id:res.id,...res._doc}
-            }catch(err){
+                const userExists = await userModel.findOne({email})
+                if(userExists){
+                    const passwordMatch = await bcrypt.compare(password,userExists.password)
+                    if(!passwordMatch){
+                        throw new GraphQLError(("Incorrect password"),{
+                            extensions: {code: "INCORRECT_PASSWORD"}
+                        })
+                    }
+                    return userExists
+                }
+                throw new GraphQLError(("User does not exist, please sign up"),{
+                    extensions: {code: 'USER_DOES_NOT_EXIST'}
+                })   
+            }catch(err) {
                 return err
             }
         },
