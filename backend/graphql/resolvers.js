@@ -8,9 +8,10 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { GraphQLError } from 'graphql';
 
-function generateAccessToken(payload){
-    const token = jwt.sign(payload,process.env.ACCESS_TOKEN,{expiresIn: "1h"})
-    return token
+function generateToken(payload){
+    const accessToken = jwt.sign(payload,process.env.ACCESS_TOKEN,{expiresIn: "1h"})
+    const refreshToken = jwt.sign(payload,process.env.REFRESH_TOKEN,{expiresIn: "30d"})
+    return {accessToken, refreshToken}
 }
 
 function authenticateToken(token){
@@ -103,17 +104,17 @@ export const resolvers = {
                 email: email.toLowerCase(),
                 password: encryptedPassword,
               });
-              const token = generateAccessToken({user_id: newUser._id, email: newUser.email})
+              const {accessToken, refreshToken} = generateToken({user_id: newUser._id, email: newUser.email})
+              newUser.token = refreshToken
               const res = await newUser.save();
-              return { id: res.id, ...res._doc,token};
+              return { id: res._id,email: res.email,token: accessToken};
             } catch (err) {
-              return err;
+              return err
             }
           },
         async loginUser(_,{loginData: {email,password}}){
             try{
                 const userExists = await userModel.findOne({email})
-                console.log(userExists._doc)
                 if(userExists){
                     const passwordMatch = await bcrypt.compare(password,userExists.password)
                     if(!passwordMatch){
@@ -121,8 +122,9 @@ export const resolvers = {
                             extensions: {code: "INCORRECT_PASSWORD"}
                         })
                     }
-                    const token = generateAccessToken({user_id: userExists._id, email: userExists.email})
-                    return {...userExists._doc,token}
+                    const {accessToken, refreshToken} = generateToken({user_id: userExists._id, email: userExists.email})
+                    userExists.token = refreshToken
+                    return {id:userExists._id,email:userExists.email,token: accessToken}
                 }
                 throw new GraphQLError(("User does not exist, please sign up"),{
                     extensions: {code: 'USER_DOES_NOT_EXIST'}

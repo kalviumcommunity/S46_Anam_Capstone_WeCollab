@@ -62,7 +62,7 @@ export default function Form() {
                     await createUser({ variables: { userInput: { name:name, email:email, password:password } } })
                         .then(({data}) => {
                             setCookie("token",data.createUser.token,30)
-                            setCookie("user", name, 1);
+                            setCookie("user", data.createUser.email, 1);
                             navigate("/home");
                         })
                         .catch((err) => {
@@ -78,7 +78,7 @@ export default function Form() {
                     await loginUser({ variables: { loginData: { email, password } } })
                         .then(({data}) => {
                             setCookie("token",data.loginUser.token,30)
-                            setCookie("user", email, 1);
+                            setCookie("user", data.loginUser.email, 1)
                             navigate("/home");
                         })
                         .catch((err) => {
