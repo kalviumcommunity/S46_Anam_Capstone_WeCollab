@@ -77,7 +77,6 @@ type Mutation {
   updateProject(id: ID!, projectData: updateProject): Project
   updateShowcase(id: ID!, showcaseData: updateShowcase): Showcase
   loginUser(loginData: loginInput!): User!
-  getCookie: String
 }
 
 input loginInput {
