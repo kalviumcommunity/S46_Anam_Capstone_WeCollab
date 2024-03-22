@@ -7,6 +7,7 @@ import express from "express"
 import { typeDefs } from "./graphql/typeDefs.js"
 import { resolvers } from "./graphql/resolvers.js"
 import CORS from "cors"
+import jwt from "jsonwebtoken"
 const app = express()
 
 const connectDB = async () => {
@@ -29,7 +30,23 @@ const server = new ApolloServer({
 const startServer = async () => {
 
     await server.start()
-    app.use("/graphql",CORS(),express.json(),expressMiddleware(server))
+    app.use("/graphql",CORS({
+        credentials: true
+    }),express.json(),expressMiddleware(server,{
+        context: async({res,req}) => {
+            const authHeader = req.headers['authorization']
+            const token = authHeader && authHeader.split(' ')[1]
+            if (token) {
+                try {
+                  const user = jwt.verify(token,process.env.ACCESS_TOKEN);
+                  return { user };
+                } catch (err) {
+                  return err
+                }
+            }
+            return {}
+        }
+    }))
 
 }
 

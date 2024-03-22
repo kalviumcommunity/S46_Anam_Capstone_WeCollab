@@ -5,7 +5,7 @@ type User {
     name: String!
     email: String!
     password: String!
-    token: String
+    token: String!
     details: Details
 }
 
@@ -77,6 +77,7 @@ type Mutation {
   updateProject(id: ID!, projectData: updateProject): Project
   updateShowcase(id: ID!, showcaseData: updateShowcase): Showcase
   loginUser(loginData: loginInput!): User!
+  getCookie: String
 }
 
 input loginInput {
