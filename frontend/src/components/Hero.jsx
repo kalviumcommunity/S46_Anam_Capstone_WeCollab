@@ -19,9 +19,11 @@ export default function Hero() {
             <div className="flex flex-col gap-5 lg:gap-10 items-center bg-white border-black border-2 lg:border-4 font-space h-fit px-4 lg:px-20 py-10 w-4/5 lg:w-1/2">
                 <h1 className="text-xl lg:text-3xl font-bold">"Welcome to WeCollab"</h1>
                 <p className="text-center text-[0.7rem] lg:text-[1.1rem] leading-[1.4rem] lg:leading-7">WeCollab is An online platform connecting passionate minds for collaborative projects. Create detailed profiles, discover project opportunities tailored to your skills, and build lasting partnerships with like-minded individuals worldwide. Join our vibrant community, unlock the power of collaboration.</p>
-                <Link className="w-5/12 lg:w-3/12 lg:text-2xl" to="/signup">
-                    <button className="bg-yellow-300 lg:p-2 border-black border-2 lg:border-4">Join Now</button>
-                </Link>
+                <div>    
+                    <Link className="w-5/12 lg:w-3/12 lg:text-2xl" to="/signup">
+                        <button className="bg-yellow-300 self lg:p-2 p-1 border-black border-2 lg:border-4">Join Now</button>
+                    </Link>
+                </div>
             </div>
         </div>
 
