@@ -48,7 +48,12 @@ export default function Navbar() {
                         <h1 className="text-2xl lg:text-3xl font-raleway font-bold pt-1">WeCollab</h1>
                     </div>
                 </Link>
-                {form ? "" : 
+                {getCookie("user") ? 
+                <input className="hidden lg:block border-black border-2 w-1/2 px-10 py-1 bg-search bg-contain bg-no-repeat rounded-full" type="text" />
+                : 
+                form ? 
+                "" 
+                : 
                 <div className="hidden md:flex lg:flex gap-10 font-space text-xl [&_*]:cursor-pointer">
                     <p>Home</p>
                     <p>Project</p>
@@ -65,8 +70,11 @@ export default function Navbar() {
                 </Link>
                 :  getCookie("user") ? 
                 <>
-                   <div onClick={() => setVisible(!isVisible)} className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
-                        <p>{getCookie("user")[0].toUpperCase()}</p>
+                    <div className="flex items-center gap-3">
+                        <img className="size-10 lg:hidden" src="./assets/search.svg" alt="" />
+                        <div onClick={() => setVisible(!isVisible)} className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
+                            <p>{getCookie("user")[0].toUpperCase()}</p>
+                        </div>
                     </div>
                 </> 
                 :
