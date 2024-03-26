@@ -14,8 +14,8 @@ export default {
       backgroundImage: {
         "thumbnail": "url(./Thumbnail.svg)",
         "wavy" : "url(./wavy-bgm.png)",
-        "search": "url(./assets/search.svg)",
-        "arrowdown": "url(./assets/arrow-down.svg)"
+        "search": "url(./search.svg)",
+        "arrowdown": "url(./arrow-down.svg)"
       }
     },
   },

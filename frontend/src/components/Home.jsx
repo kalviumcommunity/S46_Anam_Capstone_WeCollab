@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <>
         <Navbar/>
-        <div className="w-[100dvw] font-raleway flex items-center lg:items-start flex-col p-5 pt-10 lg:px-20 lg:py-10 gap-10">
+        <div className="w-[100dvw] font-raleway flex items-center lg:items-start flex-col p-5 pt-24 lg:px-20 lg:py-28 gap-10">
             <div className="flex items-center font-semibold gap-3 lg:gap-5 lg:text-xl text-[1rem]">
                 <p onClick={(e) => setActiveSection(e.target.innerHTML)} className={`${activeSection === "Projects" ? "bg-red-200" : ""} cursor-pointer px-2`}>Projects</p>
                 <div className="h-5 w-1 border-l-2 border-black"></div>
