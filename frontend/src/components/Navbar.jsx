@@ -41,7 +41,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="border-black border-b-2 flex justify-between items-center p-3">
+            <nav className="border-black fixed top-0 z-20 bg-white w-full border-b-2 flex justify-between items-center p-3">
                 <Link to="/">
                     <div className="flex items-center gap-3 cursor-pointer">
                         <img className="size-10 lg:size-[inherit]" src="./assets/logo.svg" alt="Logo of WeCollab" />
@@ -49,7 +49,7 @@ export default function Navbar() {
                     </div>
                 </Link>
                 {getCookie("user") ? 
-                <input className="hidden lg:block border-black border-2 w-1/2 px-10 py-1 bg-search bg-contain bg-no-repeat rounded-full" type="text" />
+                <input className="hidden lg:block border-black border-2 w-1/3 px-10 py-1 bg-search bg-contain bg-no-repeat rounded-full" type="text" />
                 : 
                 form ? 
                 "" 
@@ -88,8 +88,18 @@ export default function Navbar() {
                 </>
                 }
             </nav>
-            <div className={`${isVisible ? "": "hidden"} fixed right-3 top-[5.5rem] flex justify-end border-black rounded-md border-2 shadow-lg w-1/3 lg:w-1/6 p-3`}>
-                <button onClick={handleLogout} className="bg-red-600 text-white p-2 rounded-md">Log Out</button>
+            <div className={`${isVisible ? "": "hidden"} fixed right-3 z-10 top-[5rem] bg-white flex flex-col border-black font-raleway rounded-md border-2 shadow-lg w-1/2 lg:w-1/6 p-3`}>
+                <h1 className="p-1 text-[1.15rem] lg:text-xl font-semibold">Account</h1>
+                <Link to="/profile">
+                    <p className="hover:bg-red-100 p-1 hover:text-black text-gray-800 rounded-md cursor-pointer">View Profile</p>
+                </Link>
+                <p className="hover:bg-red-100 p-1 hover:text-black text-gray-800 rounded-md cursor-pointer">Settings</p>
+                <hr className="border-black border-1 m-2" />
+                <h1 className="p-1 text-[1.15rem] lg:text-xl font-semibold">Manage</h1>
+                <p className="hover:bg-red-100 p-1 hover:text-black text-gray-800 rounded-md cursor-pointer">Posts</p>
+                <p className="hover:bg-red-100 p-1 hover:text-black text-gray-800 rounded-md cursor-pointer">Pitch</p>
+                <hr className="border-black border-1 m-2" />
+                <button onClick={handleLogout} className="bg-red-600 text-white font-semibold p-1 rounded-md">Log Out</button>
             </div>
         </>
     )
