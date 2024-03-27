@@ -24,14 +24,19 @@ export default function Form() {
     const [loginUser, { data: loginUserData, loading: loginUserLoading, error: loginUserError }] = useMutation(LOGIN_USER);
 
     const handleGoogle = () => {
-        fetch("http://localhost:3000/api/google",{
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        .then(res => res.json())
-        .then(data => window.open(data.redirectURI))
+        try{
+            fetch("http://localhost:3000/api/google",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(res => res.json())
+            .then(data => window.open(data.redirectURI))
+        }catch(err){
+            console.error(err.message)
+            throw new Error(err.message)
+        }
     }
 
     const setCookie = (cookieName,value,daysToLive) => {
