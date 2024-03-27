@@ -24,7 +24,7 @@ router.post("/api/google", async (req,res) => {
         res.json({redirectURI: authorizeUrl})
         
     }catch(err){
-        console.error(err,message)
+        console.error(err.message)
         throw new Error(err.message)
     }
 })
