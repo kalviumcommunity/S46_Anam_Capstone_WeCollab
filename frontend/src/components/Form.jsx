@@ -3,7 +3,7 @@ import * as Yup from "yup"
 import Navbar from "./Navbar"
 import { useNavigate, useParams } from "react-router-dom"
 import Footer from "./Footer"
-import { useMutation } from '@apollo/client';
+import { useMutation} from '@apollo/client';
 import { CREATE_USER, LOGIN_USER } from "../graphql/CRUD"
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
@@ -22,6 +22,22 @@ export default function Form() {
 
     const [createUser, { data: createUserData, loading: createUserLoading, error: createUserError }] = useMutation(CREATE_USER);
     const [loginUser, { data: loginUserData, loading: loginUserLoading, error: loginUserError }] = useMutation(LOGIN_USER);
+
+    const handleGoogle = () => {
+        try{
+            fetch("http://localhost:3000/api/google",{
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(res => res.json())
+            .then(data => window.open(data.redirectURI))
+        }catch(err){
+            console.error(err.message)
+            throw new Error(err.message)
+        }
+    }
 
     const setCookie = (cookieName,value,daysToLive) => {
         const date = new Date()
@@ -148,7 +164,7 @@ export default function Form() {
                             className="border-black border-2 py-3 lg:mt-3 mt-10 w-3/4 lg:w-1/3 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
                             Submit
                         </button>
-                        <div className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-gray-200">
+                        <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-gray-200">
                             <img className="size-5" src="./assets/google.svg" alt="" />
                             <p>Sign-up with Google</p>
                         </div>
@@ -190,7 +206,7 @@ export default function Form() {
                         className="border-black border-2 py-3 lg:mt-3 mt-10 w-3/4 lg:w-1/3 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
                         Submit
                     </button>
-                    <div className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-gray-200">
+                    <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-gray-200">
                         <img className="size-5" src="./assets/google.svg" alt="" />
                         <p>Log-In with Google</p>
                     </div>
