@@ -29,6 +29,9 @@ export default function Home() {
   return (
     <>
         <Navbar/>
+
+        {/* Side navbar */}
+
         <div className="flex flex-col-reverse lg:flex-row">
             <div className="w-full lg:w-[25dvw] fixed bg-white border-black border-t-2 lg:border-0 lg:static bottom-0 flex flex-col p-5 lg:p-10 font-raleway font-semibold text-xl">
                 <div className="flex lg:block gap-12 justify-center">
@@ -51,7 +54,8 @@ export default function Home() {
                 </div>
                 <hr />
             </div>
-            <div className="lg:w-[50dvw] font-raleway border-black border-x-2 flex items-center lg:items-start flex-col gap-10">
+
+            <div className="hidden lg:w-[50dvw] font-raleway border-black border-x-2 lg:flex items-center lg:items-start flex-col gap-10">
                 <div className="lg:hidden self-end">
                     <div className="flex items-center">
                         <p>Filter</p>
@@ -59,6 +63,8 @@ export default function Home() {
                     </div>
                 </div>
                 
+                {/* Projects */}
+
                 <div className="grid w-full">
                     <div className="min-h-[25rem] p-5 w-full border-black border-b-2">
                          <div className="flex items-center gap-3">
@@ -153,7 +159,6 @@ export default function Home() {
                             </div>
                          </div>
                     </div>
-                    
                 </div>
             </div>
         </div>
