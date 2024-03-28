@@ -29,55 +29,137 @@ export default function Home() {
   return (
     <>
         <Navbar/>
-        <div className="w-[100dvw] font-raleway flex items-center lg:items-start flex-col p-5 pt-24 lg:px-20 lg:py-28 gap-10">
-            <div className="flex items-center font-semibold gap-3 lg:gap-5 lg:text-xl text-[1rem]">
-                <p onClick={(e) => setActiveSection(e.target.innerHTML)} className={`${activeSection === "Projects" ? "bg-red-200" : ""} cursor-pointer px-2`}>Projects</p>
-                <div className="h-5 w-1 border-l-2 border-black"></div>
-                <p onClick={(e) => setActiveSection(e.target.innerHTML)} className={`${activeSection === "Open Ideas" ? "bg-red-200" : ""} cursor-pointer px-2`}>Open Ideas</p>
-                <div className="h-5 w-1 border-l-2 border-black"></div>
-                <p onClick={(e) => setActiveSection(e.target.innerHTML)} className={`${activeSection === "Showcases" ? "bg-red-200" : ""} cursor-pointer px-2`}>Showcases</p>
-            </div>
-            <h1 className="text-2xl lg:text-4xl font-space">{`Hey [username] 👋🏻`}</h1>
-            <div className="lg:hidden self-end">
-                <div className="flex items-center">
-                    <p>Filter</p>
-                    <img className="size-8" src="./assets/arrow-down.svg" alt="" />
+        <div className="flex flex-col-reverse lg:flex-row">
+            <div className="w-full lg:w-[25dvw] fixed bg-white border-black border-t-2 lg:border-0 lg:static bottom-0 flex flex-col p-5 lg:p-10 font-raleway font-semibold text-xl">
+                <div className="flex lg:block gap-12 justify-center">
+                    <div className="flex items-center">
+                        <img className="size-10" src="./assets/projects.svg" alt="" />
+                        <p className="py-3 hidden lg:block">Projects</p>
+                    </div>
+                    <div className="flex items-center">
+                        <img className="size-10" src="./assets/ideas.svg" alt="" />
+                        <p className="py-3 hidden lg:block">Open Ideas</p>
+                    </div>
+                    <div className="flex items-center">
+                        <img className="size-10" src="./assets/showcase.svg" alt="" />
+                        <p className="py-3 hidden lg:block">Showcase</p>
+                    </div>
+                    <div className="flex items-center">
+                        <img className="size-10" src="./assets/connect.svg" alt="" />
+                        <p className="py-3 hidden lg:block">Connect</p>
+                    </div>
                 </div>
+                <hr />
             </div>
-            <div className="hidden lg:flex gap-10 relative">
-                <Dropdown label={"Category"} data={categories} type={"select"} />
-                <Dropdown label={"Project Size"} data={projectSize} type={"select"} />
-                <Dropdown label={"Skills"} data={skills} type={"checkbox"} />
-            </div>
-            <div className="hidden lg:block self-end">
-                <div className="flex items-center">
-                    <p>Sort</p>
-                    <img className="size-8" src="./assets/arrow-down.svg" alt="" />
+            <div className="lg:w-[50dvw] font-raleway border-black border-x-2 flex items-center lg:items-start flex-col gap-10">
+                <div className="lg:hidden self-end">
+                    <div className="flex items-center">
+                        <p>Filter</p>
+                        <img className="size-8" src="./assets/arrow-down.svg" alt="" />
+                    </div>
                 </div>
-            </div>
-            <div className="grid lg:grid-cols-3 gap-y-10 lg:gap-x-10 lg:gap-y-20">
-                <div className="size-[22rem] lg:size-[26rem] border-black border-2 bg-slate-200"></div>
-                <div className="size-[22rem] lg:size-[26rem] border-black border-2 bg-slate-200"></div>
-                <div className="size-[22rem] lg:size-[26rem] border-black border-2 bg-slate-200"></div>
-                <div className="size-[22rem] lg:size-[26rem] border-black border-2 bg-slate-200"></div>
-                <div className="size-[22rem] lg:size-[26rem] border-black border-2 bg-slate-200"></div>
-                <div className="size-[22rem] lg:size-[26rem] border-black border-2 bg-slate-200"></div>
-                <div className="size-[22rem] lg:size-[26rem] border-black border-2 bg-slate-200"></div>
-                <div className="size-[22rem] lg:size-[26rem] border-black border-2 bg-slate-200"></div>
-                <div className="size-[22rem] lg:size-[26rem] border-black border-2 bg-slate-200"></div>
-            </div>
-            <div className="flex w-full justify-center font-semibold mb-10">
-                <div className="flex gap-1 lg:gap-2 border-black p-2 border-2 items-center rounded-md">
-                    <img className="size-8 rotate-90" src="./assets/arrow-down.svg" alt="" />
-                    <p>Page</p>
-                    <input className="border-black border-2 h-3/4 w-5 p-1 rounded-md" type="text" />
-                    <p>of</p>
-                    <p>2</p>
-                    <img className="size-8 rotate-90 scale-y-[-1]" src="./assets/arrow-down.svg" alt="" />
+                
+                <div className="grid w-full">
+                    <div className="min-h-[25rem] p-5 w-full border-black border-b-2">
+                         <div className="flex items-center gap-3">
+                            <div className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
+                                <p>A</p>
+                            </div>
+                            <div>
+                                <p>Username</p>
+                                <p className="text-[0.8rem] text-gray-500">Profession</p>
+                            </div>
+                         </div>
+                         <div className="p-3">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi minima reprehenderit inventore suscipit sapiente laudantium enim dolorem, veniam facilis eos saepe sit nulla itaque quas reiciendis quidem rem labore quam.
+                         </div>
+                         <div className="h-[20rem] bg-slate-300 rounded-md"></div>
+                         <div className="flex gap-5 py-5">
+                            <p>Likes</p>
+                            <p>Add to Collections</p>
+                         </div>
+                    </div>
+                    <div className="min-h-[25rem] p-5 w-full border-black border-b-2">
+                         <div className="flex items-center gap-3">
+                            <div className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
+                                <p>A</p>
+                            </div>
+                            <div>
+                                <p>Username</p>
+                                <p className="text-[0.8rem] text-gray-500">Profession</p>
+                            </div>
+                         </div>
+                         <div className="p-3">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi minima reprehenderit inventore suscipit sapiente laudantium enim dolorem, veniam facilis eos saepe sit nulla itaque quas reiciendis quidem rem labore quam.
+                         </div>
+                         <div className="h-[20rem] bg-slate-300 rounded-md"></div>
+                         <div className="flex gap-5 py-5">
+                            <p>Likes</p>
+                            <p>Add to Collections</p>
+                         </div>
+                    </div>
+                    <div className="h-[25rem] p-5 w-full border-black border-b-2">
+                         <div className="flex items-center gap-3">
+                            <div className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
+                                <p>A</p>
+                            </div>
+                            <div>
+                                <p>Username</p>
+                                <p className="text-[0.8rem] text-gray-500">Profession</p>
+                            </div>
+                         </div>
+                    </div>
+                    <div className="h-[25rem] p-5 w-full border-black border-b-2">
+                         <div className="flex items-center gap-3">
+                            <div className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
+                                <p>A</p>
+                            </div>
+                            <div>
+                                <p>Username</p>
+                                <p className="text-[0.8rem] text-gray-500">Profession</p>
+                            </div>
+                         </div>
+                    </div>
+                    <div className="h-[25rem] p-5 w-full border-black border-b-2">
+                         <div className="flex items-center gap-3">
+                            <div className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
+                                <p>A</p>
+                            </div>
+                            <div>
+                                <p>Username</p>
+                                <p className="text-[0.8rem] text-gray-500">Profession</p>
+                            </div>
+                         </div>
+                    </div>
+                    <div className="h-[25rem] p-5 w-full border-black border-b-2">
+                         <div className="flex items-center gap-3">
+                            <div className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
+                                <p>A</p>
+                            </div>
+                            <div>
+                                <p>Username</p>
+                                <p className="text-[0.8rem] text-gray-500">Profession</p>
+                            </div>
+                         </div>
+                    </div>
+                    <div className="h-[25rem] p-5 w-full border-black border-b-2">
+                         <div className="flex items-center gap-3">
+                            <div className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
+                                <p>A</p>
+                            </div>
+                            <div>
+                                <p>Username</p>
+                                <p className="text-[0.8rem] text-gray-500">Profession</p>
+                            </div>
+                         </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
-        <Footer/>
+        <div className="hidden lg:block">
+            <Footer/>
+        </div>
     </>
   )
 }
