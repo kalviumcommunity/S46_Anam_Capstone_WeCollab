@@ -41,15 +41,18 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="border-black fixed top-0 z-20 bg-white w-full border-b-2 flex justify-between items-center p-3">
+            <nav className="border-black bg-white w-full border-b-2 flex justify-between items-center p-3">
                 <Link to="/">
                     <div className="flex items-center gap-3 cursor-pointer">
                         <img className="size-10 lg:size-[inherit]" src="./assets/logo.svg" alt="Logo of WeCollab" />
                         <h1 className="text-2xl lg:text-3xl font-raleway font-bold pt-1">WeCollab</h1>
                     </div>
                 </Link>
+
+                {/* Search bar */}
+
                 {getCookie("user") ? 
-                <input className="hidden lg:block border-black border-2 w-1/3 px-10 py-1 bg-search bg-contain bg-no-repeat rounded-full" type="text" />
+                <input className="hidden font-raleway bg-blue-50 lg:block border-black border-2 w-1/2 px-10 py-1 bg-search bg-contain bg-no-repeat rounded-full" placeholder="Search Projects" type="text" />
                 : 
                 form ? 
                 "" 
