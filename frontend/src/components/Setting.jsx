@@ -63,15 +63,15 @@ export default function Setting() {
                             <div className="flex flex-col p-5 lg:p-0 w-full gap-5">
                                 <div className="flex flex-col w-full">
                                     <label htmlFor="old">Old Password</label>
-                                    <input id="old" className="border-black border-2 p-3 rounded-xl" placeholder="Old password" type="text" />
+                                    <input id="old" className="border-black border-2 p-3 rounded-xl" placeholder="Old password" type="password" />
                                 </div>
                                 <div className="flex flex-col w-full">
                                     <label htmlFor="new">New password</label>
-                                    <input id="new" className="border-black border-2 p-3 rounded-xl" placeholder="New password" type="text" />
+                                    <input id="new" className="border-black border-2 p-3 rounded-xl" placeholder="New password" type="password" />
                                 </div>
                                 <div className="flex flex-col w-full">
                                     <label htmlFor="confirm">Confirm new password</label>
-                                    <input id="confirm" className="border-black border-2 p-3 rounded-xl" placeholder="Confirm new password" type="text" />
+                                    <input id="confirm" className="border-black border-2 p-3 rounded-xl" placeholder="Confirm new password" type="password" />
                                 </div>
                             </div>
                             <div className="p-5 lg:p-0">
