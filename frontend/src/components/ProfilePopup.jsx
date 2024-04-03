@@ -6,7 +6,7 @@ export default function ProfilePopup({section, changeVisibility}) {
                 <div className="flex flex-col text-2xl">
                     <div className="flex font-semibold justify-between">
                         <h1>{section}</h1>
-                        <p onClick={changeVisibility} className="cursor-pointer">X</p>
+                        <button onClick={changeVisibility} className="cursor-pointer">X</button>
                     </div>
                     <hr className="mt-1"/>
                 </div>
