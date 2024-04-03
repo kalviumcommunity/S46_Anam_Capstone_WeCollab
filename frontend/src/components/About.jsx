@@ -7,7 +7,7 @@ export default function About() {
                     <h1 className="text-3xl font-semibold">About</h1>
                     <img className="size-6 cursor-pointer" src="./assets/edit.svg" alt="" />
                 </div>
-                <p className="my-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum quidem doloremque libero nisi atque ut eos optio expedita sapiente quod? Perferendis neque quas voluptatibus at, possimus fugit ea porro distinctio.</p>
+                <p className="my-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum quidem doloremque libero nisi atque ut eos optio expedita sapiente quod? Perferendis neque quas voluptatibus at, possimus fugit ea porro distinctio.</p>
         </div>
     </>
   )
