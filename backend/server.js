@@ -45,31 +45,40 @@ function generateToken(payload){
 const startServer = async () => {
 
     await server.start()
-    app.use("/graphql",expressMiddleware(server,{
-        context: async({res,req}) => {
-            const authHeader = req.headers['authorization']
-            const token = authHeader && authHeader.split(' ')[1]
-            if (token) {
-                try {
-                    const user = jwt.verify(token,process.env.ACCESS_TOKEN)
-                    return { user };
-                } catch (err) {
-                    const userInfo = jwt.decode(token,process.env.ACCESS_TOKEN)
-                    const {accessToken, refreshToken} = generateToken({user_id: userInfo.user_id, email: userInfo.email})
-                    res.cookie("token",accessToken,{maxAge: 1000*60*60*24})
-                    const User = await userModel.findByIdAndUpdate(userInfo.user_id, {$set: { [token]: refreshToken } },{ new: true } )
-                    if (User){
-                        return User
+    app.use("/graphql", expressMiddleware(server, {
+        context: async ({ res, req }) => {
+          const authHeader = req.headers['authorization'];
+          const token = authHeader && authHeader.split(' ')[1];
+      
+          if (token) {
+            try {
+              const user = jwt.verify(token, process.env.ACCESS_TOKEN);
+              return { user };
+            } catch (err) {
+                
+                if (err.name === 'TokenExpiredError') {
+                    const userInfo = jwt.decode(token, process.env.ACCESS_TOKEN);
+                    const { accessToken, refreshToken } = generateToken({ user_id: userInfo.user_id, email: userInfo.email });
+            
+                    res.cookie("token", accessToken, { maxAge: 1000 * 60 * 60 * 24 });
+            
+                    const User = await userModel.findByIdAndUpdate(userInfo.user_id, { $set: { token: refreshToken } }, { new: true });
+            
+                    if (User) {
+                        return User;
+                    } else {
+                        return { isAuthError: true, errorMessage: "Error in refreshing token" };
                     }
-                    return {
-                        isAuthError: true,
-                        errorMessage: "Error in refreshing token"
-                    }
+                } else if (err.name === 'JsonWebTokenError') {
+                    return { isAuthError: true, errorMessage: "Invalid or tampered token" };
+                } else {
+                    return { isAuthError: true, errorMessage: "JWT verification error" };
                 }
             }
-            return {}
+          }
+          return {};
         }
-    }))
+      }));
 
 }
 
