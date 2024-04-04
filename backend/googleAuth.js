@@ -52,10 +52,10 @@ router.get("/google/oauth", async (req,res) => {
         res.cookie("picture",picture,{maxAge: 1000*60*60*24})
         res.cookie("user",name,{maxAge: 1000*60*60*24})
         res.cookie("token",tokens.access_token,{maxAge: 1000*60*60})
-        res.redirect("http://localhost:5173/home")
+        res.redirect(`${process.env.GOOGLE_REDIRECT_URL}/home`)
     } catch (error) {
         console.error('Error during Google Auth:', error)
-        res.redirect("http://localhost:5173/google/oauth?status=failed")
+        res.redirect(`${process.env.GOOGLE_REDIRECT_URL}/google/oauth?status=failed`)
     }
 
 })
