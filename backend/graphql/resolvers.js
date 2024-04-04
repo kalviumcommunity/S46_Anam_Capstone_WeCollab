@@ -14,12 +14,6 @@ function generateToken(payload){
     return {accessToken, refreshToken}
 }
 
-function authenticateToken(token){
-    jwt.verify(token,process.env.ACCESS_TOKEN,(err,user) => {
-        if(err) return err
-    })
-}
-
 export const resolvers = {
     Query: {
         async ideas() {
@@ -73,7 +67,12 @@ export const resolvers = {
         }
     },
     Mutation: {
-        async deleteProject(_,args){
+        async deleteProject(_,args,contextValue){
+            if (contextValue.isAuthError){
+                throw new GraphQLError(contextValue.errorMessage, {
+                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                  });
+            }
             try{
                 const wasDeleted = (await projectModel.deleteOne({_id: args.id})).deletedCount
                 return wasDeleted
@@ -81,7 +80,12 @@ export const resolvers = {
                 return err
             }
         },
-        async deleteShowcase(_,args){
+        async deleteShowcase(_,args,contextValue){
+            if (contextValue.isAuthError){
+                throw new GraphQLError(contextValue.errorMessage, {
+                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                  });
+            }
             try{
                 const wasDeleted = (await showcaseModel.deleteOne({_id: args.id})).deletedCount
                 return wasDeleted
@@ -89,7 +93,7 @@ export const resolvers = {
                 return err
             }
         },
-        async createUser(_, { userInput: {name,email,password} }) {
+        async userSignup(_, { userInput: {name,email,password}}){
             try {
               const userExists = await userModel.findOne({ email });
               if (userExists) {
@@ -113,10 +117,15 @@ export const resolvers = {
               return err
             }
           },
-        async loginUser(_,{loginData: {email,password}}){
+        async userLogin(_,{loginData: {email,password}}){
             try{
                 const userExists = await userModel.findOne({email})
                 if(userExists){
+                    if(userExists.provider === "google"){
+                        throw new GraphQLError(("Please sign in using google"),{
+                            extensions: {code: 'INVALID_SIGNIN_METHOD'}
+                        })   
+                    }
                     const passwordMatch = await bcrypt.compare(password,userExists.password)
                     if(!passwordMatch){
                         throw new GraphQLError(("Incorrect password"),{
@@ -134,7 +143,12 @@ export const resolvers = {
                 return err
             }
         },
-        async createIdea(_,args){
+        async createIdea(_,args,contextValue){
+            if (contextValue.isAuthError){
+                throw new GraphQLError(contextValue.errorMessage, {
+                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                  });
+            }
             try{
                 const newIdea = new ideaModel(args.idea)
                 const res = await newIdea.save()
@@ -143,7 +157,12 @@ export const resolvers = {
                 return err
             }
         },
-        async createProject(_,args){
+        async createProject(_,args,contextValue){
+            if (contextValue.isAuthError){
+                throw new GraphQLError(contextValue.errorMessage, {
+                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                  });
+            }
             try{
                 const newProject = new projectModel(args.project)
                 const res = await newProject.save()
@@ -152,7 +171,12 @@ export const resolvers = {
                 return err
             }
         },
-        async updateUser(_,{id,userData}){
+        async updateUser(_,{id,userData},contextValue){
+            if (contextValue.isAuthError){
+                throw new GraphQLError(contextValue.errorMessage, {
+                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                  });
+            }
             try{
                 const res = userModel.findByIdAndUpdate(id,userData,{new: true})
                 return res
@@ -160,7 +184,12 @@ export const resolvers = {
                 return err
             }
         },
-        async updateProject(_,{id,projectData}){
+        async updateProject(_,{id,projectData},contextValue){
+            if (contextValue.isAuthError){
+                throw new GraphQLError(contextValue.errorMessage, {
+                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                  });
+            }
             try{
                 const res = projectModel.findByIdAndUpdate(id,projectData,{new: true})
                 return res
@@ -168,7 +197,12 @@ export const resolvers = {
                 return err
             }
         },
-        async updateShowcase(_,{id,showcaseData}){
+        async updateShowcase(_,{id,showcaseData},contextValue){
+            if (contextValue.isAuthError){
+                throw new GraphQLError(contextValue.errorMessage, {
+                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                  });
+            }
             try{
                 const res = showcaseModel.findByIdAndUpdate(id,showcaseData,{new: true})
                 return res
