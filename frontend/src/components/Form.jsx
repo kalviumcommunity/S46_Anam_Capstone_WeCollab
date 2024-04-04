@@ -4,7 +4,7 @@ import Navbar from "./Navbar"
 import { useNavigate, useParams } from "react-router-dom"
 import Footer from "./Footer"
 import { useMutation} from '@apollo/client';
-import { CREATE_USER, LOGIN_USER } from "../graphql/CRUD"
+import { USER_SIGNUP, USER_LOGIN } from "../graphql/CRUD"
 import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
 
@@ -20,8 +20,8 @@ export default function Form() {
         }
     })
 
-    const [createUser, { data: createUserData, loading: createUserLoading, error: createUserError }] = useMutation(CREATE_USER);
-    const [loginUser, { data: loginUserData, loading: loginUserLoading, error: loginUserError }] = useMutation(LOGIN_USER);
+    const [userSignup, { data: signupData, loading: signupLoading, error: signupError }] = useMutation(USER_SIGNUP);
+    const [userLogin, { data: loginData, loading: loginLoading, error: loginError }] = useMutation(USER_LOGIN);
 
     const handleGoogle = () => {
         try{
@@ -75,10 +75,10 @@ export default function Form() {
         onSubmit: async ({ name, email, password }) => {
             if (form === "signup") {
                 try {
-                    await createUser({ variables: { userInput: { name:name, email:email, password:password } } })
+                    await userSignup({ variables: { userInput: { name:name, email:email, password:password } } })
                         .then(({data}) => {
-                            setCookie("token",data.createUser.token,30)
-                            setCookie("user", data.createUser.email, 1);
+                            setCookie("token",data.userSignup.token,30)
+                            setCookie("user", data.userSignup.email, 1);
                             navigate("/home");
                         })
                         .catch((err) => {
@@ -91,10 +91,10 @@ export default function Form() {
                 }
             } else {
                 try {
-                    await loginUser({ variables: { loginData: { email, password } } })
+                    await userLogin({ variables: { loginData: { email, password } } })
                         .then(({data}) => {
-                            setCookie("token",data.loginUser.token,30)
-                            setCookie("user", data.loginUser.email, 1)
+                            setCookie("token",data.userLogin.token,30)
+                            setCookie("user", data.userLogin.email, 1)
                             navigate("/home");
                         })
                         .catch((err) => {

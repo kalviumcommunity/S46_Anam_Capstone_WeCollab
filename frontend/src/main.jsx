@@ -25,7 +25,7 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((operation, previousContext) => {
-  if (operation.operationName.startsWith("update") || operation.operationName.startsWith("delete")){
+  if (operation.operationName.startsWith("update") || operation.operationName.startsWith("delete") || operation.operationName.startsWith("create")){
     const token = getCookie('token');
     return {
       headers: {

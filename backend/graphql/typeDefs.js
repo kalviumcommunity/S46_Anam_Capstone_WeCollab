@@ -69,14 +69,14 @@ type Query {
 type Mutation {
   deleteProject(id: ID!): Boolean
   deleteShowcase(id: ID!): Boolean
-  createUser(userInput: addUser!): User!
+  userSignup(userInput: addUser!): User!
   createIdea(ideaInput: addIdea!): Idea!
   createProject(projectInput: addProject): Project!
   createShowcase(id: ID!,showcase: addShowcase): Showcase!
   updateUser(id: ID!, userData: updateUser): User
   updateProject(id: ID!, projectData: updateProject): Project
   updateShowcase(id: ID!, showcaseData: updateShowcase): Showcase
-  loginUser(loginData: loginInput!): User!
+  userLogin(loginData: loginInput!): User!
 }
 
 input loginInput {

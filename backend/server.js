@@ -9,6 +9,7 @@ import { resolvers } from "./graphql/resolvers.js"
 import CORS from "cors"
 import jwt from "jsonwebtoken"
 import router from "./googleAuth.js"
+import userModel from "./models/user.js"
 const app = express()
 
 const corsOptions = {
@@ -35,6 +36,12 @@ const server = new ApolloServer({
     resolvers
 })
 
+function generateToken(payload){
+    const accessToken = jwt.sign(payload,process.env.ACCESS_TOKEN,{expiresIn: "1h"})
+    const refreshToken = jwt.sign(payload,process.env.REFRESH_TOKEN,{expiresIn: "30d"})
+    return {accessToken, refreshToken}
+}
+
 const startServer = async () => {
 
     await server.start()
@@ -44,10 +51,20 @@ const startServer = async () => {
             const token = authHeader && authHeader.split(' ')[1]
             if (token) {
                 try {
-                  const user = jwt.verify(token,process.env.ACCESS_TOKEN);
-                  return { user };
+                    const user = jwt.verify(token,process.env.ACCESS_TOKEN)
+                    return { user };
                 } catch (err) {
-                  return err
+                    const userInfo = jwt.decode(token,process.env.ACCESS_TOKEN)
+                    const {accessToken, refreshToken} = generateToken({user_id: userInfo.user_id, email: userInfo.email})
+                    res.cookie("token",accessToken,{maxAge: 1000*60*60*24})
+                    const User = await userModel.findByIdAndUpdate(userInfo.user_id, {$set: { [token]: refreshToken } },{ new: true } )
+                    if (User){
+                        return User
+                    }
+                    return {
+                        isAuthError: true,
+                        errorMessage: "Error in refreshing token"
+                    }
                 }
             }
             return {}
