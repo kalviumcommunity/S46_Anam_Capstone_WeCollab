@@ -183,6 +183,4 @@ input updateShowcase {
   category: String
   link: String
 }
-
-
 `
