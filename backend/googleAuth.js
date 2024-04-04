@@ -1,5 +1,7 @@
 import express from "express"
 import {OAuth2Client} from "google-auth-library"
+import userModel from "./models/user.js"
+import jwt from "jsonwebtoken"
 const router = express.Router()
 
 const oAuth2Client = new OAuth2Client(
@@ -34,17 +36,26 @@ router.get("/google/oauth", async (req,res) => {
     const { code } = req.query
     try {
         const { tokens } = await oAuth2Client.getToken(code)
-        console.log(tokens)
         oAuth2Client.setCredentials(tokens)
-        const tokenInfo = await oAuth2Client.getTokenInfo(
-        oAuth2Client.credentials.access_token
-        )
-        const {name, email} = await getUserInfo(tokenInfo.access_token)
-        console.log(tokenInfo,name,email)
-        res.send('Authentication successful!')
+        const {name,email,picture} = await getUserInfo(tokens.access_token)
+        const userExists = await userModel.findOne({email})
+        if(!userExists){
+            const newUser = new userModel({
+                name: name,
+                email: email,
+                provider: "google"
+            })
+            const refreshToken = jwt.sign({email: email},process.env.REFRESH_TOKEN,{expiresIn: "30d"})
+            newUser.token = refreshToken
+            await newUser.save()
+        }
+        res.cookie("picture",picture,{maxAge: 1000*60*60*24})
+        res.cookie("user",name,{maxAge: 1000*60*60*24})
+        res.cookie("token",tokens.access_token,{maxAge: 1000*60*60})
+        res.redirect(`${process.env.GOOGLE_REDIRECT_URL}/home`)
     } catch (error) {
         console.error('Error during Google Auth:', error)
-        res.status(500).send('Authentication failed')
+        res.redirect(`${process.env.GOOGLE_REDIRECT_URL}/google/oauth?status=failed`)
     }
 
 })

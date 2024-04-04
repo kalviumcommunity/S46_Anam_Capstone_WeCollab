@@ -10,7 +10,13 @@ import CORS from "cors"
 import jwt from "jsonwebtoken"
 import router from "./googleAuth.js"
 const app = express()
-app.use(CORS())
+
+const corsOptions = {
+    credentials: true,
+    optionsSuccessStatus: 200
+}
+
+app.use(CORS(corsOptions),express.json())
 
 const connectDB = async () => {
     try{
@@ -32,7 +38,7 @@ const server = new ApolloServer({
 const startServer = async () => {
 
     await server.start()
-    app.use("/graphql",express.json(),expressMiddleware(server,{
+    app.use("/graphql",expressMiddleware(server,{
         context: async({res,req}) => {
             const authHeader = req.headers['authorization']
             const token = authHeader && authHeader.split(' ')[1]

@@ -102,6 +102,7 @@ export const resolvers = {
               const newUser = new userModel({
                 name,
                 email: email.toLowerCase(),
+                provider: "email",
                 password: encryptedPassword,
               });
               const {accessToken, refreshToken} = generateToken({user_id: newUser._id, email: newUser.email})
