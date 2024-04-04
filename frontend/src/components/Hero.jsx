@@ -24,7 +24,7 @@ export default function Hero() {
 
     useEffect(() =>{
         if(getCookie("user")){
-            navigate("/home")
+            navigate("/home",{replace: true})
         }
     })
 

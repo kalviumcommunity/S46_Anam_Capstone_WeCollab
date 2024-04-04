@@ -21,9 +21,13 @@ const userSchema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    password: {
+    provider: {
         type: String,
         required: true
+    },
+    password: {
+        type: String,
+        required: (user) => user.provider !== "google"
     },
     token: {
         type: String,
