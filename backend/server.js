@@ -9,6 +9,7 @@ import { resolvers } from "./graphql/resolvers.js"
 import CORS from "cors"
 import jwt from "jsonwebtoken"
 import router from "./googleAuth.js"
+import userModel from "./models/user.js"
 const app = express()
 
 const corsOptions = {
@@ -35,24 +36,49 @@ const server = new ApolloServer({
     resolvers
 })
 
+function generateToken(payload){
+    const accessToken = jwt.sign(payload,process.env.ACCESS_TOKEN,{expiresIn: "1h"})
+    const refreshToken = jwt.sign(payload,process.env.REFRESH_TOKEN,{expiresIn: "30d"})
+    return {accessToken, refreshToken}
+}
+
 const startServer = async () => {
 
     await server.start()
-    app.use("/graphql",expressMiddleware(server,{
-        context: async({res,req}) => {
-            const authHeader = req.headers['authorization']
-            const token = authHeader && authHeader.split(' ')[1]
-            if (token) {
-                try {
-                  const user = jwt.verify(token,process.env.ACCESS_TOKEN);
-                  return { user };
-                } catch (err) {
-                  return err
+    app.use("/graphql", expressMiddleware(server, {
+        context: async ({ res, req }) => {
+          const authHeader = req.headers['authorization'];
+          const token = authHeader && authHeader.split(' ')[1];
+      
+          if (token) {
+            try {
+              const user = jwt.verify(token, process.env.ACCESS_TOKEN);
+              return { user };
+            } catch (err) {
+                
+                if (err.name === 'TokenExpiredError') {
+                    const userInfo = jwt.decode(token, process.env.ACCESS_TOKEN);
+                    const { accessToken, refreshToken } = generateToken({ user_id: userInfo.user_id, email: userInfo.email });
+            
+                    res.cookie("token", accessToken, { maxAge: 1000 * 60 * 60 * 24 });
+            
+                    const User = await userModel.findByIdAndUpdate(userInfo.user_id, { $set: { token: refreshToken } }, { new: true });
+            
+                    if (User) {
+                        return User;
+                    } else {
+                        return { isAuthError: true, errorMessage: "Error in refreshing token" };
+                    }
+                } else if (err.name === 'JsonWebTokenError') {
+                    return { isAuthError: true, errorMessage: "Invalid or tampered token" };
+                } else {
+                    return { isAuthError: true, errorMessage: "JWT verification error" };
                 }
             }
-            return {}
+          }
+          return {};
         }
-    }))
+      }));
 
 }
 
