@@ -5,20 +5,12 @@ import { useNavigate, useParams } from "react-router-dom"
 import Footer from "./Footer"
 import { useMutation} from '@apollo/client';
 import { USER_SIGNUP, USER_LOGIN } from "../graphql/CRUD"
-import { Notyf } from 'notyf';
-import 'notyf/notyf.min.css';
+import { Toaster, toast } from 'sonner';
 
 export default function Form() {
 
     const {form} = useParams()
     const navigate = useNavigate()
-    const notyf = new Notyf({
-        duration: "2000",
-        position: {
-            x: "right",
-            y: "top"
-        }
-    })
 
     const [userSignup, { data: signupData, loading: signupLoading, error: signupError }] = useMutation(USER_SIGNUP);
     const [userLogin, { data: loginData, loading: loginLoading, error: loginError }] = useMutation(USER_LOGIN);
@@ -83,11 +75,11 @@ export default function Form() {
                         })
                         .catch((err) => {
                             console.error(err);
-                            notyf.error(err)
+                            toast.error(err)
                         });
                 } catch (err) {
                     console.error(err);
-                    notyf.error(err)
+                    toast.error(err)
                 }
             } else {
                 try {
@@ -99,11 +91,11 @@ export default function Form() {
                         })
                         .catch((err) => {
                             console.error(err);
-                            notyf.error(err)
+                            toast.error(err)
                         });
                 } catch (err) {
                     console.error(err);
-                    notyf.error(err)
+                    toast.error(err)
                 }
             }
         }
@@ -111,6 +103,7 @@ export default function Form() {
 
     return (
         <>
+            <Toaster richColors position="top-right"/>
             <Navbar/>
             <form onSubmit={formik.handleSubmit} className="flex flex-col font-raleway font-semibold gap-5 h-[100dvh] items-center justify-center">
                     {form && form === "signup" ?

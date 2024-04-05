@@ -4,12 +4,15 @@ import About from "./About"
 import Experience from "./Experience"
 import Skill from "./Skill"
 import ProfilePopup from "./ProfilePopup"
-import { useState } from "react"
+import { imageDB } from "../firebase/config"
+import { ref,getDownloadURL } from "firebase/storage"
+import { useEffect, useState } from "react"
 
 export default function Profile() {
 
     const [selectedSection,setSection] = useState()
     const [isVisible,setVisible] = useState(false)
+    const [downloadURL,setDownloadURL] = useState()
 
     const handleSection = (e) => {
         setSection(e.target.innerHTML)
@@ -20,6 +23,16 @@ export default function Profile() {
         setVisible(false)
     }
 
+    const showDownloadURL = async () => {
+        const imageRef = ref(imageDB,"files/profile")
+        const url = await getDownloadURL(imageRef)
+        setDownloadURL(url)
+    }
+
+    useEffect(() => {
+       showDownloadURL()
+    },[])
+
   return (
     <>
         <Navbar/>
@@ -29,7 +42,7 @@ export default function Profile() {
         <div className="flex flex-col items-center font-raleway p-5 justify-center bg-orange-50 pt-24 pb-10 lg:py-32">
             <div className="lg:w-1/2 flex flex-col w-full py-3 border-black border-2 rounded-md relative bg-white">
                 <div className="h-[20dvh] border-black border-b-2"></div>
-                <img className="absolute top-24 left-5 border-black border-2 size-32 rounded-full bg-white" src="" alt="" />
+                <img className="absolute top-24 left-5 border-black border-2 size-32 rounded-full bg-white" src={`${downloadURL ? downloadURL : "./assets/profile-placeholder.png"}`} alt="" />
                 <img className="size-6 self-end m-4 cursor-pointer" src="./assets/edit.svg" alt="" />
                 <div className="px-5">
                     <div className="flex items-center justify-between">
@@ -50,7 +63,7 @@ export default function Profile() {
                             <div className="bg-blue-400 w-1/3 p-1 rounded-full"></div>
                         </div>
                     </div>
-                    <div className="flex gap-5 text-[0.8rem] lg:text-xl overflow-x-auto">
+                    <div className="flex gap-5 text-[0.8rem] lg:text-[1.15rem] overflow-x-auto">
                         <div className="min-w-[50dvw] lg:min-w-[20vw] flex flex-col justify-center bg-blue-50 p-5 gap-3 font-semibold">
                             <p>Upload photo and show yourself to the community</p>
                             <button onClick={handleSection} className="border-blue-600 border-2 rounded-full p-1 hover:bg-blue-100 text-blue-600">Add profile photo</button>
