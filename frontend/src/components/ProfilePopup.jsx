@@ -1,3 +1,4 @@
+import FirebaseImageUpload from "../firebase/FirebaseImageUpload"
 
 export default function ProfilePopup({section, changeVisibility}) {
   return (
@@ -46,11 +47,7 @@ export default function ProfilePopup({section, changeVisibility}) {
                         </div>
                         :
                     section === "Add profile photo" ?
-                        <div className="py-5 font-semibold">
-                            <label className="text-gray-900" htmlFor="file_input">Upload file</label>
-                            <input className="w-full file:p-2 file:m-2 file:bg-red-200 file:border-0 file:text-red-600 file:font-semibold text-gray-900 border-2 border-black rounded-lg cursor-pointer bg-red-50 focus:outline-none" id="file_input" type="file"/>
-                            <button className="bg-green-600 w-full mt-5 px-5 py-2 text-white font-semibold rounded-full">Save</button>
-                        </div>
+                        <FirebaseImageUpload />
                         :
                         <div className="flex flex-col gap-5 py-3">
                             <p className="text-xl font-semibold">Collaborators would love to know your profession</p>
