@@ -1,13 +1,8 @@
-
 import { initializeApp } from "firebase/app"
 import { getStorage } from "firebase/storage"
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyCzxlhg3akceWy4wisfbFPlzUKuuCs76JE",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "wecollab-23f71.firebaseapp.com",
   projectId: "wecollab-23f71",
   storageBucket: "wecollab-23f71.appspot.com",

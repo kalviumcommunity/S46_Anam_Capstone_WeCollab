@@ -24,6 +24,7 @@ export default function FirebaseImageUpload({handleDownloadURL}) {
             setLoading(false)
           } catch (error) {
             console.error("Error uploading image:", error);
+            toast.error(error)
           }
     }
 
