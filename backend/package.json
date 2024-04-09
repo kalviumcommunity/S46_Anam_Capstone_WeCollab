@@ -20,6 +20,7 @@
   "homepage": "https://github.com/kalviumcommunity/S46_Anam_Capstone_WeCollab",
   "dependencies": {
     "@apollo/server": "^4.10.1",
+    "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
