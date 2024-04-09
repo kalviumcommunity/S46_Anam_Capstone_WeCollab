@@ -1,10 +1,9 @@
 import { imageDB } from "./config"
 import { ref,uploadBytes,getDownloadURL } from "firebase/storage"
 import { useState } from "react"
-import { v4 } from "uuid"
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
 
-export default function FirebaseImageUpload({handleDownloadURL}) {
+export default function FirebaseImageUpload({handleCompletion,userId}) {
 
     const [image,setImage] = useState()
     const [uploaded,setUpload] = useState(false)
@@ -12,9 +11,9 @@ export default function FirebaseImageUpload({handleDownloadURL}) {
 
     const handleUpload = async () => {
         setLoading(true)
-        const imageRef = ref(imageDB,`files/profile`)
+        const imageRef = ref(imageDB,`files/profile-${userId}`)
         if(!image){
-            toast.error("No image selected for upload")
+            toast.error("No image selected for upload",{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border-2" })
             setLoading(false)
             return
         }
@@ -22,15 +21,15 @@ export default function FirebaseImageUpload({handleDownloadURL}) {
             await uploadBytes(imageRef, image)
             setUpload(true)
             setLoading(false)
+            handleCompletion("photo")
           } catch (error) {
             console.error("Error uploading image:", error);
-            toast.error(error)
+            toast.error(error, { position:"top-right", className: "text-red-600 text-[1.2rem] bg-white py-5 shadow-none border-black border-2" })
           }
     }
 
   return (
     <>
-        <Toaster richColors position="top-right"/>
         {loading ? 
         <div className="flex flex-col justify-center items-center h-[20dvh]">
             <div className="size-16 border-[8px] border-t-orange-500 rounded-full animate-spin"></div>

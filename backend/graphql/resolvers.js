@@ -30,6 +30,13 @@ export const resolvers = {
                 return err
             }
         },
+        async user(_,{email}){
+            try{
+                return await userModel.findOne({ email })
+            }catch(err){
+                return err
+            }
+        },
         async projects() {
             try{
                 return await projectModel.find()
@@ -95,28 +102,27 @@ export const resolvers = {
         },
         async userSignup(_, { userInput: {name,email,password}}){
             try {
-              const userExists = await userModel.findOne({ email });
-              if (userExists) {
+                const userExists = await userModel.findOne({ email });
+                if (userExists) {
                 throw new GraphQLError(`A user already exists with email ${email}`, {
-                  extensions: { code: 'USER_ALREADY_EXISTS' },
+                    extensions: { code: 'USER_ALREADY_EXISTS' },
                 });
               }
-          
-              const encryptedPassword = await bcrypt.hash(password, 10);
-              const newUser = new userModel({
-                name,
+                const encryptedPassword = await bcrypt.hash(password, 10)
+                const newUser = new userModel({
+                name: name,
                 email: email.toLowerCase(),
                 provider: "email",
-                password: encryptedPassword,
-              });
-              const {accessToken, refreshToken} = generateToken({user_id: newUser._id, email: newUser.email})
-              newUser.token = refreshToken
-              const res = await newUser.save();
-              return { id: res._id,email: res.email,token: accessToken};
+                password: encryptedPassword
+                })
+                const {accessToken, refreshToken} = generateToken({user_id: newUser._id, email: newUser.email})
+                newUser.token = refreshToken
+                const res = await newUser.save()
+                return { id: res._id,email: res.email,token: accessToken}
             } catch (err) {
               return err
             }
-          },
+        },
         async userLogin(_,{loginData: {email,password}}){
             try{
                 const userExists = await userModel.findOne({email})
@@ -171,15 +177,30 @@ export const resolvers = {
                 return err
             }
         },
-        async updateUser(_,{id,userData},contextValue){
+        async updateUser(_,{id,property,userData},contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
                     extensions: { code: 'ERROR_UPDATING_TOKENS' },
-                  });
+                  })
             }
             try{
-                const res = userModel.findByIdAndUpdate(id,userData,{new: true})
-                return res
+                let updateObject = {};
+                const {about,status,currentPosition} = userData.details
+                if(property === "details.experience") {
+                    updateObject = { $push: { "details.experience": userData.details.experience } };
+                } else if(property === "details.skills") {
+                    updateObject = { $push: { "details.skills": userData.details.skills } };
+                } else if(property === "details.projects"){
+                    updateObject = { $push: { "details.skills": userData.details.projects } }
+                }else {
+                    updateObject = { [property]: about || status || currentPosition }
+                }
+                const updatedUser = await userModel.findByIdAndUpdate(
+                    id,
+                    updateObject,
+                    { new: true }
+                  )
+                return updatedUser
             }catch(err){
                 return err
             }

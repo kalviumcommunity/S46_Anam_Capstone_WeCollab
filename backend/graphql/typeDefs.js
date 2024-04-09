@@ -61,22 +61,23 @@ type Query {
   projects: [Project]
   showcases: [Showcase]
   users: [User]
+  user(email: String!): User!
   project(id: ID!): Project
   showcase(id: ID!): Showcase
   idea(id: ID!): Idea
 }
 
 type Mutation {
+  userSignup(userInput: addUser!): User!
+  userLogin(loginData: loginInput!): User!
   deleteProject(id: ID!): Boolean
   deleteShowcase(id: ID!): Boolean
-  userSignup(userInput: addUser!): User!
   createIdea(ideaInput: addIdea!): Idea!
   createProject(projectInput: addProject): Project!
   createShowcase(id: ID!,showcase: addShowcase): Showcase!
-  updateUser(id: ID!, userData: updateUser): User
+  updateUser(id: ID!, property: String!, userData: updateUser): User
   updateProject(id: ID!, projectData: updateProject): Project
   updateShowcase(id: ID!, showcaseData: updateShowcase): Showcase
-  userLogin(loginData: loginInput!): User!
 }
 
 input loginInput {
@@ -149,9 +150,9 @@ input updateDetails {
   currentPosition: String
   about: String
   status: String
-  experience: [updateExperience]
-  skills: [String]
-  projects: [String]
+  experience: updateExperience
+  skills: String
+  projects: String
 }
 
 input updateExperience {
