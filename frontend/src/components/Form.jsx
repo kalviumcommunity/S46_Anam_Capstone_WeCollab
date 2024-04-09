@@ -5,14 +5,14 @@ import { useNavigate, useParams } from "react-router-dom"
 import Footer from "./Footer"
 import { useMutation} from '@apollo/client';
 import { USER_SIGNUP, USER_LOGIN } from "../graphql/CRUD"
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
 
 export default function Form() {
 
     const {form} = useParams()
     const navigate = useNavigate()
 
-    const [userSignup, { data: signupData, loading: signupLoading, error: signupError }] = useMutation(USER_SIGNUP);
+    const [userSignup, { data: signupData, loading: signupLoading, error: signupError }] = useMutation(USER_SIGNUP)
     const [userLogin, { data: loginData, loading: loginLoading, error: loginError }] = useMutation(USER_LOGIN);
 
     const handleGoogle = () => {
@@ -67,19 +67,19 @@ export default function Form() {
         onSubmit: async ({ name, email, password }) => {
             if (form === "signup") {
                 try {
-                    await userSignup({ variables: { userInput: { name:name, email:email, password:password } } })
+                    await userSignup({ variables: { userInput: { name, email, password } } })
                         .then(({data}) => {
                             setCookie("token",data.userSignup.token,30)
                             setCookie("user", data.userSignup.email, 1);
                             navigate("/home");
                         })
                         .catch((err) => {
-                            console.error(err);
-                            toast.error(err)
+                            console.error(err,);
+                            toast.error(err,{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border-2" })
                         });
                 } catch (err) {
-                    console.error(err);
-                    toast.error(err)
+                    console.error(err)
+                    toast.error(err,{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border-2" })
                 }
             } else {
                 try {
@@ -87,15 +87,15 @@ export default function Form() {
                         .then(({data}) => {
                             setCookie("token",data.userLogin.token,30)
                             setCookie("user", data.userLogin.email, 1)
-                            navigate("/home");
+                            navigate("/home")
                         })
                         .catch((err) => {
-                            console.error(err);
-                            toast.error(err)
+                            console.error(err)
+                            toast.error(err.message, { position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border-2" })
                         });
                 } catch (err) {
-                    console.error(err);
-                    toast.error(err)
+                    console.error(err)
+                    toast.error(err.message,{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border-2" })
                 }
             }
         }
@@ -103,7 +103,6 @@ export default function Form() {
 
     return (
         <>
-            <Toaster richColors position="top-right"/>
             <Navbar/>
             <form onSubmit={formik.handleSubmit} className="flex flex-col font-raleway font-semibold gap-5 h-[100dvh] items-center justify-center">
                     {form && form === "signup" ?
@@ -157,7 +156,7 @@ export default function Form() {
                             className="border-black border-2 py-3 lg:mt-3 mt-10 w-3/4 lg:w-1/3 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
                             Submit
                         </button>
-                        <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-gray-200">
+                        <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
                             <img className="size-5" src="./assets/google.svg" alt="" />
                             <p>Sign-up with Google</p>
                         </div>
@@ -199,7 +198,7 @@ export default function Form() {
                         className="border-black border-2 py-3 lg:mt-3 mt-10 w-3/4 lg:w-1/3 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
                         Submit
                     </button>
-                    <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-gray-200">
+                    <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
                         <img className="size-5" src="./assets/google.svg" alt="" />
                         <p>Log-In with Google</p>
                     </div>

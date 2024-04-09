@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-export default function Skill() {
+export default function Skill({skills}) {
 
     const [showSkills,setShowSkills] = useState(false)
 
@@ -16,16 +16,27 @@ export default function Skill() {
                     </div>
                 </div>
                 <div className="flex flex-col gap-3 text-[1rem] lg:text-xl">
-                    <p>JavaScript</p>
-                    <hr className="border-slate-200 border-1" />
-                    <p>NodeJS</p>
-                    <hr className="border-slate-200 border-1" />
-                    <p className={`${showSkills ? "": "hidden"}`}>ExpressJS</p>
-                    <hr className={`${showSkills ? "": "hidden"} border-slate-200 border-1`} />
-                    <div onClick={() => setShowSkills(!showSkills)} className="flex font-semibold items-center text-[0.9rem] lg:text-[1rem] cursor-pointer self-center">
+                    {skills && skills.map((skill,index) => {
+                        if(index < 2){
+                            return(
+                                <div key={index}>
+                                    <p>{skill}</p>
+                                    <hr className="border-slate-200 border-1" />
+                                </div>
+                            )
+                        }else{
+                            return(
+                                <div key={index}>
+                                    <p className={`${showSkills ? "": "hidden"}`}>{skill}</p>
+                                    <hr className={`${showSkills ? "": "hidden"} border-slate-200 border-1`} />
+                                </div>
+                            )
+                        }
+                    })}
+                    {skills && skills.length >= 2 ? <div onClick={() => setShowSkills(!showSkills)} className="flex font-semibold items-center text-[0.9rem] lg:text-[1rem] cursor-pointer self-center">
                         <p>Show all skills</p>
                         <img className="size-6" src="./assets/arrow-right.svg" alt="" />
-                    </div>
+                    </div> : ""}
                 </div>
             </div>
     </>
