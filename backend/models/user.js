@@ -27,7 +27,9 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: (user) => user.provider !== "google"
+        required: function(){
+            return this.provider !== "google"
+        }
     },
     token: {
         type: String,
@@ -35,6 +37,14 @@ const userSchema = new mongoose.Schema({
     },
     details: {
         type: Object,
+        default: {
+            currentPosition: "",
+            about: "",
+            status: "",
+            experience: [],
+            skills: [],
+            projects: []
+        },
         currentPosition: {
             type: String,
             required: true

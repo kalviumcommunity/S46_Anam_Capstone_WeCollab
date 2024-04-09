@@ -4,6 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { Toaster } from "sonner"
 
 const getCookie = (cookieName) => {
   const cDecoded = decodeURIComponent(document.cookie)
@@ -45,6 +46,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
         <App />
+        <Toaster/>
     </ApolloProvider>
   </React.StrictMode>
 )

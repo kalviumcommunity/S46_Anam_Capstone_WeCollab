@@ -20,7 +20,7 @@ export default function Home() {
 
         <div className="flex mt-16 lg:mt-[4.7rem] h-[90dvh] flex-col-reverse font-raleway lg:flex-row">
 
-            <div className="w-full z-10 items-center lg:items-start lg:w-[20dvw] fixed bg-white border-black border-t-2 lg:border-t-0 lg:border-r-0 lg:static bottom-0 flex flex-col p-5 lg:p-10 font-semibold text-xl">
+            <div className="w-full fixed z-10 items-center lg:items-start lg:w-[20dvw] bg-white border-black border-t-2 lg:border-t-0 lg:border-r-0 lg:static bottom-0 flex flex-col p-5 lg:p-10 font-semibold text-xl">
                 <div className="flex lg:block gap-12">
                     <div onClick={(e) => setActiveSection(e.target.innerHTML)} className="flex lg:hover:bg-slate-300 rounded-md cursor-pointer items-center">
                         <img className="size-10" src="./assets/projects.svg" alt="" />

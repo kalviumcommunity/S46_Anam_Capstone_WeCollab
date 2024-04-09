@@ -50,7 +50,7 @@ router.get("/google/oauth", async (req,res) => {
             await newUser.save()
         }
         res.cookie("picture",picture,{maxAge: 1000*60*60*24})
-        res.cookie("user",name,{maxAge: 1000*60*60*24})
+        res.cookie("user",email,{maxAge: 1000*60*60*24})
         res.cookie("token",tokens.access_token,{maxAge: 1000*60*60})
         res.redirect(`${process.env.FRONTEND_REDIRECT_URL}/home`)
     } catch (error) {
