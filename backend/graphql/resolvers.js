@@ -191,7 +191,7 @@ export const resolvers = {
                 } else if(property === "details.skills") {
                     updateObject = { $push: { "details.skills": userData.details.skills } };
                 } else if(property === "details.projects"){
-                    updateObject = { $push: { "details.skills": userData.details.projects } }
+                    updateObject = { $push: { "details.projects": userData.details.projects } }
                 }else {
                     updateObject = { [property]: about || status || currentPosition }
                 }
