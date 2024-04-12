@@ -35,6 +35,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    completedSection: {
+        type: Array,
+        default: []
+    },
     details: {
         type: Object,
         default: {

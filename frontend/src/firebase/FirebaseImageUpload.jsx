@@ -1,5 +1,5 @@
 import { imageDB } from "./config"
-import { ref,uploadBytes,getDownloadURL } from "firebase/storage"
+import { ref,uploadBytes } from "firebase/storage"
 import { useState } from "react"
 import { toast } from 'sonner';
 

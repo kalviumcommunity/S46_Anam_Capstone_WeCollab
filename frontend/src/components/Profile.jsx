@@ -4,11 +4,11 @@ import About from "./About"
 import Experience from "./Experience"
 import Skill from "./Skill"
 import ProfilePopup from "./ProfilePopup"
-import { GET_USER } from "../graphql/CRUD"
+import { GET_USER, UPDATE_USER } from "../graphql/CRUD"
 import { imageDB } from "../firebase/config"
 import { ref,getDownloadURL } from "firebase/storage"
 import { useEffect, useState } from "react"
-import {useQuery} from "@apollo/client/"
+import { useQuery, useMutation } from "@apollo/client/"
 
 export default function Profile() {
 
@@ -34,6 +34,7 @@ export default function Profile() {
     const [downloadURL,setDownloadURL] = useState()
     const [completedSection,setCompletedSection] = useState([])
     const {loading,error,data} = useQuery(GET_USER,{variables: { email }})
+    const [updateUser,{ data: userData, loading: userLoading, error: userError }] = useMutation(UPDATE_USER)
 
     const handleSection = (e) => {
         setSection(e.target.innerHTML)
@@ -54,10 +55,16 @@ export default function Profile() {
 
     const handleCompletion = (section) => {
         setCompletedSection((prevState) => [...prevState,section])
+        try{
+            updateUser({ variables: {id: data.user.id, property: "completedSection", userData: { section: section }} })
+        }catch(error){
+            console.error(error)
+        }
     }
 
     useEffect(() => {
         showDownloadURL()
+        if (data) setCompletedSection(data.user.completedSection)
         if(loading) console.log(loading)
         else if(error) console.error(error)
         if(!loading) console.log(data)
@@ -67,7 +74,6 @@ export default function Profile() {
     <>
         <Navbar/>
         {/* Profile */}
-
         {data && 
         <div className="flex flex-col items-center font-raleway p-5 justify-center bg-orange-50 pt-24 pb-10 lg:py-32">
             <div className="lg:w-1/2 flex flex-col w-full py-3 border-black border-2 rounded-md relative bg-white">
@@ -85,7 +91,7 @@ export default function Profile() {
                     <div className="bg-green-200 px-3 py-1 my-5 rounded-full inline-block border-green-800 border-2 text-green-800 font-semibold">Open to Collaborate</div>
                 </div>
             </div>
-            <div className="lg:w-1/2 mt-1 flex flex-col w-full border-black border-2 rounded-md relative bg-white p-5 gap-5">
+            <div className={`${completedSection.length >=5 ? "hidden" : ""} lg:w-1/2 mt-1 flex flex-col w-full border-black border-2 rounded-md relative bg-white p-5 gap-5`}>
                     <div className="font-semibold">
                         <h1 className="text-3xl py-5">Suggested for you</h1>
                         <p>Completed {completedSection.length}/5</p>

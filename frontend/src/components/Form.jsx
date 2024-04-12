@@ -24,7 +24,7 @@ export default function Form() {
                 }
             })
             .then(res => res.json())
-            .then(data => window.open(data.redirectURI))
+            .then(data => window.location.href = data.redirectURI)
         }catch(err){
             console.error(err.message)
             throw new Error(err.message)
