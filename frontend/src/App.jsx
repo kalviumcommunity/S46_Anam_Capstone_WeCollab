@@ -4,6 +4,7 @@ import Home from "./components/Home"
 import Profile from "./components/Profile"
 import Setting from "./components/Setting"
 import AuthError from "./components/AuthError"
+import ProjectDetail from "./components/ProjectDetail"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/profile" element={<Profile/>} />
           <Route path="/setting" element={<Setting/>} />
           <Route path="/google/oauth" element={<AuthError/>} />
+          <Route path="/project" element={<ProjectDetail/>} />
         </Routes>
       </BrowserRouter>
     </>

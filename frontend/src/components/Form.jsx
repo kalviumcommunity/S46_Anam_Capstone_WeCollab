@@ -17,7 +17,7 @@ export default function Form() {
 
     const handleGoogle = () => {
         try{
-            fetch("http://localhost:3000/api/google",{
+            fetch(import.meta.env.VITE_GOOGLE_AUTH,{
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
