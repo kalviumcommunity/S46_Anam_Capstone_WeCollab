@@ -91,7 +91,7 @@ export default function Navbar() {
                 </>
                 }
             </nav>
-            <div className={`${isVisible ? "": "hidden"} fixed right-3 z-10 top-[5rem] bg-white flex flex-col border-black font-raleway rounded-md border-2 shadow-lg w-1/2 lg:w-1/6 p-3`}>
+            <div className={`${isVisible ? "": "hidden"} fixed right-4 lg:right-6 z-30 top-16 bg-white flex flex-col border-black font-raleway rounded-md border-2 shadow-lg w-1/2 lg:w-1/6 p-3`}>
                 <h1 className="p-1 text-[1.15rem] lg:text-xl font-semibold">Account</h1>
                 <Link to="/profile">
                     <p className="hover:bg-red-100 p-1 hover:text-black text-gray-800 rounded-md cursor-pointer">View Profile</p>
