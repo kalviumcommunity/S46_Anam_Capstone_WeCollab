@@ -91,7 +91,7 @@ export default function Profile() {
                     <div className="bg-green-200 px-3 py-1 my-5 rounded-full inline-block border-green-800 border-2 text-green-800 font-semibold">Open to Collaborate</div>
                 </div>
             </div>
-            <div className={`${completedSection.length >=5 ? "hidden" : ""} lg:w-1/2 mt-1 flex flex-col w-full border-black border-2 rounded-md relative bg-white p-5 gap-5`}>
+            { completedSection.length >= 5 ? <div className="lg:w-1/2 mt-1 flex flex-col w-full border-black border-2 rounded-md relative bg-white p-5 gap-5">
                     <div className="font-semibold">
                         <h1 className="text-3xl py-5">Suggested for you</h1>
                         <p>Completed {completedSection.length}/5</p>
@@ -121,7 +121,7 @@ export default function Profile() {
                             <button onClick={handleSection} className="border-blue-600 border-2 rounded-full p-1 hover:bg-blue-100 text-blue-600">Add skills</button>
                         </div>
                     </div>
-            </div>
+            </div>: ""}
             <About description={data.user.details?.about}/>
             <Experience experience={data.user.details?.experience} />
             <Skill skills={data.user.details?.skills} />
