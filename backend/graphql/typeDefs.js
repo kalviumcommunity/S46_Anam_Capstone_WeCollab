@@ -6,6 +6,7 @@ type User {
     email: String!
     password: String!
     token: String!
+    completedSection: [String]
     details: Details
 }
 
@@ -143,6 +144,7 @@ input updateUser {
   name: String
   email: String
   password: String
+  section: String
   details: updateDetails
 }
 

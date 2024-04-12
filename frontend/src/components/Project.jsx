@@ -1,7 +1,7 @@
 
 export default function Project() {
   return (
-        <div className="lg:w-[55dvw] h-full overflow-y-auto border-black border-y-2 lg:border-y-0 lg:border-x-2 lg:flex items-center lg:items-start flex-col gap-10">
+        <div className="lg:w-[60dvw] h-full overflow-y-auto border-black border-y-2 lg:border-y-0 lg:border-x-2 lg:flex items-center lg:items-start flex-col gap-10">
                     
             {/* Projects  */}
 
