@@ -185,15 +185,16 @@ export const resolvers = {
             }
             try{
                 let updateObject = {};
-                const {about,status,currentPosition} = userData.details
                 if(property === "details.experience") {
                     updateObject = { $push: { "details.experience": userData.details.experience } };
                 } else if(property === "details.skills") {
                     updateObject = { $push: { "details.skills": userData.details.skills } };
                 } else if(property === "details.projects"){
                     updateObject = { $push: { "details.projects": userData.details.projects } }
-                }else {
-                    updateObject = { [property]: about || status || currentPosition }
+                } else if(property === "completedSection"){
+                    updateObject = { $push: { "completedSection": userData.section } }
+                } else {
+                    updateObject = { [property]: userData.details.about || userData.details.status || userData.details.currentPosition }
                 }
                 const updatedUser = await userModel.findByIdAndUpdate(
                     id,
