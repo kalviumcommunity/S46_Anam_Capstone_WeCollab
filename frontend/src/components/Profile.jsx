@@ -65,9 +65,6 @@ export default function Profile() {
     useEffect(() => {
         showDownloadURL()
         if (data) setCompletedSection(data.user.completedSection)
-        if(loading) console.log(loading)
-        else if(error) console.error(error)
-        if(!loading) console.log(data)
     },[loading])
 
   return (
