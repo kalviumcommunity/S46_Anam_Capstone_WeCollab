@@ -116,6 +116,7 @@ input addIdea {
 }
 
 input addProject {
+  userId: String!
   title: String!
   about: String!
   thumbnail: String!

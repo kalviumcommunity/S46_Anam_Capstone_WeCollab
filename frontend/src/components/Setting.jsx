@@ -12,7 +12,7 @@ export default function Setting() {
 
   return (
     <>
-        <div className={` ${isVisible ? "" : "hidden lg:block" } h-[90dvh] w-full font-Poppins lg:w-[30dvw] fixed bg-white border-black lg:border-x-2 lg:static bottom-0 flex flex-col font-semibold`}>
+        <div className={` ${isVisible ? "" : "hidden lg:block" } h-[100dvh] w-full font-Poppins lg:w-[30dvw] bg-white border-black lg:border-x-2 lg:static bottom-0 flex flex-col font-semibold`}>
                 <h1 className="text-3xl pt-10 pb-5 px-5">Settings</h1>
                 <div onClick={handleClick} className={`flex w-full ${selectedSetting === "Account Information" ? "bg-red-200 border-red-500 border-r-4" : ""} hover:bg-red-200 cursor-pointer items-center gap-3 p-5`}>
                     <img className="size-6" src="./assets/account.svg" alt="" />
@@ -30,8 +30,8 @@ export default function Setting() {
 
         {
             selectedSetting === "Account Information" ? 
-                <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[85dvh] lg:w-[60dvw] lg:py-10 lg:px-20 gap-20`}>
-                        <div className="flex items-center gap-10 lg:gap-20">
+                <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[100dvh] p-5 lg:w-[60dvw] lg:py-10 lg:px-20 gap-20`}>
+                        <div className="flex items-center gap-5 lg:gap-20">
                             <img onClick={() => setVisible(true)} className="lg:hidden size-10 scale-x-[-1]" src="./assets/arrow-right.svg" alt="" />
                             <h1 className="text-2xl lg:text-3xl font-semibold">Account Information</h1>
                         </div>
@@ -55,8 +55,8 @@ export default function Setting() {
                     </div> 
                     :
                     selectedSetting === "Change Password" ?
-                        <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[85dvh] lg:w-[60dvw] lg:py-10 lg:px-20 gap-20`}>
-                            <div className="flex items-center gap-10 lg:gap-20">
+                        <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[100dvh] p-5 lg:w-[60dvw] lg:py-10 lg:px-20 gap-20`}>
+                            <div className="flex items-center gap-5 lg:gap-20">
                                 <img onClick={() => setVisible(true)} className="lg:hidden size-10 scale-x-[-1]" src="./assets/arrow-right.svg" alt="" />
                                 <h1 className="text-2xl lg:text-3xl font-semibold">Change Your Password</h1>
                             </div>
@@ -79,8 +79,8 @@ export default function Setting() {
                             </div>
                         </div>
                         :
-                        <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[85dvh] lg:w-[60dvw] lg:py-10 lg:px-20 gap-10`}>
-                            <div className="flex items-center gap-10 lg:gap-20">
+                        <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[100dvh] p-5 lg:w-[60dvw] lg:py-10 lg:px-20 gap-10`}>
+                            <div className="flex items-center gap-5 lg:gap-20">
                                 <img onClick={() => setVisible(true)} className="lg:hidden size-10 scale-x-[-1]" src="./assets/arrow-right.svg" alt="" />
                                 <h1 className="text-2xl lg:text-3xl font-semibold">Delete Your Account</h1>
                             </div>

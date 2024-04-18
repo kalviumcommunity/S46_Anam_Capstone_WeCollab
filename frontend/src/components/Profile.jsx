@@ -2,7 +2,7 @@ import Navbar from "./Navbar"
 import Footer from "./Footer"
 import About from "./About"
 import Experience from "./Experience"
-import Skill from "./Skill"
+import ProfileSkill from "./ProfileSkill"
 import ProfilePopup from "./ProfilePopup"
 import { GET_USER, UPDATE_USER } from "../graphql/CRUD"
 import { imageDB } from "../firebase/config"
@@ -75,8 +75,8 @@ export default function Profile() {
         <Navbar/>
         {/* Profile */}
         {data && 
-        <div className="flex flex-col items-center font-raleway p-5 justify-center bg-orange-50 pt-24 pb-10 lg:py-32">
-            <div className="lg:w-1/2 flex flex-col w-full py-3 border-black border-2 rounded-md relative bg-white">
+        <div className="flex flex-col items-center font-raleway p-5 justify-center bg-[#fff3e6] pt-24 pb-10 lg:py-32">
+            <div className="lg:w-1/2 flex flex-col w-full py-3 border-black border-2 rounded-xl relative bg-white">
                 <div className="h-[20dvh] border-black border-b-2"></div>
                 <img className="absolute top-24 left-5 border-black border-2 size-32 rounded-full bg-white" src={`${downloadURL ? downloadURL : "./assets/profile-placeholder.png"}`} alt="" />
                 <img className="size-6 self-end m-4 cursor-pointer" src="./assets/edit.svg" alt="" />
@@ -91,7 +91,7 @@ export default function Profile() {
                     <div className="bg-green-200 px-3 py-1 my-5 rounded-full inline-block border-green-800 border-2 text-green-800 font-semibold">Open to Collaborate</div>
                 </div>
             </div>
-            <div className={`${completedSection.length >=5 ? "hidden" : ""} lg:w-1/2 mt-1 flex flex-col w-full border-black border-2 rounded-md relative bg-white p-5 gap-5`}>
+            <div className={`${completedSection.length >=5 ? "hidden" : ""} lg:w-1/2 mt-3 flex flex-col w-full border-black border-2 rounded-xl relative bg-white p-5 gap-5`}>
                     <div className="font-semibold">
                         <h1 className="text-3xl py-5">Suggested for you</h1>
                         <p>Completed {completedSection.length}/5</p>
@@ -124,7 +124,7 @@ export default function Profile() {
             </div>
             <About description={data.user.details?.about}/>
             <Experience experience={data.user.details?.experience} />
-            <Skill skills={data.user.details?.skills} />
+            <ProfileSkill skills={data.user.details?.skills} />
         </div>}
         {isVisible && <ProfilePopup userId={data.user.id} section={selectedSection} changeVisibility={changeVisiblity} handleCompletion={handleCompletion} />}
         <Footer/>
