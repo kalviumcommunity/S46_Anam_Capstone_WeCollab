@@ -5,6 +5,7 @@ import Profile from "./components/Profile"
 import Setting from "./components/Setting"
 import AuthError from "./components/AuthError"
 import ProjectDetail from "./components/ProjectDetail"
+import PostProject from "./components/PostProject"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Route path="/setting" element={<Setting/>} />
           <Route path="/google/oauth" element={<AuthError/>} />
           <Route path="/project" element={<ProjectDetail/>} />
+          <Route path="/project/create" element={<PostProject/> } />
         </Routes>
       </BrowserRouter>
     </>

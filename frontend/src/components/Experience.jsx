@@ -3,7 +3,7 @@
 export default function Experience({experience}) {
   return (
     <>
-        <div className="lg:w-1/2 mt-1 flex flex-col w-full border-black border-2 rounded-md relative bg-white p-5">
+        <div className="lg:w-1/2 mt-3 flex flex-col w-full border-black border-2 rounded-xl relative bg-white p-5">
             <div className="flex justify-between items-center py-2 pb-5">
                 <h1 className="text-3xl font-semibold">Experience</h1>
                 <div className="flex gap-3 items-center">
