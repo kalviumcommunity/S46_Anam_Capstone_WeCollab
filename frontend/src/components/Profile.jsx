@@ -75,10 +75,10 @@ export default function Profile() {
         <Navbar/>
         {/* Profile */}
         {data && 
-        <div className="flex flex-col items-center font-raleway p-5 justify-center bg-[#fff3e6] pt-24 pb-10 lg:py-32">
+        <div className="flex flex-col items-center font-raleway p-5 justify-center bg-[#fff3e6] pt-24 pb-10 lg:py-20">
             <div className="lg:w-1/2 flex flex-col w-full py-3 border-black border-2 rounded-xl relative bg-white">
                 <div className="h-[20dvh] border-black border-b-2"></div>
-                <img className="absolute top-24 left-5 border-black border-2 size-32 rounded-full bg-white" src={`${downloadURL ? downloadURL : "./assets/profile-placeholder.png"}`} alt="" />
+                <img className="absolute top-28 left-5 border-black border-2 size-32 rounded-full bg-white" src={`${downloadURL ? downloadURL : "./assets/profile-placeholder.png"}`} alt="" />
                 <img className="size-6 self-end m-4 cursor-pointer" src="./assets/edit.svg" alt="" />
                 <div className="px-5">
                     <div className="flex items-center justify-between">

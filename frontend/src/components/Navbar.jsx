@@ -41,7 +41,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="border-black sticky top-0 bg-white w-full border-b-2 flex justify-between items-center py-3 px-5 lg:px-10">
+            <nav className="border-black sticky top-0 z-30 bg-white w-full border-b-2 flex justify-between items-center py-3 px-5 lg:px-10">
                 <Link to="/">
                     <div className="flex items-center gap-3 cursor-pointer">
                         <img className="size-10 lg:size-[inherit]" src="./assets/logo.svg" alt="Logo of WeCollab" />

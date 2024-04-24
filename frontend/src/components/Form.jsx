@@ -104,7 +104,7 @@ export default function Form() {
     return (
         <>
             <Navbar/>
-            <form onSubmit={formik.handleSubmit} className="flex flex-col font-raleway font-semibold gap-5 h-[100dvh] items-center justify-center">
+            <form onSubmit={formik.handleSubmit} className="flex flex-col font-raleway font-semibold gap-5 lg:py-44 py-32 items-center justify-center">
                     {form && form === "signup" ?
                     // For Signup
                     <>
