@@ -34,13 +34,13 @@ export default function Hero() {
 
         {/* Hero Section */}
 
-        <div className="flex items-center justify-center border-black border-b-2 bg-orange-200 bg-thumbnail font-space py-10 pl-5 lg:p-16 bg-cover lg:bg-[20%] lg:h-[80dvh]">
-            <h1 className="text-[2.5rem] leading-[3rem] lg:text-[9rem] lg:leading-[10rem] font-medium">THE COLLABORATION PLATFORM</h1>
+        <div className="flex items-center justify-center border-black border-b-2 bg-orange-200 bg-thumbnail font-space py-10 pl-5 lg:px-16 bg-cover lg:bg-[20%] lg:py-44">
+            <h1 className="text-[2.5rem] leading-[3rem] lg:text-[9rem] lg:leading-[10rem] font-bold">THE <br /> COLLABORATION PLATFORM</h1>
         </div>
 
         {/* Welcome Message */}
 
-        <div className="flex items-center justify-center bg-wavy bg-center bg-[#FFC0CB] h-[60dvh] lg:h-[80dvh] border-black border-b-2">
+        <div className="flex items-center justify-center bg-wavy bg-center bg-[#FFC0CB] lg:py-32 py-20 border-black border-b-2">
             <div className="flex flex-col gap-5 lg:gap-10 items-center bg-white border-black border-2 lg:border-4 font-space h-fit px-4 lg:px-20 py-10 w-4/5 lg:w-1/2">
                 <h1 className="text-xl lg:text-3xl font-bold">"Welcome to WeCollab"</h1>
                 <p className="text-center text-[0.7rem] lg:text-[1.1rem] leading-[1.4rem] lg:leading-7">WeCollab is An online platform connecting passionate minds for collaborative projects. Create detailed profiles, discover project opportunities tailored to your skills, and build lasting partnerships with like-minded individuals worldwide. Join our vibrant community, unlock the power of collaboration.</p>

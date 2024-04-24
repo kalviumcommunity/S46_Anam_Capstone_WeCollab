@@ -163,14 +163,14 @@ export const resolvers = {
                 return err
             }
         },
-        async createProject(_,args,contextValue){
+        async createProject(_,{projectInput},contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
                     extensions: { code: 'ERROR_UPDATING_TOKENS' },
                   });
             }
             try{
-                const newProject = new projectModel(args.project)
+                const newProject = new projectModel(projectInput)
                 const res = await newProject.save()
                 return{id:res.id,...res._doc}
             }catch(err){

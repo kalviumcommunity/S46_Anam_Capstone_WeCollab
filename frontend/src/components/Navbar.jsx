@@ -41,7 +41,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="border-black fixed top-0 z-20 bg-white w-full border-b-2 flex justify-between items-center py-3 px-5 lg:px-10">
+            <nav className="border-black sticky top-0 z-30 bg-white w-full border-b-2 flex justify-between items-center py-3 px-5 lg:px-10">
                 <Link to="/">
                     <div className="flex items-center gap-3 cursor-pointer">
                         <img className="size-10 lg:size-[inherit]" src="./assets/logo.svg" alt="Logo of WeCollab" />
@@ -52,7 +52,7 @@ export default function Navbar() {
                 {/* Search bar */}
 
                 {getCookie("user") ? 
-                <input className="hidden font-raleway bg-blue-50 lg:block border-black border-2 w-1/2 mr-36 px-10 py-1 bg-search bg-contain bg-no-repeat rounded-full" placeholder="Search Projects" type="text" />
+                <input className="hidden font-raleway bg-blue-50 lg:block md:block border-black border-2 w-1/2 mr-10 px-10 py-1 bg-search bg-contain bg-no-repeat rounded-full" placeholder="Search Projects" type="text" />
                 : 
                 form ? 
                 "" 
@@ -73,10 +73,15 @@ export default function Navbar() {
                 </Link>
                 :  getCookie("user") ? 
                 <>
-                    <div className="flex items-center gap-3">
-                        <img className="size-10 lg:hidden" src="./assets/search.svg" alt="" />
-                        <div onClick={() => setVisible(!isVisible)} className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
-                            <p>{getCookie("user")[0].toUpperCase()}</p>
+                    <div className="flex items-center gap-5 font-Poppins">
+                        <Link to="/project/create">
+                            <button className="rounded-full hidden lg:block border-black border-2 px-5 py-1">Post +</button>
+                        </Link>
+                        <div className="flex items-center gap-3">
+                            <img className="size-10 lg:hidden md:hidden" src="./assets/search.svg" alt="" />
+                            <div onClick={() => setVisible(!isVisible)} className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
+                                <p>{getCookie("user")[0].toUpperCase()}</p>
+                            </div>
                         </div>
                     </div>
                 </> 
