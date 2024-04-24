@@ -91,7 +91,7 @@ export default function Profile() {
                     <div className="bg-green-200 px-3 py-1 my-5 rounded-full inline-block border-green-800 border-2 text-green-800 font-semibold">Open to Collaborate</div>
                 </div>
             </div>
-            <div className={`${completedSection.length >=5 ? "hidden" : ""} lg:w-1/2 mt-3 flex flex-col w-full border-black border-2 rounded-xl relative bg-white p-5 gap-5`}>
+            <div className={`${completedSection.length >=5 ? "hidden" : ""} lg:w-1/2 mt-1 flex flex-col w-full border-black border-2 rounded-md relative bg-white p-5 gap-5`}>
                     <div className="font-semibold">
                         <h1 className="text-3xl py-5">Suggested for you</h1>
                         <p>Completed {completedSection.length}/5</p>
