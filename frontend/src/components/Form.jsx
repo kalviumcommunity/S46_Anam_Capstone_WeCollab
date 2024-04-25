@@ -15,22 +15,6 @@ export default function Form() {
     const [userSignup, { data: signupData, loading: signupLoading, error: signupError }] = useMutation(USER_SIGNUP)
     const [userLogin, { data: loginData, loading: loginLoading, error: loginError }] = useMutation(USER_LOGIN);
 
-    const handleGoogle = () => {
-        try{
-            fetch(import.meta.env.VITE_GOOGLE_AUTH,{
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-            .then(res => res.json())
-            .then(data => window.location.href = data.redirectURI)
-        }catch(err){
-            console.error(err.message)
-            throw new Error(err.message)
-        }
-    }
-
     const setCookie = (cookieName,value,daysToLive) => {
         const date = new Date()
         date.setTime(date.getTime() + (daysToLive * 24 * 60 * 60 * 1000))
@@ -156,7 +140,7 @@ export default function Form() {
                             className="border-black border-2 py-3 lg:mt-3 mt-10 w-3/4 lg:w-1/3 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
                             Submit
                         </button>
-                        <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
+                        <div className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
                             <img className="size-5" src="./assets/google.svg" alt="" />
                             <p>Sign-up with Google</p>
                         </div>
@@ -198,7 +182,7 @@ export default function Form() {
                         className="border-black border-2 py-3 lg:mt-3 mt-10 w-3/4 lg:w-1/3 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
                         Submit
                     </button>
-                    <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
+                    <div className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
                         <img className="size-5" src="./assets/google.svg" alt="" />
                         <p>Log-In with Google</p>
                     </div>
