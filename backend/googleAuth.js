@@ -11,8 +11,12 @@ const oAuth2Client = new OAuth2Client(
 )
 
 async function getUserInfo(accessToken){
-    const response = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${accessToken}`)
-    return response.json()
+    try {
+        const response = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${accessToken}`)
+        return response.json()
+    } catch (error) {
+        console.error(error)
+    }
 }
 
 router.post("/api/google", async (req,res) => {
