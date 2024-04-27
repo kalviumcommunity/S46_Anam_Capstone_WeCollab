@@ -2,7 +2,6 @@ import {
     Drawer,
     DrawerClose,
     DrawerContent,
-    DrawerDescription,
     DrawerFooter,
     DrawerHeader,
     DrawerTitle,
@@ -24,9 +23,7 @@ export default function ResponsiveNav() {
             <DrawerTitle className="text-xl hover:underline">Open Ideas</DrawerTitle>
             </DrawerHeader>
             <DrawerFooter>
-            {/* <Button>Submit</Button> */}
             <DrawerClose>
-                {/* <Button variant="outline">Cancel</Button> */}
             </DrawerClose>
             </DrawerFooter>
         </DrawerContent>

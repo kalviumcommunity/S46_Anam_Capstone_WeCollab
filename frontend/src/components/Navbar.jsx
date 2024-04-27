@@ -81,9 +81,6 @@ export default function Navbar() {
                         </Link>
                         <div className="flex items-center gap-3">
                             <img className="size-10 lg:hidden md:hidden" src="./assets/search.svg" alt="" />
-                            {/* <div onClick={() => setVisible(!isVisible)} className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
-                                <p>{getCookie("user")[0].toUpperCase()}</p>
-                            </div> */}
                             <UserDropdown handleLogout={handleLogout} getCookie={getCookie} />
                         </div>
                     </div>
@@ -95,7 +92,6 @@ export default function Navbar() {
                             <button className="rounded-full bg-orange-600 px-5 py-1">+ Join</button>
                         </Link>
                     </div>
-                    {/* <img className="md:hidden lg:hidden" src="./assets/responsive-nav.svg" alt="Responsive navigation icon" /> */}
                     <ResponsiveNav/>
                 </>
                 }

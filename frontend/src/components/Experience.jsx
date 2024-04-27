@@ -20,7 +20,6 @@ export default function Experience({experience}) {
                         </div>
                         <p className="">- {exp.duration}</p>
                     </div>
-                    {/* <hr className="border-slate-200 border-1" /> */}
                 </div>
             ))}
         </div>

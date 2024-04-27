@@ -21,14 +21,12 @@ export default function Skill({skills}) {
                             return(
                                 <div className="p-1" key={index}>
                                     <p>{skill}</p>
-                                    {/* <hr className="border-slate-200 border-1" /> */}
                                 </div>
                             )
                         }else{
                             return(
                                 <div className={`${showSkills ? "": "hidden"} p-1`} key={index}>
                                     <p>{skill}</p>
-                                    {/* <hr className="border-slate-200 border-1" /> */}
                                 </div>
                             )
                         }
