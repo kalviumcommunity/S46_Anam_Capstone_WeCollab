@@ -43,7 +43,7 @@ export default function PostProject() {
         setLoading(true)
         const imageRef = ref(imageDB,`project/thumbnail`)
         if(!image){
-            toast.error("No image selected for upload",{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border-2" })
+            toast.error("No image selected for upload",{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border" })
             setLoading(false)
             return
         }
@@ -53,7 +53,7 @@ export default function PostProject() {
             setLoading(false)
           } catch (error) {
             console.error("Error uploading image:", error);
-            toast.error(error, { position:"top-right", className: "text-red-600 text-[1.2rem] bg-white py-5 shadow-none border-black border-2" })
+            toast.error(error, { position:"top-right", className: "text-red-600 text-[1.2rem] bg-white py-5 shadow-none border-black border" })
           }
     }
 
@@ -120,23 +120,23 @@ export default function PostProject() {
     <>
     <Navbar/>
     <div className="flex justify-center bg-[#fff3e6] font-Poppins">
-        <div className="lg:h-screen lg:overflow-y-auto overflow-x-clip">
-            <form className="flex flex-col gap-3 lg:gap-5 bg-white py-10 lg:pb-20 lg:w-[30dvw] md:w-[30dvw] border-black lg:border-r-2 ">
+        <div className="lg:h-screen md:h-screen lg:overflow-y-auto md:overflow-y-auto overflow-x-clip">
+            <form className="flex flex-col gap-3 lg:gap-5 bg-white py-10 lg:pb-20 lg:w-[30dvw] md:w-[30dvw] border-black lg:border-r ">
                 <h1 className="font-semibold text-2xl lg:text-3xl px-10">Project Description</h1>
                 <p></p>
                 <div className="flex flex-col px-10">
                     <label className="text-xl font-semibold pb-2" htmlFor="">Title</label>
-                    <input placeholder="Project title" value={title} onChange={(e) => setTitle(e.target.value)} className="border-black border-2 p-2 rounded-md" type="text" />
+                    <input placeholder="Project title" value={title} onChange={(e) => setTitle(e.target.value)} className="border-black border p-2 rounded-md" type="text" />
                 </div>
                 <div className="flex flex-col px-10">
                     <label className="text-xl pb-2 font-semibold" htmlFor="">Presentation Link</label>
-                    <input placeholder="Slide link" onChange={(e) => setPresentationLink(e.target.value)} className="border-black border-2  p-2 rounded-md" type="text"/>
+                    <input placeholder="Slide link" onChange={(e) => setPresentationLink(e.target.value)} className="border-black border  p-2 rounded-md" type="text"/>
                 </div>
                 <div className="flex flex-col px-10">
                     <label className="text-xl font-semibold pb-2" htmlFor="about">About</label>
-                    <textarea placeholder="Write a detailed description about the project" value={about} onChange={(e) => setAbout(e.target.value)} className="border-black border-2 whitespace-pre-wrap p-3 h-64 rounded-md " name="" id="about" cols="70" rows="15"></textarea>
+                    <textarea placeholder="Write a detailed description about the project" value={about} onChange={(e) => setAbout(e.target.value)} className="border-black border whitespace-pre-wrap p-3 h-64 rounded-md " name="" id="about" cols="70" rows="15"></textarea>
                 </div>
-                <div className="flex flex-col mx-10 justify-between items-center text-blue-600 border-blue-600 border-2 p-10 lg:p-10 bg-blue-100 rounded-md">
+                <div className="flex flex-col mx-10 justify-between items-center text-blue-600 border-blue-600 border p-10 lg:p-10 bg-blue-100 rounded-md">
                     <label htmlFor="file-input" className="cursor-pointer flex flex-col items-center">
                         <p className="text-2xl">+</p>
                         <p className="text-[1.1rem] lg:text-xl">Add Project Thumbnail</p>
@@ -146,20 +146,20 @@ export default function PostProject() {
                 <div className="flex flex-row flex-wrap gap-3 px-10">
                     <div className="flex flex-col gap-2">
                         <label className="text-xl font-semibold" htmlFor="size">Team Size</label>
-                        <input value={collaborators} onChange={(e) => setCollaborators(e.target.value)} id="size" className="w-28 border-black border-2 p-2 rounded-md" type="number" />
+                        <input value={collaborators} onChange={(e) => setCollaborators(e.target.value)} id="size" className="w-28 border-black border p-2 rounded-md" type="number" />
                     </div>
                     <div className="flex flex-col gap-2">
                         <label className="text-xl font-semibold" htmlFor="budget">Project Budget</label>
-                        <input value={budget} onChange={handleChange} id="budget" className="border-black w-40 border-2 p-2 rounded-md" type="number" />
+                        <input value={budget} onChange={handleChange} id="budget" className="border-black w-40 border p-2 rounded-md" type="number" />
                     </div>
                 </div>
                 <div className="flex flex-col gap-5 px-10">
                         <div className="flex flex-col gap-2">
                             <label className="text-xl font-semibold" htmlFor="experience">Timeline</label>
                             <div className="flex gap-3">
-                                <input onChange={(e) => setTimeline(e.target.value)} className="w-28 border-black border-2 p-2 rounded-md" id="experience" type="number" />
+                                <input onChange={(e) => setTimeline(e.target.value)} className="w-28 border-black border p-2 rounded-md" id="experience" type="number" />
                                 <Select onValueChange={handleTimelineDurationChange}>
-                                    <SelectTrigger className="w-[180px]">
+                                    <SelectTrigger className="w-[180px] border">
                                         <SelectValue placeholder="Select time period" />
                                     </SelectTrigger>
                                     <SelectContent>
@@ -170,7 +170,7 @@ export default function PostProject() {
                             </div>
                         </div>
                     </div>
-                <hr className="border-2 my-4 mx-10" />
+                <hr className="border my-4 mx-10" />
                 <h1 className="text-2xl lg:text-3xl font-semibold px-10">Seeking</h1>
                 <div className="flex flex-col gap-3 lg:gap-5">
                     <div className="flex flex-col gap-3">
@@ -182,18 +182,18 @@ export default function PostProject() {
                     </div>
                     <div className="flex flex-col px-10">
                         <label className="text-xl font-semibold pb-2" htmlFor="role">Role</label>
-                        <input placeholder="UX Designer" ref={roleRef} id="role" className="border-black border-2 p-2 rounded-md" type="text"/>
+                        <input placeholder="UX Designer" ref={roleRef} id="role" className="border-black border p-2 rounded-md" type="text"/>
                     </div>
                     <div className="flex flex-col px-10">
                         <label className="text-xl font-semibold pb-2" htmlFor="responsibility">Responsibility</label>
-                        <textarea value={responsibility} onChange={(e) => setResponsibility(e.target.value)} id="responsibility" className="border-black whitespace-pre-wrap border-2 p-2 rounded-md" name="" cols="30" rows="10"></textarea>
+                        <textarea value={responsibility} onChange={(e) => setResponsibility(e.target.value)} id="responsibility" className="border-black whitespace-pre-wrap border p-2 rounded-md" name="" cols="30" rows="10"></textarea>
                     </div>
                     <div className="flex flex-col gap-3 lg:gap-5">
                         <label className="text-xl font-semibold px-10" htmlFor="experience">Experience</label>
                         <div className="flex flex-col lg:flex-col gap-3 lg:gap-5">
-                            <input ref={experienceRef} className="border-black border-2 p-2 rounded-md mx-10" id="experience" type="number" />
+                            <input ref={experienceRef} className="border-black border p-2 rounded-md mx-10" id="experience" type="number" />
                             <Select onValueChange={handleExperienceChange}>
-                                <SelectTrigger className="w-[180px] mx-10">
+                                <SelectTrigger className="w-[180px] mx-10 border">
                                     <SelectValue placeholder="Select time period" />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -205,7 +205,7 @@ export default function PostProject() {
                     </div>
                     <div className="flex flex-col gap-3 lg:gap-3 px-10">
                         <label className="text-xl font-semibold" htmlFor="vacancy">Vacancy</label>
-                        <input ref={vacancyRef} id="vacancy" className="border-black border-2 p-2 rounded-md" type="number" />
+                        <input ref={vacancyRef} id="vacancy" className="border-black border p-2 rounded-md" type="number" />
                     </div>
                     <div className="flex flex-col py-5 px-10">
                         <label className="text-xl font-semibold pb-2" htmlFor="skills">Skills Required</label>
@@ -218,22 +218,22 @@ export default function PostProject() {
                             ))}
                         </div>
                         <div className="flex flex-wrap gap-3 lg:gap-3">
-                            <input placeholder="Webflow" ref={skillRef} id="skills" className="border-black border-2 p-2 w-5/6 lg:w-[inherit] rounded-md" type="text" />
-                            <button onClick={addSkills} className="border-black border-2 bg-white p-2 lg:w-[inherit] lg:px-2 rounded-md">Add +</button>
+                            <input placeholder="Webflow" ref={skillRef} id="skills" className="border-black border p-2 w-5/6 lg:w-[inherit] rounded-md" type="text" />
+                            <button onClick={addSkills} className="border-black border bg-white p-2 lg:w-[inherit] lg:px-2 rounded-md">Add +</button>
                         </div>
                     </div>
                     <div className="text-right">
                         <button onClick={addRoles} className="bg-orange-600 text-white p-2 font-semibold rounded-md mx-10">Add Role +</button>
                     </div>
                 </div>
-                <hr className="border-2 mx-10" />
+                <hr className="border mx-10" />
                 <button onClick={handleSubmit} className="bg-blue-500 text-white font-semibold p-2 rounded-md mx-10">Post</button>
             </form>
         </div>
-        <div className="w-[70dvw] h-screen hidden bg-white py-10 overflow-auto px-20 lg:block md:block border-black border-l-2">
+        <div className="w-[70dvw] h-screen hidden bg-white py-10 overflow-auto px-20 lg:block md:block border-black border-l">
             <div>
                 {title && <h1 className="text-5xl font-semibold">{title}</h1>}
-                {image && <img className="border-2 my-5 w-full rounded-xl" src={image} alt="not uploaded" />}
+                {image && <img className="border my-5 w-full rounded-xl" src={image} alt="not uploaded" />}
                 {about && <div>
                     <h1 className="text-3xl font-semibold py-5">About</h1>
                     <p className="whitespace-pre-wrap">{about}</p>

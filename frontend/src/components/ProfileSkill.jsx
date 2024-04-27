@@ -7,28 +7,28 @@ export default function Skill({skills}) {
 
   return (
     <>
-        <div className="lg:w-1/2 mt-3 flex flex-col w-full border-black border-2 rounded-xl relative bg-white p-5">
-                <div className="flex justify-between py-2 pb-5">
+        <div className="lg:w-1/2 mt-2 flex flex-col w-full border-black border rounded-lg relative bg-white p-5">
+                <div className="flex justify-between py-2">
                     <h1 className="text-3xl font-semibold">Skills</h1>
                     <div className="flex gap-3 items-center">
                         <img className="size-8 cursor-pointer" src="./assets/plus.svg" alt="" />
                         <img className="size-6 cursor-pointer" src="./assets/edit.svg" alt="" />
                     </div>
                 </div>
-                <div className="flex flex-col gap-3 text-[1rem] lg:text-xl">
+                <div className="flex flex-col gap-3 text-[1rem] lg:text-xl pt-5">
                     {skills && skills.map((skill,index) => {
-                        if(index < 2){
+                        if(index <= 2){
                             return(
-                                <div key={index}>
+                                <div className="p-1" key={index}>
                                     <p>{skill}</p>
-                                    <hr className="border-slate-200 border-1" />
+                                    {/* <hr className="border-slate-200 border-1" /> */}
                                 </div>
                             )
                         }else{
                             return(
-                                <div key={index}>
-                                    <p className={`${showSkills ? "": "hidden"}`}>{skill}</p>
-                                    <hr className={`${showSkills ? "": "hidden"} border-slate-200 border-1`} />
+                                <div className={`${showSkills ? "": "hidden"} p-1`} key={index}>
+                                    <p>{skill}</p>
+                                    {/* <hr className="border-slate-200 border-1" /> */}
                                 </div>
                             )
                         }

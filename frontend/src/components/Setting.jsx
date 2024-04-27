@@ -12,7 +12,7 @@ export default function Setting() {
 
   return (
     <>
-        <div className={` ${isVisible ? "" : "hidden lg:block" } h-[100dvh] w-full font-Poppins lg:w-[30dvw] bg-white border-black lg:border-x-2 lg:static bottom-0 flex flex-col font-semibold`}>
+        <div className={` ${isVisible ? "" : "hidden lg:block" } h-[100dvh] w-full font-Poppins lg:w-[30dvw] bg-white border-black lg:border-x lg:static bottom-0 flex flex-col font-semibold`}>
                 <h1 className="text-3xl pt-10 pb-5 px-5">Settings</h1>
                 <div onClick={handleClick} className={`flex w-full ${selectedSetting === "Account Information" ? "bg-red-200 border-red-500 border-r-4" : ""} hover:bg-red-200 cursor-pointer items-center gap-3 p-5`}>
                     <img className="size-6" src="./assets/account.svg" alt="" />

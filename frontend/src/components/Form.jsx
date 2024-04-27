@@ -2,10 +2,10 @@ import {useFormik} from "formik"
 import * as Yup from "yup"
 import Navbar from "./Navbar"
 import { useNavigate, useParams } from "react-router-dom"
-import Footer from "./Footer"
 import { useMutation} from '@apollo/client';
 import { USER_SIGNUP, USER_LOGIN } from "../graphql/CRUD"
 import { toast } from 'sonner';
+import { useState } from "react";
 
 export default function Form() {
 
@@ -14,6 +14,7 @@ export default function Form() {
 
     const [userSignup, { data: signupData, loading: signupLoading, error: signupError }] = useMutation(USER_SIGNUP)
     const [userLogin, { data: loginData, loading: loginLoading, error: loginError }] = useMutation(USER_LOGIN);
+    // const [form,setForm] = useState()
 
     const setCookie = (cookieName,value,daysToLive) => {
         const date = new Date()
@@ -75,11 +76,11 @@ export default function Form() {
                         })
                         .catch((err) => {
                             console.error(err,);
-                            toast.error(err,{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border-2" })
+                            toast.error(err,{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border" })
                         });
                 } catch (err) {
                     console.error(err)
-                    toast.error(err,{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border-2" })
+                    toast.error(err,{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border" })
                 }
             } else {
                 try {
@@ -91,11 +92,11 @@ export default function Form() {
                         })
                         .catch((err) => {
                             console.error(err)
-                            toast.error(err.message, { position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border-2" })
+                            toast.error(err.message, { position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border" })
                         });
                 } catch (err) {
                     console.error(err)
-                    toast.error(err.message,{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border-2" })
+                    toast.error(err.message,{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border" })
                 }
             }
         }
@@ -104,7 +105,7 @@ export default function Form() {
     return (
         <>
             <Navbar/>
-            <form onSubmit={formik.handleSubmit} className="flex flex-col font-raleway font-semibold gap-5 lg:py-44 py-32 items-center justify-center">
+            <form onSubmit={formik.handleSubmit} className="flex flex-col font-raleway font-semibold gap-5 h-[80dvh] items-center justify-center">
                     {form && form === "signup" ?
                     // For Signup
                     <>
@@ -115,7 +116,7 @@ export default function Form() {
                                 id="name"
                                 name="name"
                                 type="text"
-                                className={`font-medium py-2 px-2 rounded-md ${formik.touched.name && formik.errors.name ? "border-red-500 border-2" : ""} border-black border-2`}
+                                className={`font-medium py-2 px-2 rounded-md ${formik.touched.name && formik.errors.name ? "border-red-500 border-2" : ""} border-black border`}
                                 placeholder="Enter Your Full Name"
                                 onChange={formik.handleChange}
                                 value={formik.values.name}
@@ -129,7 +130,7 @@ export default function Form() {
                                 id="email"
                                 name="email"
                                 type="email"
-                                className={`font-medium py-2 px-2 rounded-md ${formik.touched.email && formik.errors.email ? "border-red-500 border-2" : ""} border-black border-2`}       
+                                className={`font-medium py-2 px-2 rounded-md ${formik.touched.email && formik.errors.email ? "border-red-500 border-2" : ""} border-black border`}       
                                 placeholder="Enter Your Email"
                                 onChange={formik.handleChange}
                                 value={formik.values.email}
@@ -143,7 +144,7 @@ export default function Form() {
                                 id="password"
                                 name="password"
                                 type="password"
-                                className={`font-medium py-2 px-2 rounded-md ${formik.touched.password && formik.errors.password ? "border-red-500 border-2" : ""} border-black border-2`}
+                                className={`font-medium py-2 px-2 rounded-md ${formik.touched.password && formik.errors.password ? "border-red-500 border-2" : ""} border-black border`}
                                 placeholder="Enter Your Password"
                                 onChange={formik.handleChange}
                                 value={formik.values.password}
@@ -153,10 +154,10 @@ export default function Form() {
                         </div>
                         <button
                             type="submit"
-                            className="border-black border-2 py-3 lg:mt-3 mt-10 w-3/4 lg:w-1/3 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
+                            className="border-black border-0 py-3 lg:mt-3 mt-10 w-3/4 lg:w-1/3 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
                             Submit
                         </button>
-                        <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
+                        <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
                             <img className="size-5" src="./assets/google.svg" alt="" />
                             <p>Sign-up with Google</p>
                         </div>
@@ -171,7 +172,7 @@ export default function Form() {
                             id="email"
                             name="email"
                             type="email"
-                            className={`font-medium py-2 px-2 rounded-md ${formik.touched.email && formik.errors.email ? "border-red-500 border-2" : ""} border-black border-2`}       
+                            className={`font-medium py-2 px-2 rounded-md ${formik.touched.email && formik.errors.email ? "border-red-500 border-2" : ""} border-black border`}       
                             placeholder="Enter Your Email"
                             onChange={formik.handleChange}
                             value={formik.values.email}
@@ -185,7 +186,7 @@ export default function Form() {
                             id="password"
                             name="password"
                             type="password"
-                            className={`font-medium py-2 px-2 rounded-md ${formik.touched.password && formik.errors.password ? "border-red-500 border-2" : ""} border-black border-2`}
+                            className={`font-medium py-2 px-2 rounded-md ${formik.touched.password && formik.errors.password ? "border-red-500 border-2" : ""} border-black border`}
                             placeholder="Enter Your Password"
                             onChange={formik.handleChange}
                             value={formik.values.password}
@@ -195,17 +196,16 @@ export default function Form() {
                     </div>
                     <button
                         type="submit"
-                        className="border-black border-2 py-3 lg:mt-3 mt-10 w-3/4 lg:w-1/3 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
+                        className="border-black border py-3 lg:mt-3 mt-10 w-3/4 lg:w-1/3 bg-orange-500 hover:bg-orange-600 rounded-full text-white">
                         Submit
                     </button>
-                    <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border-2 py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
+                    <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
                         <img className="size-5" src="./assets/google.svg" alt="" />
                         <p>Log-In with Google</p>
                     </div>
                     </>
                     }
                 </form>
-            <Footer/>
         </>
     )
 }
