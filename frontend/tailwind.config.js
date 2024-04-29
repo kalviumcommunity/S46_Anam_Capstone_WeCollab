@@ -77,9 +77,9 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundImage: {
-        "thumbnail": "url(./Thumbnail.svg)",
-        "wavy" : "url(./wavy-bgm.png)",
-        "search": "url(./search.svg)",
+        "thumbnail": "url(./assets/Thumbnail.svg)",
+        "wavy" : "url(./assets/wavy-bgm.png)",
+        "search": "url(./assets/search.svg)",
         "arrowdown": "url(./arrow-down.svg)"
       }
     },

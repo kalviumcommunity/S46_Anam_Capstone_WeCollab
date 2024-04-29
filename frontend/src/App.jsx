@@ -15,10 +15,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Hero/>} />
-          <Route path="/:form" element={<Form/>} />
+          <Route path="/user/:form" element={<Form/>} />
           <Route path="/home" element={<Home/>}/>
           <Route path="/profile" element={<Profile/>} />
-          <Route path="/setting" element={<Setting/>} />
+          <Route path="/:section" element={<Home/>} />
           <Route path="/google/oauth" element={<AuthError/>} />
           <Route path="/project" element={<ProjectDetail/>} />
           <Route path="/project/create" element={<PostProject/> } />

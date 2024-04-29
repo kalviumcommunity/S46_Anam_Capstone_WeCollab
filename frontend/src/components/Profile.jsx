@@ -9,6 +9,7 @@ import { imageDB } from "../firebase/config"
 import { ref,getDownloadURL } from "firebase/storage"
 import { useEffect, useState } from "react"
 import { useQuery, useMutation } from "@apollo/client/"
+import { Progress } from "@/components/ui/progress"
 
 export default function Profile() {
 
@@ -75,29 +76,27 @@ export default function Profile() {
         <Navbar/>
         {/* Profile */}
         {data && 
-        <div className="flex flex-col items-center font-raleway p-5 justify-center bg-[#fff3e6] pt-24 pb-10 lg:py-20">
-            <div className="lg:w-1/2 flex flex-col w-full py-3 border-black border-2 rounded-xl relative bg-white">
-                <div className="h-[20dvh] border-black border-b-2"></div>
-                <img className="absolute top-28 left-5 border-black border-2 size-32 rounded-full bg-white" src={`${downloadURL ? downloadURL : "./assets/profile-placeholder.png"}`} alt="" />
+        (<div className="flex flex-col items-center font-Poppins p-5 justify-center bg-[#fff3e6] pt-24 pb-10 lg:py-12">
+            <div className="lg:w-1/2 flex flex-col w-full py-3 border-black border rounded-lg relative bg-white">
+                <div className="h-[20dvh] border-black border-b"></div>
+                <img className="absolute top-28 left-5 border-black border size-32 rounded-full bg-white" src={`${downloadURL ? downloadURL : "./assets/profile-placeholder.png"}`} alt="" />
                 <img className="size-6 self-end m-4 cursor-pointer" src="./assets/edit.svg" alt="" />
                 <div className="px-5">
                     <div className="flex items-center justify-between">
-                        <div>
+                        <div className="pt-5">
                             <h1 className="text-3xl font-semibold">{data.user.name}</h1>
-                            <p>{data.user.details?.currentPosition}</p>
+                            <p className="text-gray-600 pt-1">{data.user.details?.currentPosition}</p>
                         </div>
                         <button className="bg-green-600 px-3 py-1 rounded-full text-white font-semibold">Contact</button>
                     </div>
                     <div className="bg-green-200 px-3 py-1 my-5 rounded-full inline-block border-green-800 border-2 text-green-800 font-semibold">Open to Collaborate</div>
                 </div>
             </div>
-            <div className={`${completedSection.length >=5 ? "hidden" : ""} lg:w-1/2 mt-1 flex flex-col w-full border-black border-2 rounded-md relative bg-white p-5 gap-5`}>
+           { completedSection.length < 5 && <div className="lg:w-1/2 mt-2 flex flex-col w-full border-black border rounded-lg relative bg-white p-5 gap-5">
                     <div className="font-semibold">
                         <h1 className="text-3xl py-5">Suggested for you</h1>
                         <p>Completed {completedSection.length}/5</p>
-                        <div className="bg-blue-100 rounded-full">
-                            <div className={`bg-blue-400 w-10 p-1 rounded-full`}></div>
-                        </div>
+                        <Progress value={(completedSection.length/5)*100 || 1} />
                     </div>
                     <div className="flex gap-5 text-[0.8rem] lg:text-[1.15rem] overflow-x-auto">
                         <div className={`${completedSection.includes("photo") ? "hidden" : ""} min-w-[50dvw] lg:min-w-[20vw] lg:max-w-[25vw] flex flex-col justify-center bg-blue-50 p-5 gap-3 font-semibold`}>
@@ -121,11 +120,11 @@ export default function Profile() {
                             <button onClick={handleSection} className="border-blue-600 border-2 rounded-full p-1 hover:bg-blue-100 text-blue-600">Add skills</button>
                         </div>
                     </div>
-            </div>
+            </div>}
             <About description={data.user.details?.about}/>
             <Experience experience={data.user.details?.experience} />
             <ProfileSkill skills={data.user.details?.skills} />
-        </div>}
+        </div>)}
         {isVisible && <ProfilePopup userId={data.user.id} section={selectedSection} changeVisibility={changeVisiblity} handleCompletion={handleCompletion} />}
         <Footer/>
     </>
