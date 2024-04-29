@@ -25,7 +25,7 @@ export default function Project() {
             <div className="grid w-full">
                 <div onClick={handleSelection} className="min-h-[25rem] py-5 px-8 lg:px-12 w-full border-black border-b">
                     <div className="flex items-center gap-3">
-                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-bold rounded-full bg-orange-600 h-10 w-10">
+                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-10 w-10">
                             <p>A</p>
                         </div>
                         <div>
@@ -44,7 +44,7 @@ export default function Project() {
                 </div>
                 <div className="min-h-[25rem] py-5 px-8 lg:px-12 w-full border-black border-b">
                     <div className="flex items-center gap-3">
-                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-bold rounded-full bg-orange-600 h-10 w-10">
+                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-10 w-10">
                             <p>A</p>
                         </div>
                         <div>
@@ -63,7 +63,7 @@ export default function Project() {
                 </div>
                 <div className="h-[25rem] py-5 px-8 lg:px-12 w-full border-black border-b">
                     <div className="flex items-center gap-3">
-                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-bold rounded-full bg-orange-600 h-10 w-10">
+                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-10 w-10">
                             <p>A</p>
                         </div>
                         <div>
@@ -74,7 +74,7 @@ export default function Project() {
                 </div>
                 <div className="h-[25rem] py-5 px-8 lg:px-12 w-full border-black border-b">
                     <div className="flex items-center gap-3">
-                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-bold rounded-full bg-orange-600 h-10 w-10">
+                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-10 w-10">
                             <p>A</p>
                         </div>
                         <div>

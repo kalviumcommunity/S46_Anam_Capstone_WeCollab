@@ -30,7 +30,7 @@ export default function Setting() {
 
         {
             selectedSetting === "Account Information" ? 
-                <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[100dvh] p-5 lg:w-[60dvw] lg:py-10 lg:px-20 gap-20`}>
+                <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[100dvh] p-5 lg:w-[50dvw] lg:py-10 lg:px-20 gap-10`}>
                         <div className="flex items-center gap-5 lg:gap-20">
                             <img onClick={() => setVisible(true)} className="lg:hidden size-10 scale-x-[-1]" src="./assets/arrow-right.svg" alt="" />
                             <h1 className="text-2xl lg:text-3xl font-semibold">Account Information</h1>
@@ -55,7 +55,7 @@ export default function Setting() {
                     </div> 
                     :
                     selectedSetting === "Change Password" ?
-                        <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[100dvh] p-5 lg:w-[60dvw] lg:py-10 lg:px-20 gap-20`}>
+                        <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[100dvh] p-5 lg:w-[50dvw] lg:py-10 lg:px-20 gap-10`}>
                             <div className="flex items-center gap-5 lg:gap-20">
                                 <img onClick={() => setVisible(true)} className="lg:hidden size-10 scale-x-[-1]" src="./assets/arrow-right.svg" alt="" />
                                 <h1 className="text-2xl lg:text-3xl font-semibold">Change Your Password</h1>
@@ -79,7 +79,7 @@ export default function Setting() {
                             </div>
                         </div>
                         :
-                        <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[100dvh] p-5 lg:w-[60dvw] lg:py-10 lg:px-20 gap-10`}>
+                        <div className={`${!isVisible ? "" : "hidden" } lg:flex flex-col h-[100dvh] p-5 lg:w-[50dvw] lg:py-10 lg:px-20 gap-10`}>
                             <div className="flex items-center gap-5 lg:gap-20">
                                 <img onClick={() => setVisible(true)} className="lg:hidden size-10 scale-x-[-1]" src="./assets/arrow-right.svg" alt="" />
                                 <h1 className="text-2xl lg:text-3xl font-semibold">Delete Your Account</h1>

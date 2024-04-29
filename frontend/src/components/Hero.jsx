@@ -34,8 +34,8 @@ export default function Hero() {
 
         {/* Hero Section */}
 
-        <div className="flex items-center justify-center border-black border-b bg-orange-200 bg-thumbnail font-space py-10 pl-5 lg:px-24 md:px-20 md:py-24 bg-cover lg:bg-[20%] lg:py-32">
-            <h1 className="text-[2.5rem] leading-[3rem] lg:text-[8rem] md:text-[5rem] md:leading-[6rem] lg:leading-[10rem] font-semibold">THE <br /> COLLABORATION PLATFORM</h1>
+        <div className="flex items-center justify-center border-black border-b bg-orange-200 bg-thumbnail font-space py-10 pl-5 lg:px-24 md:px-20 md:py-40 bg-cover lg:bg-[20%] lg:py-44">
+            <h1 className="text-[2.5rem] leading-[3rem] lg:text-[8rem] md:text-[5rem] md:leading-[6rem] lg:leading-[8rem] font-semibold">THE <br /> COLLABORATION PLATFORM</h1>
         </div>
 
         {/* Welcome Message */}
