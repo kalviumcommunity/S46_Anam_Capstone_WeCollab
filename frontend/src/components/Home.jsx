@@ -3,6 +3,7 @@ import Setting from "./Setting";
 import Project from "./Project";
 import SideNavbar from "./SideNavbar";
 import { useParams } from "react-router-dom";
+import Idea from "./Idea";
 
 export default function Home() {
 
@@ -18,6 +19,9 @@ export default function Home() {
 
            {section === "settings" ? 
                 <Setting/>
+                :
+                section === "ideas" ?
+                <Idea/>
                 :
                 <Project/>
             }

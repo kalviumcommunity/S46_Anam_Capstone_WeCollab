@@ -26,7 +26,7 @@ export default function UserDropdown({handleLogout,getCookie}) {
   <>
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-            <div className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-bold rounded-full bg-orange-600 h-10 w-10">
+            <div className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-semibold rounded-full bg-orange-600 h-10 w-10">
                 <p>{getCookie("user")[0].toUpperCase()}</p>
             </div>
       </DropdownMenuTrigger>
