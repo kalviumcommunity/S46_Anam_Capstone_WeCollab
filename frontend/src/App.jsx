@@ -2,11 +2,11 @@ import Hero from "./components/Hero"
 import Form from "./components/Form"
 import Home from "./components/Home"
 import Profile from "./components/Profile"
-import Setting from "./components/Setting"
 import AuthError from "./components/AuthError"
 import ProjectDetail from "./components/ProjectDetail"
 import PostProject from "./components/PostProject"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
+import IdeaDetail from "./components/IdeaDetail"
 
 function App() {
 
@@ -19,6 +19,7 @@ function App() {
           <Route path="/home" element={<Home/>}/>
           <Route path="/profile" element={<Profile/>} />
           <Route path="/:section" element={<Home/>} />
+          <Route path="/ideas/:id" element={<IdeaDetail/>} />
           <Route path="/google/oauth" element={<AuthError/>} />
           <Route path="/project" element={<ProjectDetail/>} />
           <Route path="/project/create" element={<PostProject/> } />
