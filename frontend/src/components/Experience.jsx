@@ -7,8 +7,8 @@ export default function Experience({experience}) {
             <div className="flex justify-between items-center py-2 pb-5">
                 <h1 className="text-3xl font-semibold">Experience</h1>
                 <div className="flex gap-3 items-center">
-                    <img className="size-8 cursor-pointer" src="./assets/plus.svg" alt="" />
-                    <img className="size-6 cursor-pointer" src="./assets/edit.svg" alt="" />
+                    <img className="size-8 cursor-pointer" src="/assets/plus.svg" alt="" />
+                    <img className="size-6 cursor-pointer" src="/assets/edit.svg" alt="" />
                 </div>
             </div>
             {experience && experience.map(exp => (

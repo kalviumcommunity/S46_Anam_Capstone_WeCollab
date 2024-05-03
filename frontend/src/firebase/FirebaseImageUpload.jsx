@@ -38,7 +38,7 @@ export default function FirebaseImageUpload({handleCompletion,userId}) {
         uploaded ?
          <div className="flex items-center justify-center h-[20dvh]">
             <div className="flex items-center gap-3 font-semibold text-2xl">
-                <img className="size-10" src="./assets/success.png" alt="" />
+                <img className="size-10" src="/assets/success.png" alt="" />
                 <p>Profile Picture Uploaded</p>
             </div>
          </div>

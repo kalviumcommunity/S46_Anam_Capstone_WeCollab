@@ -18,7 +18,7 @@ export default function Project() {
   return (
 
     <>
-        <div className="lg:w-[45dvw] md:w-[80dvw] h-full overflow-y-auto hide-scrollbar font-Poppins border-black lg:border-x md:border-r lg:flex items-center lg:items-start flex-col gap-10">
+        <div className="lg:w-[45dvw] md:w-[80dvw] h-full overflow-y-auto hide-scrollbar font-Poppins border-black lg:border-x md:border-x lg:flex items-center lg:items-start flex-col gap-10">
                     
             {/* Projects  */}
 

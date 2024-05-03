@@ -158,7 +158,7 @@ export default function Form() {
                             Submit
                         </button>
                         <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
-                            <img className="size-5" src="./assets/google.svg" alt="" />
+                            <img className="size-5" src="/assets/google.svg" alt="" />
                             <p>Sign-up with Google</p>
                         </div>
                     </> 
@@ -200,7 +200,7 @@ export default function Form() {
                         Submit
                     </button>
                     <div onClick={handleGoogle} className="flex gap-3 items-center justify-center border-black border py-3 w-3/4 lg:w-1/3 rounded-full cursor-pointer hover:bg-orange-50">
-                        <img className="size-5" src="./assets/google.svg" alt="" />
+                        <img className="size-5" src="/assets/google.svg" alt="" />
                         <p>Log-In with Google</p>
                     </div>
                     </>

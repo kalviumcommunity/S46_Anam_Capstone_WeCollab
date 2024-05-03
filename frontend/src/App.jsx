@@ -4,14 +4,16 @@ import Home from "./components/Home"
 import Profile from "./components/Profile"
 import AuthError from "./components/AuthError"
 import ProjectDetail from "./components/ProjectDetail"
-import PostProject from "./components/PostProject"
+import PostProject from "./components/PostForm"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import IdeaDetail from "./components/IdeaDetail"
+import Showcase from "./components/Showcase"
 
 function App() {
 
   return (
     <>
+      {/* <Navbar/> */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Hero/>} />
@@ -22,7 +24,7 @@ function App() {
           <Route path="/ideas/:id" element={<IdeaDetail/>} />
           <Route path="/google/oauth" element={<AuthError/>} />
           <Route path="/project" element={<ProjectDetail/>} />
-          <Route path="/project/create" element={<PostProject/> } />
+          <Route path="/post/:section" element={<PostProject/> } />
         </Routes>
       </BrowserRouter>
     </>

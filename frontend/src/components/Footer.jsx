@@ -22,7 +22,7 @@ export default function Footer() {
         <footer className="flex flex-col-reverse gap-10 lg:flex-row md:flex-row lg:gap-0 items-center justify-between p-10 lg:py-10 md:px-20 lg:px-28 border-black border-t">
             <div className="flex flex-col items-center lg:items-start md:items-start gap-5">
                 <div className="flex gap-3 items-center cursor-pointer">
-                    <img className="size-8 lg:size-[inherit]" src="./assets/logo.svg" alt="Logo of WeCollab" />
+                    <img className="size-8 lg:size-[inherit]" src="/assets/logo.svg" alt="Logo of WeCollab" />
                     <h1 className="text-xl lg:text-3xl font-raleway font-bold pt-3">WeCollab</h1>
                 </div>
                 <p className="hidden lg:block md:block font-space w-3/4">Collaborate, Innovate, Thrive with WeCollab</p>
