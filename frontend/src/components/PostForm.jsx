@@ -13,8 +13,12 @@ import Navbar from "./Navbar"
 import Footer from "./Footer"
 import Roles from "./Roles"
 import SeekingSkill from "./SeekingSkill"
+import { useParams } from "react-router-dom"
+import { Heart, Eye, Forward, MessageCircle,Bookmark } from "lucide-react"
 
 export default function PostProject() {
+
+    const {section} = useParams()
 
     const [skills,setSkills] = useState([])
     const [roles,setRoles] = useState([])
@@ -28,6 +32,7 @@ export default function PostProject() {
     const [responsibility,setResponsibility] = useState()
     const [presentationLink,setPresentationLink] = useState()
     const [timelineDuration, setTimelineDuration] = useState()
+    const [subtitle,setSubtitle] = useState()
     const skillRef = useRef()
     const roleRef = useRef()
     const vacancyRef = useRef()
@@ -119,23 +124,41 @@ export default function PostProject() {
   return (
     <>
     <Navbar/>
-    <div className="flex justify-center bg-[#fff3e6] font-Poppins">
+    <div className="flex flex-row-reverse justify-center bg-[#fff3e6] font-Poppins">
         <div className="lg:h-screen md:h-screen lg:overflow-y-auto md:overflow-y-auto overflow-x-clip">
-            <form className="flex flex-col gap-3 lg:gap-5 bg-white py-10 lg:pb-20 lg:w-[30dvw] md:w-[30dvw] border-black lg:border-r ">
-                <h1 className="font-semibold text-2xl lg:text-3xl px-10">Project Description</h1>
-                <p></p>
+            <form className="flex flex-col gap-3 lg:gap-5 bg-white py-10 lg:pb-20 lg:w-[30dvw] md:w-[30dvw] border-black lg:border-l">
+                {section === "idea" ?
+                    <h1 className="font-semibold text-2xl lg:text-3xl px-10">Create Idea</h1>
+                    :
+                    <h1 className="font-semibold text-2xl lg:text-3xl px-10">Create project</h1>
+                }
                 <div className="flex flex-col px-10">
                     <label className="text-xl font-semibold pb-2" htmlFor="">Title</label>
                     <input placeholder="Project title" value={title} onChange={(e) => setTitle(e.target.value)} className="border-black border p-2 rounded-md" type="text" />
                 </div>
-                <div className="flex flex-col px-10">
-                    <label className="text-xl pb-2 font-semibold" htmlFor="">Presentation Link</label>
-                    <input placeholder="Slide link" onChange={(e) => setPresentationLink(e.target.value)} className="border-black border  p-2 rounded-md" type="text"/>
-                </div>
-                <div className="flex flex-col px-10">
-                    <label className="text-xl font-semibold pb-2" htmlFor="about">About</label>
-                    <textarea placeholder="Write a detailed description about the project" value={about} onChange={(e) => setAbout(e.target.value)} className="border-black border whitespace-pre-wrap p-3 h-64 rounded-md " name="" id="about" cols="70" rows="15"></textarea>
-                </div>
+                {section === "idea" ?
+                <>
+                    <div className="flex flex-col px-10">
+                        <label className="text-xl pb-2 font-semibold" htmlFor="">Summary</label>
+                        <input placeholder="Subtitle" onChange={(e) => setSubtitle(e.target.value)} className="border-black border  p-2 rounded-md" type="text"/>
+                    </div>
+                    <div className="flex flex-col px-10">
+                        <label className="text-xl font-semibold pb-2" htmlFor="about">Description</label>
+                        <textarea placeholder="Write a detailed description about the project" value={about} onChange={(e) => setAbout(e.target.value)} className="border-black border whitespace-pre-wrap p-3 h-64 rounded-md " name="" id="about" cols="70" rows="15"></textarea>
+                    </div>
+                </>
+                :
+                <>
+                    <div className="flex flex-col px-10">
+                        <label className="text-xl pb-2 font-semibold" htmlFor="">Presentation Link</label>
+                        <input placeholder="Slide link" onChange={(e) => setPresentationLink(e.target.value)} className="border-black border  p-2 rounded-md" type="text"/>
+                    </div>
+                    <div className="flex flex-col px-10">
+                        <label className="text-xl font-semibold pb-2" htmlFor="about">About</label>
+                        <textarea placeholder="Write a detailed description about the project" value={about} onChange={(e) => setAbout(e.target.value)} className="border-black border whitespace-pre-wrap p-3 h-64 rounded-md " name="" id="about" cols="70" rows="15"></textarea>
+                    </div>
+                </>
+                }
                 <div className="flex flex-col mx-10 justify-between items-center text-blue-600 border-blue-600 border p-10 lg:p-10 bg-blue-100 rounded-md">
                     <label htmlFor="file-input" className="cursor-pointer flex flex-col items-center">
                         <p className="text-2xl">+</p>
@@ -153,6 +176,24 @@ export default function PostProject() {
                         <input value={budget} onChange={handleChange} id="budget" className="border-black w-40 border p-2 rounded-md" type="number" />
                     </div>
                 </div>
+                {section === "idea" ? 
+                    <div className="flex flex-col py-5 px-10">
+                    <label className="text-xl font-semibold pb-2" htmlFor="skills">Skills Required</label>
+                    <div className="mb-4">
+                        {skills && skills.map(skill => (
+                            <div className="flex text-xl bg-blue-100 p-2 my-2 rounded-md justify-between" key={skill}>
+                                <p>{skill}</p>
+                                <p className="cursor-pointer" onClick={() => removeSkill(skill)}>x</p>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="flex flex-wrap gap-3 lg:gap-3">
+                        <input placeholder="Webflow" ref={skillRef} id="skills" className="border-black border p-2 w-5/6 lg:w-[inherit] rounded-md" type="text" />
+                        <button onClick={addSkills} className="border-black border bg-white p-2 lg:w-[inherit] lg:px-2 rounded-md">Add +</button>
+                    </div>
+                </div>
+                    :
+                <>
                 <div className="flex flex-col gap-5 px-10">
                         <div className="flex flex-col gap-2">
                             <label className="text-xl font-semibold" htmlFor="experience">Timeline</label>
@@ -169,7 +210,7 @@ export default function PostProject() {
                                 </Select>
                             </div>
                         </div>
-                    </div>
+                </div>
                 <hr className="border my-4 mx-10" />
                 <h1 className="text-2xl lg:text-3xl font-semibold px-10">Seeking</h1>
                 <div className="flex flex-col gap-3 lg:gap-5">
@@ -226,15 +267,79 @@ export default function PostProject() {
                         <button onClick={addRoles} className="bg-orange-600 text-white p-2 font-semibold rounded-md mx-10">Add Role +</button>
                     </div>
                 </div>
-                <hr className="border mx-10" />
-                <button onClick={handleSubmit} className="bg-blue-500 text-white font-semibold p-2 rounded-md mx-10">Post</button>
+            </>
+                }
+            <hr className="border mx-10" />
+            <button onClick={handleSubmit} className="bg-blue-500 text-white font-semibold p-2 rounded-md mx-10">Post</button>
             </form>
         </div>
         <div className="w-[70dvw] h-screen hidden bg-white py-10 overflow-auto px-20 lg:block md:block border-black border-l">
             <div>
                 {title && <h1 className="text-5xl font-semibold">{title}</h1>}
+                {section === "idea"
+                ?
+                <>
+                <div className="flex items-center gap-5">
+                    {image &&
+                    <>
+                    <img className="rounded-xl bg-slate-200 min-w-[13rem] w-full h-[20rem] lg:size-52" src={image} alt="not uploaded" />
+                    <div className="flex flex-col self-start gap-8">
+                        <div>
+                            <h1 className="text-2xl lg:text-4xl md:text-4xl cursor-pointer font-semibold py-2">{title}</h1>
+                            <div className="flex text-xl items-center gap-2">
+                                <Eye/>
+                                <p>1k read</p>
+                                <p className="mb-2">.</p>
+                                <p className="border-red-600 border px-2 text-red-600 rounded-full">Closed</p>
+                            </div>
+                            <div className="flex items-center gap-3 font-medium italic text-gray-500">
+                                <p># Science</p>
+                                <p className="mb-2">.</p>
+                                <p># Mental Health</p>
+                            </div>
+                        </div>
+                        <div className="flex gap-5 [&_*]:cursor-pointer">
+                            <div className="flex items-center gap-2">
+                                <Heart/>
+                                <span>2k likes</span>
+                            </div>
+                            <Bookmark/>
+                            <Forward/>
+                            <MessageCircle/>
+                        </div>
+                    </div>
+                    </> 
+                    }
+                </div>
+                <div className="text-[1.1rem] py-10">
+                    <p>This idea proposes an app that empowers users to change their mindset and cultivate a more positive outlook.</p>
+                    <h1 className="text-2xl lg:text-3xl md:text-3xl font-semibold py-5">Description</h1>
+                    <p>{about}</p>
+                    <ul className="list-disc px-10 py-5">
+                        <li>Identifying negative thought patterns.</li>
+                        <li>Learning techniques for cognitive reframing (reframing negative thoughts into more positive ones).</li>
+                        <li>Practicing gratitude exercises.</li>
+                        <li>Setting and tracking personal goals related to positive thinking.</li>
+                        <li>Gamification elements could be implemented to keep users engaged and motivated on their mind-shifting journey.</li>
+                    </ul>
+                    <h1 className="text-2xl lg:text-3xl md:text-3xl font-semibold py-5">Skills Required</h1>
+                    <ul className="list-disc px-10 py-5">
+                        <li>
+                            Gamification Design: To create engaging and rewarding challenges that keep users motivated.
+                        </li>
+                        <li>
+                            Psychology/Behavioral Science Background (preferred): Understanding of human behavior and effective techniques for positive change.
+                        </li>
+                        <li>
+                            Mobile App Development: To build a user-friendly and accessible app experience.
+                        </li>
+                    </ul>
+                </div>
+                </>
+                :
+                <>
                 {image && <img className="border my-5 w-full rounded-xl" src={image} alt="not uploaded" />}
-                {about && <div>
+                {about && <div> 
                     <h1 className="text-3xl font-semibold py-5">About</h1>
                     <p className="whitespace-pre-wrap">{about}</p>
                 </div>}
@@ -272,6 +377,8 @@ export default function PostProject() {
                         </div>
                     )}
                 </div>
+                </>
+                }
             </div>
         </div>
     </div>

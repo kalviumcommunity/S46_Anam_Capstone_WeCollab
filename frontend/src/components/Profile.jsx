@@ -79,8 +79,8 @@ export default function Profile() {
         (<div className="flex flex-col items-center font-Poppins p-5 justify-center bg-[#fff3e6] pt-24 pb-10 lg:py-12">
             <div className="lg:w-1/2 flex flex-col w-full py-3 border-black border rounded-lg relative bg-white">
                 <div className="h-[20dvh] border-black border-b"></div>
-                <img className="absolute top-28 left-5 border-black border size-32 rounded-full bg-white" src={`${downloadURL ? downloadURL : "./assets/profile-placeholder.png"}`} alt="" />
-                <img className="size-6 self-end m-4 cursor-pointer" src="./assets/edit.svg" alt="" />
+                <img className="absolute top-28 left-5 border-black border size-32 rounded-full bg-white" src={`${downloadURL ? downloadURL : "/assets/profile-placeholder.png"}`} alt="" />
+                <img className="size-6 self-end m-4 cursor-pointer" src="/assets/edit.svg" alt="" />
                 <div className="px-5">
                     <div className="flex items-center justify-between">
                         <div className="pt-5">

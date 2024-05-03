@@ -8,6 +8,7 @@ export default function Navbar() {
     const {form} = useParams()
     const navigate = useNavigate()
     const [isVisible,setVisible] = useState(false)
+    const {section} = useParams()
 
     const setCookie = (cookieName,value,daysToLive) => {
         const date = new Date()
@@ -43,10 +44,10 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="border-black sticky font-Poppins top-0 z-30 bg-white w-full border-b flex justify-between items-center py-3 px-5 md:px-16 lg:px-24">
+            <nav className={`border-black sticky font-Poppins top-0 z-30 bg-white w-full border-b flex justify-between items-center py-3 px-5 md:px-16 ${section === "showcase" ? "lg:px-8": ""} lg:px-24`}>
                 <Link to="/">
                     <div className="flex items-center gap-3 cursor-pointer">
-                        <img className="size-10 lg:size-[inherit]" src="./assets/logo.svg" alt="Logo of WeCollab" />
+                        <img className="size-10 lg:size-[inherit]" src="/assets/logo.svg" alt="Logo of WeCollab" />
                         <h1 className="text-2xl lg:text-3xl font-raleway font-bold pt-1">WeCollab</h1>
                     </div>
                 </Link>
@@ -76,11 +77,11 @@ export default function Navbar() {
                 :  getCookie("user") ? 
                 <>
                     <div className="flex items-center gap-5 font-Poppins">
-                        <Link to="/project/create">
+                        <Link to="/post/project">
                             <button className="rounded-full hidden lg:block md:block border-black border px-5 py-1">Post +</button>
                         </Link>
                         <div className="flex items-center gap-3">
-                            <img className="size-10 lg:hidden md:hidden" src="./assets/search.svg" alt="" />
+                            <img className="size-10 lg:hidden md:hidden" src="/assets/search.svg" alt="" />
                             <UserDropdown handleLogout={handleLogout} getCookie={getCookie} />
                         </div>
                     </div>

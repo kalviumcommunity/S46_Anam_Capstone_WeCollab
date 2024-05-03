@@ -5,8 +5,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-
-import { Heart } from "lucide-react"
+import { Heart, CirclePlus } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 
 export default function Idea() {
@@ -125,6 +124,10 @@ export default function Idea() {
                 <p>AI Engine</p>
             </div>
         </div>
+        <button onClick={() => navigate("/post/idea")} className="flex w-full gap-3 justify-center p-2 bg-yellow-400 border-black border-2 rounded-lg">
+            <CirclePlus/>
+            Contribute
+        </button>
     </div>
     </>
   )

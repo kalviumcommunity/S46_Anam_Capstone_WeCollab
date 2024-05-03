@@ -14,7 +14,7 @@ export default function ResponsiveNav() {
     <div className="md:hidden lg:hidden">
         <Drawer direction="right">
         <DrawerTrigger>
-            <img src="./assets/responsive-nav.svg" alt="Responsive navigation icon" />
+            <img src="/assets/responsive-nav.svg" alt="Responsive navigation icon" />
         </DrawerTrigger>
         <DrawerContent>
             <DrawerHeader className="flex flex-col items-center gap-10">
