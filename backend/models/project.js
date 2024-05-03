@@ -6,7 +6,7 @@ const seekingSchema = new mongoose.Schema({
         required: true
     },
     vacancy: {
-        type: String,
+        type: Number,
         required: true
     },
     skills: {
