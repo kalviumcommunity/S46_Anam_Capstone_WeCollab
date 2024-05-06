@@ -5,19 +5,45 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { Heart, CirclePlus } from "lucide-react"
+import { Heart, CirclePlus, ListFilter } from "lucide-react"
+import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 export default function Idea() {
 
     const navigate = useNavigate()
+    const [isVisible,setVisible] = useState(false)
 
   return (
     <>
-    <div className="lg:w-[50dvw] h-full px-10 overflow-y-auto hide-scrollbar font-Poppins border-black border-l lg:flex items-center lg:items-start flex-col gap-12">
+    <div className="lg:w-[60dvw] h-full px-10 overflow-y-auto hide-scrollbar font-Poppins border-black border-l lg:flex items-center lg:items-start flex-col gap-12">
         <div className="w-full sticky top-0 pt-6 bg-white">
-            <h1 className="text-4xl font-semibold py-5">Open Ideas</h1>
+            <div className="flex items-center justify-between">
+                <h1 className="text-4xl font-semibold py-5">Open Ideas</h1>
+                <button onClick={() => navigate("/post/idea")} className="flex lg:hidden w-1/3 gap-3 justify-center p-1 bg-yellow-400 border-black border-2 rounded-lg">
+                    <CirclePlus/>
+                    Contribute
+                </button>
+            </div>
             <hr className="border-slate-100 border w-full" />
+        </div>
+        <div className="flex lg:hidden justify-end pt-5">
+            <button onClick={() => setVisible(!isVisible)} className="flex items-center gap-3 py-2 px-4 rounded-full">
+                <ListFilter className="size-5" />
+                <p>Filter</p>
+            </button>
+        </div>
+        <div className={`w-full lg:hidden ${isVisible ? "pt-5" : "h-0"} transition-all pb-5`}>
+            <Select>
+                <SelectTrigger className={`w-full text-[1rem] ${isVisible ? "" : "invisible"} border-0`}>
+                    <SelectValue placeholder="Category" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="tech">Tech</SelectItem>
+                    <SelectItem value="art">Art</SelectItem>
+                    <SelectItem value="outdoor Activity">Outdoor Activity</SelectItem>
+                </SelectContent>
+            </Select>
         </div>
         <div>
             <div className="flex items-center gap-2 mb-3">
@@ -98,7 +124,7 @@ export default function Idea() {
             </div>
         </div>
     </div>
-    <div className="my-16 font-Poppins font-medium">
+    <div className="my-16 hidden lg:block font-Poppins font-medium">
         <Select>
             <SelectTrigger className="w-full border-slate-400 border h-10">
                 <SelectValue placeholder="Category" />

@@ -44,7 +44,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className={`border-black sticky font-Poppins top-0 z-30 bg-white w-full border-b flex justify-between items-center py-3 px-5 md:px-16 ${section === "showcase" ? "lg:px-8": ""} lg:px-24`}>
+            <nav className={`border-black sticky font-Poppins top-0 z-30 bg-white w-full border-b flex justify-between items-center py-3 px-5 md:px-16 ${section === "showcase" ? "": "lg:px-8"} transition-all lg:px-24`}>
                 <Link to="/">
                     <div className="flex items-center gap-3 cursor-pointer">
                         <img className="size-10 lg:size-[inherit]" src="/assets/logo.svg" alt="Logo of WeCollab" />
