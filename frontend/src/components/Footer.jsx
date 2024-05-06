@@ -19,7 +19,7 @@ export default function Footer() {
 
   return (
     <>
-        <footer className="flex flex-col-reverse gap-10 lg:flex-row md:flex-row lg:gap-0 items-center justify-between p-10 lg:py-10 md:px-20 lg:px-28 border-black border-t">
+        <footer className="flex flex-col-reverse gap-10 lg:flex-row md:flex-row lg:gap-0 items-center justify-between p-10 lg:py-10 md:px-20 lg:px-28 border-black border">
             <div className="flex flex-col items-center lg:items-start md:items-start gap-5">
                 <div className="flex gap-3 items-center cursor-pointer">
                     <img className="size-8 lg:size-[inherit]" src="/assets/logo.svg" alt="Logo of WeCollab" />

@@ -126,7 +126,7 @@ export default function PostProject() {
     <Navbar/>
     <div className="flex flex-row-reverse justify-center bg-[#fff3e6] font-Poppins">
         <div className="lg:h-screen md:h-screen lg:overflow-y-auto md:overflow-y-auto overflow-x-clip">
-            <form className="flex flex-col gap-3 lg:gap-5 bg-white py-10 lg:pb-20 lg:w-[30dvw] md:w-[30dvw] border-black lg:border-l">
+            <form className="flex flex-col gap-3 lg:gap-5 bg-white py-10 lg:pb-20 lg:w-[30dvw] md:w-[30dvw] border-black lg:border-l md:border-l ">
                 {section === "idea" ?
                     <h1 className="font-semibold text-2xl lg:text-3xl px-10">Create Idea</h1>
                     :

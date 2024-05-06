@@ -6,7 +6,7 @@ export default function SideNavbar() {
     const {section} = useParams()
 
   return (
-    <div className={`w-full sticky transition-all ease-in-out items-center font-raleway lg:items-start lg:w-[20dvw] md:w-[30dvw] bg-white border-black border-t md:border-t-0 lg:border-t-0 lg:border-r-0 lg:static bottom-0 flex flex-col p-5 ${section === "showcase" ? "lg:py-10 lg:px-8 md:p-10" : "lg:py-10 lg:px-8 md:static"} font-semibold text-xl`}>
+    <div className={`w-full sticky transition-all ease-in-out items-center font-raleway lg:items-start lg:w-[20dvw] md:w-[30dvw] bg-white border-black border-t md:border-t-0 lg:border-t-0 lg:border-r-0 lg:static bottom-0 flex flex-col p-5 lg:py-10 md:p-10 lg:px-8 md:static font-semibold text-xl`}>
         <div className="flex lg:block md:block gap-12">
             <div onClick={() => navigate("/home")} className="flex hover:bg-slate-300 rounded-md cursor-pointer items-center">
                 <img className="lg:size-12 md:size-8 size-10" src="/assets/projects.svg" alt="" />
