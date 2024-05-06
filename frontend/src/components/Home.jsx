@@ -14,7 +14,7 @@ export default function Home() {
     <>
         <Navbar/>
 
-        <div className={`flex h-[90dvh] flex-col-reverse font-raleway lg:flex-row md:flex-row ${section === "showcase" ? "" : "md:mx-5 lg:mx-20"}`}>
+        <div className={`flex h-[90dvh] flex-col-reverse font-raleway lg:flex-row md:flex-row transition-all ${section === "showcase" ? "md:mx-5 lg:mx-20" : ""}`}>
 
             <SideNavbar/>
 
