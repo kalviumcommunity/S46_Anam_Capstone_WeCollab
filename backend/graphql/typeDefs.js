@@ -33,9 +33,13 @@ type Showcase {
 }
 
 type Project {
+  userId: String!
   title: String!
   about: String!
   thumbnail: String!
+  collaborators: Int!
+  budget: String!
+  timeline: String!
   carousel: [String!]
   presentation: String
   seeking: [Seeking!]!
@@ -43,18 +47,21 @@ type Project {
 
 type Seeking {
   role: String!
-  vacancy: String!
+  vacancy: Int!
   skills: [String!]!
-  responsibilities: String!
+  responsibility: String!
   experience: String!
 }
 
 type Idea {
   userId: String!
   title: String!
+  summary: String!
   description: String!
   status: String!
   category: String!
+  skills: [String!]!
+  tags: [String!]!
 }
 
 type Query {
@@ -74,7 +81,7 @@ type Mutation {
   deleteProject(id: ID!): Boolean
   deleteShowcase(id: ID!): Boolean
   createIdea(ideaInput: addIdea!): Idea!
-  createProject(projectInput: addProject): Project!
+  createProject(projectInput: addProject!): Project!
   createShowcase(id: ID!,showcase: addShowcase): Showcase!
   updateUser(id: ID!, property: String!, userData: updateUser): User
   updateProject(id: ID!, projectData: updateProject): Project
@@ -110,9 +117,12 @@ input addExperienceType {
 input addIdea {
   userId: String!
   title: String!
+  summary: String!
   description: String!
   status: String!
   category: String!
+  skills: [String!]!
+  tags: [String!]!
 }
 
 input addProject {
@@ -120,6 +130,9 @@ input addProject {
   title: String!
   about: String!
   thumbnail: String!
+  collaborators: Int!
+  budget: String!
+  timeline: String!
   carousel: [String!]
   presentation: String
   seeking: [addSeeking!]!
@@ -127,9 +140,9 @@ input addProject {
 
 input addSeeking {
   role: String!
-  vacancy: String!
+  vacancy: Int!
   skills: [String!]!
-  responsibilities: String!
+  responsibility: String!
   experience: String!
 }
 

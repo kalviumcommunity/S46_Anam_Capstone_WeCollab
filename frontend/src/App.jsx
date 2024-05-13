@@ -7,13 +7,11 @@ import ProjectDetail from "./components/ProjectDetail"
 import PostProject from "./components/PostForm"
 import {BrowserRouter,Routes,Route} from "react-router-dom"
 import IdeaDetail from "./components/IdeaDetail"
-import Showcase from "./components/Project"
 
 function App() {
 
   return (
     <>
-      {/* <Navbar/> */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Hero/>} />

@@ -62,8 +62,8 @@ export default function Project() {
                     <p>Filter</p>
                 </button>
             </div>
-            <div onClick={scrollToTop} className={`fixed cursor-pointer right-8 ${showScrollUp ? "opacity-100" : "opacity-0"} transition-opacity bottom-10 p-2 border-black border rounded-full`}>
-                <ArrowUp/>
+            <div onClick={scrollToTop} className={`fixed cursor-pointer right-4 bg-white md:right-8 lg:right-8 ${showScrollUp ? "opacity-100" : "opacity-0"} transition-opacity bottom-32 md:bottom-10 lg:bottom-10 p-2 border-black border rounded-full`}>
+                <ArrowUp className="lg:h-[inherit] lg:w-[inherit] size-4"/>
             </div>
             <div className={`w-full ${isVisible ? "pt-5" : "h-0"} transition-all pb-10`}>
                 <Select>

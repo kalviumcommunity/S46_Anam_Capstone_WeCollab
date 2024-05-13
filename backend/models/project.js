@@ -13,7 +13,7 @@ const seekingSchema = new mongoose.Schema({
         type: Array,
         required: true
     },
-    responsibilities: {
+    responsibility: {
         type: String,
         required: true
     },
@@ -24,6 +24,13 @@ const seekingSchema = new mongoose.Schema({
 },{timestamps: true})
 
 const projectSchema = new mongoose.Schema({
+    default: {
+        carousel: [],
+    },
+    userId: {
+        type: String,
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -41,6 +48,18 @@ const projectSchema = new mongoose.Schema({
     },
     presentation: {
         type: String
+    },
+    collaborators: {
+        type: Number,
+        required: true
+    },
+    budget: {
+        type: String,
+        required: true
+    },
+    timeline: {
+        type: String,
+        required: true
     },
     seeking: {
         type:[seekingSchema],
