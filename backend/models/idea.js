@@ -9,6 +9,10 @@ const ideaSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    summary: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         required: true
@@ -19,6 +23,14 @@ const ideaSchema = new mongoose.Schema({
     },
     category: {
         type: String,
+        required: true
+    },
+    skills: {
+        type: Array,
+        required: true
+    },
+    tags: {
+        type: Array,
         required: true
     }
 },{timestamps: true})

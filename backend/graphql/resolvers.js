@@ -149,14 +149,14 @@ export const resolvers = {
                 return err
             }
         },
-        async createIdea(_,args,contextValue){
+        async createIdea(_,{ideaInput},contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
                     extensions: { code: 'ERROR_UPDATING_TOKENS' },
                   });
             }
             try{
-                const newIdea = new ideaModel(args.idea)
+                const newIdea = new ideaModel(ideaInput)
                 const res = await newIdea.save()
                 return{id:res.id,...res._doc}
             }catch(err){

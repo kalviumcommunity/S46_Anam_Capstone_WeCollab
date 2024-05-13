@@ -62,3 +62,39 @@ export const UPDATE_USER = gql `
         }
     }
 `
+
+export const POST_PROJECT = gql `
+    mutation CreateProject($projectInput: addProject!){
+        createProject(projectInput: $projectInput){
+            userId
+            title
+            about
+            thumbnail
+            collaborators
+            budget
+            timeline
+            carousel
+            seeking {
+                role
+                vacancy
+                skills
+                responsibility
+                experience
+            }
+        }
+    }
+`
+export const POST_IDEA = gql `
+    mutation CreateIdea($ideaInput: addIdea!){
+        createIdea(ideaInput: $ideaInput){
+            userId
+            title
+            summary
+            description
+            status
+            category
+            skills
+            tags
+        }
+    }
+`

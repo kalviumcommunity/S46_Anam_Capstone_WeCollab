@@ -6,8 +6,8 @@ export default function SeekingSkill({role}) {
 
   return (
     <>
-        <h1 onClick={() => setShowDetails(!showDetails)}  className="font-semibold">Skills Required🔻</h1> 
-        {role.skills.length > 0 && <ul className={`${showDetails ? "" : "hidden"} list-disc px-10`}>
+        <h1 onClick={() => setShowDetails(!showDetails)}  className="font-semibold text-[1rem] cursor-pointer">Skills Required🔻</h1> 
+        {role.skills.length > 0 && <ul className={`${showDetails ? "" : "hidden"} list-disc m-0`}>
             {role.skills.map(skill => (
                 <li key={skill}>{skill}</li>
             ))}

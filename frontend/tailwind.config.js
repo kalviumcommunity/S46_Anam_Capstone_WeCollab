@@ -77,12 +77,12 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundImage: {
-        "thumbnail": "url(assets/Thumbnail.svg)",
-        "wavy" : "url(assets/wavy-bgm.png)",
-        "search": "url(assets/search.svg)",
-        "arrowdown": "url(assets/arrow-down.svg)"
+        "thumbnail": "url(/assets/Thumbnail.svg)",
+        "wavy" : "url(/assets/wavy-bgm.png)",
+        "search": "url(/assets/search.svg)",
+        "arrowdown": "url(/assets/arrow-down.svg)"
       }
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"),require('@tailwindcss/typography')],
 }
