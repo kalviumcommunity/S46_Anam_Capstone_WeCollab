@@ -16,9 +16,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Hero/>} />
           <Route path="/user/:form" element={<Form/>} />
-          <Route path="/home" element={<Home/>}/>
-          <Route path="/profile" element={<Profile/>} />
           <Route path="/:section" element={<Home/>} />
+          <Route path="/profile" element={<Profile/>} />
           <Route path="/ideas/:id" element={<IdeaDetail/>} />
           <Route path="/google/oauth" element={<AuthError/>} />
           <Route path="/project" element={<ProjectDetail/>} />

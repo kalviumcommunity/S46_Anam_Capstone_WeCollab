@@ -87,12 +87,12 @@ export default function Project() {
                     </SelectContent>
                 </Select>
             </div>
-            <div className="flex flex-wrap lg:gap-y-5 lg:gap-x-10 gap-10 content-start md:gap-3">
-                <div className="w-full lg:w-fit md:w-fit">
-                    <div className="lg:h-[16rem] md:h-[12rem] md:w-[15rem] lg:w-[20rem] h-[20rem] w-full rounded-lg bg-red-100"></div>
-                    <div className="flex text-sm items-center justify-between gap-2 mt-3 px-2">
-                        <div className="flex items-center md:gap-1 gap-3">
-                            <div className="flex justify-center items-center text-xl cursor-pointer text-white rounded-full bg-orange-600 h-8 w-8">
+            <div className="grid grid-flow-row md:grid-cols-2 lg:grid-cols-3 w-full lg:gap-y-5 lg:gap-x-10 gap-10 content-start md:gap-3">
+                <div className="w-full">
+                    <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
+                    <div className="flex text-sm items-center justify-between mt-3 px-2">
+                        <div className="flex items-center gap-3">
+                            <div className="flex justify-center items-center text-xl cursor-pointer text-white rounded-full bg-orange-600 min-h-8 min-w-8">
                                 <p>A</p>
                             </div>
                             <div>
@@ -111,11 +111,11 @@ export default function Project() {
                         </div>
                     </div>
                 </div>
-                <div className="w-full lg:w-fit md:w-fit">
-                    <div className="lg:h-[16rem] lg:w-[20rem] md:h-[12rem] md:w-[15rem] h-[20rem] w-full rounded-lg bg-red-100"></div>
-                    <div className="flex text-sm items-center justify-between gap-2 mt-3 px-2">
-                        <div className="flex items-center md:gap-1 gap-3">
-                            <div className="flex justify-center items-center text-xl cursor-pointer text-white rounded-full bg-orange-600 h-8 w-8">
+                <div className="w-full">
+                    <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
+                    <div className="flex text-sm items-center justify-between mt-3 px-2">
+                        <div className="flex items-center gap-3">
+                            <div className="flex justify-center items-center text-xl cursor-pointer text-white rounded-full bg-orange-600 min-h-8 min-w-8">
                                 <p>A</p>
                             </div>
                             <div>
@@ -134,11 +134,11 @@ export default function Project() {
                         </div>
                     </div>
                 </div>
-                <div className="w-full lg:w-fit md:w-fit">
-                    <div className="lg:h-[16rem] lg:w-[20rem] md:h-[12rem] md:w-[15rem] h-[20rem] w-full rounded-lg bg-red-100"></div>
-                    <div className="flex text-sm items-center justify-between gap-2 mt-3 px-2">
-                        <div className="flex items-center md:gap-1 gap-3">
-                            <div className="flex justify-center items-center text-xl cursor-pointer text-white rounded-full bg-orange-600 h-8 w-8">
+                <div className="w-full">
+                    <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
+                    <div className="flex text-sm items-center justify-between mt-3 px-2">
+                        <div className="flex items-center gap-3">
+                            <div className="flex justify-center items-center text-xl cursor-pointer text-white rounded-full bg-orange-600 min-h-8 min-w-8">
                                 <p>A</p>
                             </div>
                             <div>
@@ -157,12 +157,12 @@ export default function Project() {
                         </div>
                     </div>
                 </div>
-                <div className="lg:h-[16rem] lg:w-[20rem] md:h-[12rem] md:w-[15rem] h-[20rem] w-full rounded-lg bg-red-100"></div>
-                <div className="lg:h-[16rem] lg:w-[20rem] md:h-[12rem] md:w-[15rem] h-[20rem] w-full rounded-lg bg-red-100"></div>
-                <div className="lg:h-[16rem] lg:w-[20rem] md:h-[12rem] md:w-[15rem] h-[20rem] w-full rounded-lg bg-red-100"></div>
-                <div className="lg:h-[16rem] lg:w-[20rem] md:h-[12rem] md:w-[15rem] h-[20rem] w-full rounded-lg bg-red-100"></div>
-                <div className="lg:h-[16rem] lg:w-[20rem] md:h-[12rem] md:w-[15rem] h-[20rem] w-full rounded-lg bg-red-100"></div>
-                <div className="lg:h-[16rem] lg:w-[20rem] md:h-[12rem] md:w-[15rem] h-[20rem] w-full rounded-lg bg-red-100"></div>
+                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
+                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
+                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
+                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
+                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
+                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
             </div>
         </div>
     </>
