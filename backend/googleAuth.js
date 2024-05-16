@@ -43,7 +43,7 @@ router.get("/google/oauth", async (req,res) => {
         oAuth2Client.setCredentials(tokens)
         const {name,email,picture} = await getUserInfo(tokens.access_token)
         const userExists = await userModel.findOne({email})
-        const accessToken = jwt.sign({email: email}, process.env.ACCESS_TOKEN,{expiresIn: "10s"})
+        const accessToken = jwt.sign({email: email}, process.env.ACCESS_TOKEN,{expiresIn: "1h"})
         if(!userExists){
             const newUser = new userModel({
                 name: name,
