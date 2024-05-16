@@ -77,11 +77,14 @@ export const resolvers = {
         async deleteProject(_,args,contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
-                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                    extensions: { code: 'AUTHENTICATION_ERROR' },
                   });
             }
             try{
                 const wasDeleted = (await projectModel.deleteOne({_id: args.id})).deletedCount
+                if(contextValue.token){
+                    return {deleted: wasDeleted, token: contextValue.token}
+                }
                 return wasDeleted
             }catch(err){
                 return err
@@ -90,11 +93,14 @@ export const resolvers = {
         async deleteShowcase(_,args,contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
-                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                    extensions: { code: 'AUTHENTICATION_ERROR' },
                   });
             }
             try{
                 const wasDeleted = (await showcaseModel.deleteOne({_id: args.id})).deletedCount
+                if(contextValue.token){
+                    return {deleted: wasDeleted, token: contextValue.token}
+                }
                 return wasDeleted
             }catch(err){
                 return err
@@ -152,12 +158,15 @@ export const resolvers = {
         async createIdea(_,{ideaInput},contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
-                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                    extensions: { code: 'AUTHENTICATION_ERROR' },
                   });
             }
             try{
                 const newIdea = new ideaModel(ideaInput)
                 const res = await newIdea.save()
+                if(contextValue.token){
+                    return {id:res.id,...res._doc, token: contextValue.token}
+                }
                 return{id:res.id,...res._doc}
             }catch(err){
                 return err
@@ -166,12 +175,15 @@ export const resolvers = {
         async createProject(_,{projectInput},contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
-                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                    extensions: { code: 'AUTHENTICATION_ERROR' },
                   });
             }
             try{
                 const newProject = new projectModel(projectInput)
                 const res = await newProject.save()
+                if(contextValue.token){
+                    return {id:res.id,...res._doc, token: contextValue.token}
+                }
                 return{id:res.id,...res._doc}
             }catch(err){
                 return err
@@ -180,7 +192,7 @@ export const resolvers = {
         async updateUser(_,{id,property,userData},contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
-                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                    extensions: { code: 'AUTHENTICATION_ERROR' },
                   })
             }
             try{
@@ -196,12 +208,15 @@ export const resolvers = {
                 } else {
                     updateObject = { [property]: userData.details.about || userData.details.status || userData.details.currentPosition }
                 }
-                const updatedUser = await userModel.findByIdAndUpdate(
+                const res = await userModel.findByIdAndUpdate(
                     id,
                     updateObject,
                     { new: true }
                   )
-                return updatedUser
+                if(contextValue.token){
+                    return {id:res.id,...res._doc, token: contextValue.token}
+                }
+                return {id:res.id,...res._doc}
             }catch(err){
                 return err
             }
@@ -209,12 +224,15 @@ export const resolvers = {
         async updateProject(_,{id,projectData},contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
-                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                    extensions: { code: 'AUTHENTICATION_ERROR' },
                   });
             }
             try{
                 const res = projectModel.findByIdAndUpdate(id,projectData,{new: true})
-                return res
+                if(contextValue.token){
+                    return {id:res.id,...res._doc, token: contextValue.token}
+                }
+                return {id:res.id,...res._doc}
             }catch(err){
                 return err
             }
@@ -222,12 +240,15 @@ export const resolvers = {
         async updateShowcase(_,{id,showcaseData},contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
-                    extensions: { code: 'ERROR_UPDATING_TOKENS' },
+                    extensions: { code: 'AUTHENTICATION_ERROR' },
                   });
             }
             try{
                 const res = showcaseModel.findByIdAndUpdate(id,showcaseData,{new: true})
-                return res
+                if(contextValue.token){
+                    return {id:res.id,...res._doc, token: contextValue.token}
+                }
+                return {id:res.id,...res._doc}
             }catch(err){
                 return err
             }

@@ -5,7 +5,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { imageDB } from "@/firebase/config"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { toast } from 'sonner'
@@ -62,11 +62,11 @@ export default function PostProject() {
 
     const formik = useFormik({
         initialValues,
-        onSubmit: (values) => {
-          handleUpload(image)
+        onSubmit: async (values) => {
           try{
+            await handleUpload(image)
             if(section === "project"){
-              createProject({ variables: { projectInput: {
+              await createProject({ variables: { projectInput: {
                 userId:"1234",
                 title: values.title,
                 about: values.about,
@@ -76,14 +76,13 @@ export default function PostProject() {
                 timeline: values.timeline + " " + values.timelineDuration,
                 seeking: values.seeking
               } } })
-              .then(() => {toast.success("Post Successful", {
+              toast.success("Post Successful", {
                 className: "text-green-600 text-[1rem] bg-white py-5 shadow-none border-black border-2",
                 position: "top-right"
-                })
-                navigate("/profile")
               })
+              navigate("/profile")
             }else{
-              createIdea({ variables: { ideaInput: {
+              await createIdea({ variables: { ideaInput: {
                 userId: "1234",
                 title: values.title,
                 summary: values.summary,
@@ -93,12 +92,11 @@ export default function PostProject() {
                 skills: values.skills,
                 tags: values.tags
               } }})
-              .then(() => {toast.success("Post Successful", {
+              toast.success("Post Successful", {
                 className: "text-green-600 text-[1rem] bg-white py-5 shadow-none border-black border-2",
                 position: "top-right"
                 })
-                navigate("/profile")
-              })
+              navigate("/profile")
             }
           }catch(error){
             toast.error(error, {

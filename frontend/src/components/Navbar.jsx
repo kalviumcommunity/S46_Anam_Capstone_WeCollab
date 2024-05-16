@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import UserDropdown from "./UserDropdown"
 import ResponsiveNav from "./ResponsiveNav"
@@ -7,7 +6,6 @@ export default function Navbar() {
 
     const {form} = useParams()
     const navigate = useNavigate()
-    const [isVisible,setVisible] = useState(false)
     const {section} = useParams()
 
     const setCookie = (cookieName,value,daysToLive) => {
@@ -93,23 +91,10 @@ export default function Navbar() {
                             <button className="rounded-full bg-orange-600 px-5 py-1">+ Join</button>
                         </Link>
                     </div>
-                    <ResponsiveNav/>
+                    { !section && <ResponsiveNav/>}
                 </>
                 }
             </nav>
-            <div className={`${isVisible ? "": "hidden"} fixed right-4 lg:right-6 z-30 top-16 bg-white flex flex-col border-black font-raleway rounded-md border-2 shadow-lg w-1/2 lg:w-1/6 p-3`}>
-                <h1 className="p-1 text-[1.15rem] lg:text-xl font-semibold">Account</h1>
-                <Link to="/profile">
-                    <p className="hover:bg-red-100 p-1 hover:text-black text-gray-800 rounded-md cursor-pointer">View Profile</p>
-                </Link>
-                <p className="hover:bg-red-100 p-1 hover:text-black text-gray-800 rounded-md cursor-pointer">Settings</p>
-                <hr className="border-black border-1 m-2" />
-                <h1 className="p-1 text-[1.15rem] lg:text-xl font-semibold">Manage</h1>
-                <p className="hover:bg-red-100 p-1 hover:text-black text-gray-800 rounded-md cursor-pointer">Posts</p>
-                <p className="hover:bg-red-100 p-1 hover:text-black text-gray-800 rounded-md cursor-pointer">Pitch</p>
-                <hr className="border-black border-1 m-2" />
-                <button onClick={handleLogout} className="bg-red-600 text-white font-semibold p-1 rounded-md">Log Out</button>
-            </div>
         </>
     )
 }

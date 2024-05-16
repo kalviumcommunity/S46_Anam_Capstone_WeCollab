@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink} from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, ApolloLink, Observable, from} from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { Toaster } from "sonner"
 
@@ -21,6 +21,37 @@ const getCookie = (cookieName) => {
   return result
 }
 
+const setCookie = (cookieName,value,daysToLive) => {
+  const date = new Date()
+  date.setTime(date.getTime() + (daysToLive * 24 * 60 * 60 * 1000))
+  let expires = "expires=" + date.toUTCString()
+  document.cookie = `${cookieName}=${value}; ${expires}; path=/`
+}
+
+const setTokenCookieLink = new ApolloLink((operation, forward) => {
+  return new Observable((observer) => {
+    let subscription;
+
+      subscription = forward(operation).subscribe({
+        next: (response) => {
+          const token = response?.data?.token;
+
+          if (token) {
+            setCookie('token', token, 1); 
+          }
+
+          observer.next(response);
+        },
+        error: (error) => {
+          observer.error(error);
+        },
+        complete: () => {
+          if (subscription) subscription.unsubscribe();
+        },
+      });
+  });
+});
+
 const httpLink = createHttpLink({
   uri: import.meta.env.VITE_APOLLO_URI,
 });
@@ -36,8 +67,14 @@ const authLink = setContext((operation, previousContext) => {
   }
 });
 
+const link = from([
+  setTokenCookieLink,
+  authLink,
+  httpLink,
+]);
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link,
   cache: new InMemoryCache(),
   credentials: "include"
 });

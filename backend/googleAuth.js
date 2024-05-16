@@ -43,6 +43,7 @@ router.get("/google/oauth", async (req,res) => {
         oAuth2Client.setCredentials(tokens)
         const {name,email,picture} = await getUserInfo(tokens.access_token)
         const userExists = await userModel.findOne({email})
+        const accessToken = jwt.sign({email: email}, process.env.ACCESS_TOKEN,{expiresIn: "1h"})
         if(!userExists){
             const newUser = new userModel({
                 name: name,
@@ -53,10 +54,7 @@ router.get("/google/oauth", async (req,res) => {
             newUser.token = refreshToken
             await newUser.save()
         }
-        res.cookie("picture",picture,{maxAge: 1000*60*60*24})
-        res.cookie("user",email,{maxAge: 1000*60*60*24})
-        res.cookie("token",tokens.access_token,{maxAge: 1000*60*60})
-        res.redirect(`${process.env.FRONTEND_REDIRECT_URL}/home`)
+        res.redirect(`${process.env.FRONTEND_REDIRECT_URL}/home?token=${accessToken}&email=${email}`)
     } catch (error) {
         console.error('Error during Google Auth:', error)
         res.redirect(`${process.env.FRONTEND_REDIRECT_URL}/google/oauth?status=failed`)

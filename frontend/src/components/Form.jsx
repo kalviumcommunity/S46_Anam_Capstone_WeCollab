@@ -14,7 +14,6 @@ export default function Form() {
 
     const [userSignup, { data: signupData, loading: signupLoading, error: signupError }] = useMutation(USER_SIGNUP)
     const [userLogin, { data: loginData, loading: loginLoading, error: loginError }] = useMutation(USER_LOGIN);
-    // const [form,setForm] = useState()
 
     const setCookie = (cookieName,value,daysToLive) => {
         const date = new Date()
@@ -70,7 +69,7 @@ export default function Form() {
                 try {
                     await userSignup({ variables: { userInput: { name, email, password } } })
                         .then(({data}) => {
-                            setCookie("token",data.userSignup.token,30)
+                            setCookie("token",data.userSignup.token, 1)
                             setCookie("user", data.userSignup.email, 1);
                             navigate("/home");
                         })
