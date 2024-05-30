@@ -189,7 +189,7 @@ export const resolvers = {
                 return err
             }
         },
-        async updateUser(_,{id,property,userData},contextValue){
+        async updateUser(_,{id,property,operation,matchItem,userData},contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
                     extensions: { code: 'AUTHENTICATION_ERROR' },
@@ -198,13 +198,27 @@ export const resolvers = {
             try{
                 let updateObject = {};
                 if(property === "details.experience") {
-                    updateObject = { $push: { "details.experience": userData.details.experience } };
+                    if(operation === "add"){
+                        updateObject = { $push: { "details.experience": userData.details.experience } };
+                    }else if(operation === "delete"){
+                        updateObject = { $pull: {"details.experience" : matchItem.experience} }
+                    }
                 } else if(property === "details.skills") {
-                    updateObject = { $push: { "details.skills": userData.details.skills } };
+                    if(operation === "add"){
+                        updateObject = { $push: { "details.skills": userData.details.skills } };
+                    }else if(operation === "delete"){
+                        updateObject = { $pull: { "details.skills": matchItem.skill } }
+                    }
                 } else if(property === "details.projects"){
-                    updateObject = { $push: { "details.projects": userData.details.projects } }
+                    if(operation === "add"){
+                        updateObject = { $push: { "details.projects": userData.details.projects } }
+                    }else if(operation === "delete"){
+                        updateObject = { $pull: { "details.projects": matchItem.project } }
+                    }
                 } else if(property === "completedSection"){
                     updateObject = { $push: { "completedSection": userData.section } }
+                } else if(property === "account") {
+                    updateObject = { name: userData.name, email: userData.email }
                 } else {
                     updateObject = { [property]: userData.details.about || userData.details.status || userData.details.currentPosition }
                 }

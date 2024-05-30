@@ -68,10 +68,13 @@ export default function Navbar() {
                 <Link to="/user/login">
                     <button className="rounded-full font-raleway font-bold border-black border hover:bg-slate-200 px-5 py-1">Log-In</button> 
                 </Link>
-                : 
+                :  
+                form === "login" ?
                 <Link to="/user/signup">
                     <button className="rounded-full font-raleway font-bold border-black border hover:bg-slate-200 px-5 py-1">Sign-up</button>
                 </Link>
+                :
+                ""
                 :  getCookie("user") ? 
                 <>
                     <div className="flex items-center gap-5 font-Poppins">

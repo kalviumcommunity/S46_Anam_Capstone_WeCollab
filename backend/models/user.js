@@ -2,12 +2,16 @@ import mongoose from "mongoose"
 
 const experienceSchema = new mongoose.Schema({
     role: {
-      type: String,
-      required: true,
+        type: String,
+        required: true
     },
     duration: {
-      type: String,
-      required: true,
+        type: String,
+        required: true
+    },
+    company: {
+        type: String,
+        required: true 
     }
   });
 
@@ -44,7 +48,7 @@ const userSchema = new mongoose.Schema({
         default: {
             currentPosition: "",
             about: "",
-            status: "",
+            status: "Open to collaborate",
             experience: [],
             skills: [],
             projects: []

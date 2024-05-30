@@ -6,6 +6,7 @@ export const GET_USER = gql `
             id
             name
             email
+            provider
             completedSection
             details{
                 currentPosition
@@ -14,6 +15,7 @@ export const GET_USER = gql `
                 experience{
                     role
                     duration
+                    company
                 }
                 skills
                 projects
@@ -42,8 +44,8 @@ export const USER_LOGIN = gql `
 `
 
 export const UPDATE_USER = gql `
-    mutation UpdateUser($id: ID!, $property: String!, $userData: updateUser){
-        updateUser(id: $id, property:$property, userData: $userData){
+    mutation UpdateUser($id: ID!, $property: String!, $operation: String, $matchItem: MatchItem, $userData: updateUser){
+        updateUser(id: $id, property: $property, operation: $operation, matchItem: $matchItem, userData: $userData){
             id
             name
             email

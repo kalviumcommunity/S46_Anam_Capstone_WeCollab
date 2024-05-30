@@ -5,6 +5,7 @@ type User {
     name: String!
     email: String!
     password: String!
+    provider: String
     token: String!
     completedSection: [String]
     details: Details
@@ -22,6 +23,7 @@ type Details {
 type ExperienceType {
     role: String!
     duration: String!
+    company: String!
 }
 
 type Showcase {
@@ -75,6 +77,18 @@ type Query {
   idea(id: ID!): Idea
 }
 
+input MatchItem {
+  skill: String
+  project: String
+  experience: experienceObject
+}
+
+input experienceObject{
+  role: String
+  duration: String
+  company: String
+}
+
 type Mutation {
   userSignup(userInput: addUser!): User!
   userLogin(loginData: loginInput!): User!
@@ -83,7 +97,7 @@ type Mutation {
   createIdea(ideaInput: addIdea!): Idea!
   createProject(projectInput: addProject!): Project!
   createShowcase(id: ID!,showcase: addShowcase): Showcase!
-  updateUser(id: ID!, property: String!, userData: updateUser): User
+  updateUser(id: ID!, property: String!, operation: String, matchItem: MatchItem, userData: updateUser): User
   updateProject(id: ID!, projectData: updateProject): Project
   updateShowcase(id: ID!, showcaseData: updateShowcase): Showcase
 }
@@ -174,6 +188,7 @@ input updateDetails {
 input updateExperience {
   role: String
   duration: String
+  company: String
 }
 
 input updateProject {

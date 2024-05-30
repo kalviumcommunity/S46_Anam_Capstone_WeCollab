@@ -43,11 +43,11 @@ export default function FirebaseImageUpload({handleCompletion,userId}) {
             </div>
          </div>
          : 
-         <div className="py-5 font-semibold">
-            <label className="text-gray-900" htmlFor="file_input">Upload file</label>
+         <div className="flex flex-col gap-2 py-5 font-semibold">
+            <label className="text-gray-900 lg:text-xl md:text-xl" htmlFor="file_input">Upload file</label>
             <div className="flex gap-5">
-                <input onChange={(e) => setImage(e.target.files[0])} className="w-full file:m-2 file:bg-red-200 file:border-0 file:text-red-600 file:font-semibold text-gray-900 border-2 border-black rounded-lg cursor-pointer bg-red-50 focus:outline-none" id="file_input" type="file"/>
-                <button onClick={handleUpload} className="bg-green-600 px-5 py-2 text-white font-semibold rounded-lg">Save</button>
+                <input onChange={(e) => setImage(e.target.files[0])} className="w-full file:m-2 file:bg-red-200 file:border-0 file:text-red-600 file:font-semibold text-gray-900 border border-black rounded-lg cursor-pointer bg-red-50 focus:outline-none" id="file_input" type="file"/>
+                <button onClick={handleUpload} className="bg-green-800 px-5 py-2 text-white font-semibold rounded-md">Save</button>
             </div>
         </div>}
     </>
