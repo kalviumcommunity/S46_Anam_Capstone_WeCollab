@@ -5,7 +5,7 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { imageDB } from "@/firebase/config"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { toast } from 'sonner'

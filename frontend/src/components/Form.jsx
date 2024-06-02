@@ -1,11 +1,13 @@
 import {useFormik} from "formik"
 import * as Yup from "yup"
 import Navbar from "./Navbar"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate, useParams, useSearchParams } from "react-router-dom"
 import { useMutation} from '@apollo/client';
-import { USER_SIGNUP, USER_LOGIN } from "../graphql/CRUD"
+import { USER_SIGNUP, USER_LOGIN, UPDATE_USER } from "../graphql/CRUD"
 import { toast } from 'sonner';
+import { useUserStore } from "@/zustand/store";
 import { useState } from "react";
+import PasswordAuth from "./PasswordAuth";
 
 export default function Form() {
 
@@ -14,13 +16,15 @@ export default function Form() {
 
     const [userSignup, { data: signupData, loading: signupLoading, error: signupError }] = useMutation(USER_SIGNUP)
     const [userLogin, { data: loginData, loading: loginLoading, error: loginError }] = useMutation(USER_LOGIN);
+    const [updateUser,{data: updateData,loading: updateLoading,error: updateError }] = useMutation(UPDATE_USER)
+    const [userData,setUserData] = useState(useUserStore((state) => state.userData))
 
     const setCookie = (cookieName,value,daysToLive) => {
         const date = new Date()
         date.setTime(date.getTime() + (daysToLive * 24 * 60 * 60 * 1000))
         let expires = "expires=" + date.toUTCString()
         document.cookie = `${cookieName}=${value}; ${expires}; path=/`
-    }    
+    }
 
     const initialValues = {
         name:"",
@@ -65,6 +69,7 @@ export default function Form() {
         initialValues,
         validationSchema,
         onSubmit: async ({ name, email, password }) => {
+            console.log("submitted")
             if (form === "signup") {
                 try {
                     await userSignup({ variables: { userInput: { name, email, password } } })
@@ -81,7 +86,7 @@ export default function Form() {
                     console.error(err)
                     toast.error(err,{ position:"top-right", className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border" })
                 }
-            } else {
+            } else if(form === "login") {
                 try {
                     await userLogin({ variables: { loginData: { email, password } } })
                         .then(({data}) => {
@@ -104,6 +109,11 @@ export default function Form() {
     return (
         <>
             <Navbar/>
+            {form && form === "edit" ?
+            <PasswordAuth/>
+            :
+            ""
+            }
             <form onSubmit={formik.handleSubmit} className="flex flex-col font-raleway font-semibold gap-5 h-[80dvh] items-center justify-center">
                     {form && form === "signup" ?
                     // For Signup
@@ -162,6 +172,7 @@ export default function Form() {
                         </div>
                     </> 
                     :
+                    form === "login" ?
                     // For Login
                     <>
                         <h1 className="text-3xl py-3 w-1/2 text-center leading-[3rem]">Login To Your Account</h1>
@@ -203,8 +214,11 @@ export default function Form() {
                         <p>Log-In with Google</p>
                     </div>
                     </>
+                    :
+                    ""
                     }
                 </form>
+                
         </>
     )
 }

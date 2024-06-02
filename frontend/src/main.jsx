@@ -9,7 +9,6 @@ import { Toaster } from "sonner"
 const getCookie = (cookieName) => {
   const cDecoded = decodeURIComponent(document.cookie)
   const cArray = cDecoded.split("; ")
-  console.log(cArray)
   let result;
 
   cArray.map(cookie => {

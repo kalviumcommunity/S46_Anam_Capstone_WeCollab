@@ -1,18 +1,21 @@
 import { useState } from "react"
+import { Edit, Plus } from "lucide-react"
 
-
-export default function Skill({skills}) {
+export default function Skill({skills, handleEdit, changeDeleteVisibility, setSection}) {
 
     const [showSkills,setShowSkills] = useState(false)
 
   return (
     <>
-        <div className="lg:w-1/2 mt-2 flex flex-col w-full border-black border rounded-lg relative bg-white p-5">
+        <div className="lg:w-1/2 md:w-2/3 mt-2 flex flex-col w-full border-black border rounded-lg relative bg-white p-5">
                 <div className="flex justify-between py-2">
                     <h1 className="text-3xl font-semibold">Skills</h1>
                     <div className="flex gap-3 items-center">
-                        <img className="size-8 cursor-pointer" src="/assets/plus.svg" alt="" />
-                        <img className="size-6 cursor-pointer" src="/assets/edit.svg" alt="" />
+                        <Plus onClick={() => handleEdit("Add skills")} className="cursor-pointer" />
+                        <Edit onClick={() => {
+                            changeDeleteVisibility()
+                            setSection("Edit Skills")
+                            }} className="cursor-pointer"/>
                     </div>
                 </div>
                 <div className="flex flex-col gap-3 text-[1rem] lg:text-xl pt-5">
