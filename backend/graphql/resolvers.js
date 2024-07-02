@@ -30,9 +30,13 @@ export const resolvers = {
                 return err
             }
         },
-        async user(_,{email}){
+        async user(_,{email,_id}){
             try{
-                return await userModel.findOne({ email })
+                if(email){
+                    return await userModel.findOne({email})
+                }else{
+                    return await userModel.findById({_id})
+                }
             }catch(err){
                 return err
             }

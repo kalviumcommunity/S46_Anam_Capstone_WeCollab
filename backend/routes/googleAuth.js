@@ -1,8 +1,8 @@
 import express from "express"
 import {OAuth2Client} from "google-auth-library"
-import userModel from "./models/user.js"
+import userModel from "../models/user.js"
 import jwt from "jsonwebtoken"
-const router = express.Router()
+const authRouter = express.Router()
 
 const oAuth2Client = new OAuth2Client(
     process.env.GOOGLE_CLIENT_ID,
@@ -19,7 +19,7 @@ async function getUserInfo(accessToken){
     }
 }
 
-router.post("/api/google", async (req,res) => {
+authRouter.post("/api/google", async (req,res) => {
     try{
         const authorizeUrl = await oAuth2Client.generateAuthUrl({
             access_type: 'offline',
@@ -35,7 +35,7 @@ router.post("/api/google", async (req,res) => {
     }
 })
 
-router.get("/google/oauth", async (req,res) => {
+authRouter.get("/google/oauth", async (req,res) => {
     
     const { code } = req.query
     try {
@@ -62,4 +62,4 @@ router.get("/google/oauth", async (req,res) => {
 
 })
 
-export default router
+export default authRouter

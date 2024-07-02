@@ -6,7 +6,6 @@ const RichTextEditor = ({handleAbout}) => {
 
   const handleContentChange = () => {
     if (editorRef.current) {
-      console.log("editor updating")
       handleAbout(editorRef.current.contentDocument.body.innerHTML)
     }
   };

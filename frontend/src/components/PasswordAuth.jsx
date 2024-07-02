@@ -58,12 +58,10 @@ export default function PasswordAuth() {
         initialValues,
         validationSchema,
         onSubmit:async ({password}) => {
-            console.log(password)
             try {
                 if(userData.provider === "google"){
                     // handleGoogle()
                 }else{
-                    console.log("yes 2")
                     await userLogin({ variables: { loginData: { email: getCookie("user"), password } } })
                 }
                 await updateUser({ variables: { id: userData.id, property: "account", userData: {name: searchParams.get("name"), email: searchParams.get("email") } } })

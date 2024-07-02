@@ -35,6 +35,7 @@ type Showcase {
 }
 
 type Project {
+  id: ID!
   userId: String!
   title: String!
   about: String!

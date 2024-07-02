@@ -1,12 +1,14 @@
-import { Link, useNavigate, useParams } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 import UserDropdown from "./UserDropdown"
 import ResponsiveNav from "./ResponsiveNav"
+import NotificationDropdown from "./NotificationDropdown"
 
 export default function Navbar() {
 
     const {form} = useParams()
     const navigate = useNavigate()
     const {section} = useParams()
+    // const location = useLocation()
 
     const setCookie = (cookieName,value,daysToLive) => {
         const date = new Date()
@@ -81,6 +83,7 @@ export default function Navbar() {
                         <Link to="/post/project">
                             <button className="rounded-full hidden lg:block md:block border-black border px-5 py-1">Post +</button>
                         </Link>
+                        <NotificationDropdown/>
                         <div className="flex items-center gap-3">
                             <img className="size-10 lg:hidden md:hidden" src="/assets/search.svg" alt="" />
                             <UserDropdown handleLogout={handleLogout} getCookie={getCookie} />

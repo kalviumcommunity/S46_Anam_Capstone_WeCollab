@@ -22,6 +22,6 @@ const showcaseSchema = new mongoose.Schema({
     }
 },{timestamps: true})
 
-const showcaseModel = mongoose.model("showcase", showcaseSchema)
+const showcaseModel = mongoose.model("showcases", showcaseSchema)
 
 export default showcaseModel

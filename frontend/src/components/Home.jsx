@@ -9,6 +9,8 @@ import { useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "@/graphql/CRUD";
 import { useUserStore } from "@/zustand/store";
+import Chat from "./Chat";
+import { closeSocket, getUnreadMessages, initializeSocket } from "@/socket/socketManger";
 
 export default function Home() {
 
@@ -46,8 +48,8 @@ export default function Home() {
     const {loading,error,data} = useQuery(GET_USER,{variables: { email:userEmail }})
     const handleUserData = useUserStore((state) => state.setUserData)
     if(!loading){
-      console.log(data)
       handleUserData(data.user)
+      const socket = initializeSocket(data.user.id)
     }
     if(error){
       console.error(error)
@@ -62,18 +64,25 @@ export default function Home() {
       if(token && email){
         navigate("/home")
       }
+      if(!getCookie("user")){
+        navigate("/")
+      }
+
+      return() => {
+        closeSocket()
+      }
     
     },[])
 
   return (
     <>
-        <Navbar/>
+        {data && <Navbar/>}
 
         <div className={`flex h-[90dvh] flex-col-reverse font-raleway lg:flex-row md:flex-row transition-all ${section === "showcase" ? "md:mx-5 lg:mx-20" : ""}`}>
 
             <SideNavbar/>
 
-           {section === "settings" ? 
+           {section === "settings" && data ? 
                 <Setting/>
                 :
                 section === "ideas" ?
@@ -82,7 +91,10 @@ export default function Home() {
                 section === "showcase" ?
                 <Showcase/>
                 :
+                section === "home" ?
                 <Project/>
+                :
+                data && <Chat/>
             }
 
         </div>

@@ -64,7 +64,6 @@ export default function PostProject() {
         initialValues,
         onSubmit: async (values) => {
           try{
-            await handleUpload(image)
             if(section === "project"){
               await createProject({ variables: { projectInput: {
                 userId:"1234",
@@ -76,6 +75,9 @@ export default function PostProject() {
                 timeline: values.timeline + " " + values.timelineDuration,
                 seeking: values.seeking
               } } })
+              .then(async ({data}) => {
+                  await handleUpload(image,data.createProject.id)
+                })
               toast.success("Post Successful", {
                 className: "text-green-600 text-[1rem] bg-white py-5 shadow-none border-black border-2",
                 position: "top-right"
@@ -107,9 +109,9 @@ export default function PostProject() {
         },
       });
     
-      const handleUpload = async (image) => {
+      const handleUpload = async (image,imageId) => {
         setLoading(true)
-        const imageRef = ref(imageDB, `project/thumbnail`);
+        const imageRef = ref(imageDB, `project/thumbnail-${imageId}`);
         if (!image) {
           toast.error('No image selected for upload', {
             position: 'top-right',

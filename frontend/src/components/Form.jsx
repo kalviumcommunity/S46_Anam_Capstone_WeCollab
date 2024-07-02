@@ -69,7 +69,6 @@ export default function Form() {
         initialValues,
         validationSchema,
         onSubmit: async ({ name, email, password }) => {
-            console.log("submitted")
             if (form === "signup") {
                 try {
                     await userSignup({ variables: { userInput: { name, email, password } } })
