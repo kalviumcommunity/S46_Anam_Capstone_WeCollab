@@ -41,6 +41,7 @@ export default function Profile() {
     const [isDeleteVisible,setDeleteVisible] = useState(false)
     const [downloadURL,setDownloadURL] = useState()
     const [completedSection,setCompletedSection] = useState([])
+    const [user,setUserData] = useState(useUserStore((state) => state.userData))
     const {loading,error,data} = useQuery(GET_USER,{variables: { email }})
     const [updateUser,{ data: userData, loading: userLoading, error: userError }] = useMutation(UPDATE_USER)
 

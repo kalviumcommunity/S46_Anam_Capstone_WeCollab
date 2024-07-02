@@ -48,7 +48,7 @@ export default function SideNavbar() {
           </p>
         </div>
         <div
-          onClick={() => navigate("/home")}
+          onClick={() => navigate("/chat")}
           className="flex hover:bg-slate-300 rounded-md cursor-pointer items-center"
         >
           <img

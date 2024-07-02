@@ -29,7 +29,8 @@
     "graphql": "^16.8.1",
     "graphql-type-json": "^0.3.2",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.2.1"
+    "mongoose": "^8.2.1",
+    "socket.io": "^4.7.5"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
