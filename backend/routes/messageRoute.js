@@ -1,7 +1,7 @@
 import express from "express"
 import conversationModel from "../models/conversation.js";
 import messageModel from "../models/message.js";
-import { getReceiverSocketId, io } from "../socket/socket.js";
+import { getReceiverSocketId, io } from "../server.js";
 
 const messageRouter = express.Router()
 
