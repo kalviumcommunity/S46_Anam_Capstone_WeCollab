@@ -6,8 +6,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate, useSearchParams } from "react-router-dom"
+import { GET_ALL_PROJECTS } from "@/graphql/CRUD"
+import { useQuery } from "@apollo/client"
 
 export default function Project() {
 
@@ -18,6 +20,8 @@ export default function Project() {
     const [isVisible,setVisible] = useState(false)
     const [showScrollUp,setShowScrollUp] = useState()
     const scrollRef = useRef()
+
+    const {data,loading,error} = useQuery(GET_ALL_PROJECTS)
 
     const handleSearch = (event) => {
         if(event.key === "Enter"){
@@ -40,6 +44,12 @@ export default function Project() {
     const scrollToTop = () => {
         scrollRef.current.scrollTo({top:0,behavior:"smooth"})
     }
+
+    useEffect(() => {
+        if(!loading){
+            console.log(data)
+        }
+    },[loading])
 
   return (
     <>
@@ -88,81 +98,50 @@ export default function Project() {
                 </Select>
             </div>
             <div className="grid grid-flow-row md:grid-cols-2 lg:grid-cols-3 w-full lg:gap-y-5 lg:gap-x-10 gap-10 content-start md:gap-3">
-                <div className="w-full">
-                    <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
-                    <div className="flex text-sm items-center justify-between mt-3 px-2">
-                        <div className="flex items-center gap-3">
-                            <div className="flex justify-center items-center text-xl cursor-pointer text-white rounded-full bg-orange-600 min-h-8 min-w-8">
-                                <p>A</p>
+                {data && data.projects.map((project) => (
+
+                    <div key={project.id} onClick={() => navigate(`/project/${project.id}`)} className="w-full">
+                        <div className="flex flex-col justify-between h-[25rem] w-full rounded-lg border-black border bg-slate-100 p-3">
+                            <div className="flex items-center gap-3">
+                                {project.user.details.profileImage ? 
+                                    <div className="flex items-center gap-3">
+                                        <img src={project.user.details.profileImage} className="cursor-pointer font-raleway rounded-full bg-orange-600 h-10 w-10" alt="" />
+                                        <p>{project.user.name}</p>
+                                    </div>
+                                    :
+                                    <>
+                                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-semibold rounded-full bg-orange-600 h-10 w-10">
+                                            <p>{project.user.name[0]}</p>
+                                        </div>
+                                        <p>{project.user.name}</p>
+                                    </>
+                                }
                             </div>
-                            <div>
-                                <p>Anam Ashraf</p>
+                            <div className="pt-2">
+                                <h1 className="text-2xl py-2 font-semibold">{project.title}</h1>
                             </div>
-                        </div>
-                        <div className="flex gap-3">
-                            <div className="flex items-center gap-1">
-                                <Heart/>
-                                <p>2k</p>
+                            <div className="text-sm text-gray-400 pb-2">
+                                <p>{project.createdAt}</p>
                             </div>
-                            <div className="flex items-center gap-1">
-                                <Eye/>
-                                <p>6k</p>
+                            <div className="h-1/2 w-full">
+                                <img className="h-full w-full rounded-md" src={project.thumbnail} alt="" />
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="w-full">
-                    <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
-                    <div className="flex text-sm items-center justify-between mt-3 px-2">
-                        <div className="flex items-center gap-3">
-                            <div className="flex justify-center items-center text-xl cursor-pointer text-white rounded-full bg-orange-600 min-h-8 min-w-8">
-                                <p>A</p>
-                            </div>
-                            <div>
-                                <p>Anam Ashraf</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-3">
-                            <div className="flex items-center gap-1">
-                                <Heart/>
-                                <p>2k</p>
-                            </div>
-                            <div className="flex items-center gap-1">
-                                <Eye/>
-                                <p>6k</p>
+                            <div className="flex text-sm items-center justify-between my-3 px-2">
+                                <div className="flex gap-3">
+                                    <div className="flex items-center gap-1">
+                                        <Heart/>
+                                        <p>2k</p>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <Eye/>
+                                        <p>6k</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="w-full">
-                    <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
-                    <div className="flex text-sm items-center justify-between mt-3 px-2">
-                        <div className="flex items-center gap-3">
-                            <div className="flex justify-center items-center text-xl cursor-pointer text-white rounded-full bg-orange-600 min-h-8 min-w-8">
-                                <p>A</p>
-                            </div>
-                            <div>
-                                <p>Anam Ashraf</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-3">
-                            <div className="flex items-center gap-1">
-                                <Heart/>
-                                <p>2k</p>
-                            </div>
-                            <div className="flex items-center gap-1">
-                                <Eye/>
-                                <p>6k</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
-                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
-                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
-                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
-                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
-                <div className="min-h-[15rem] w-full rounded-lg bg-red-100"></div>
+                ))
+                }
             </div>
         </div>
     </>

@@ -71,7 +71,8 @@ const shouldRefreshAccessToken = async (email) => {
 
 const startServer = async () => {
   await server.start()
-  app.use("/graphql", expressMiddleware(server, {
+  app.use("/graphql", expressMiddleware(server, 
+    {
     context: async ({ res, req }) => {
       const authHeader = req.headers['authorization']
       const token = authHeader && authHeader.split(' ')[1]
@@ -103,7 +104,8 @@ const startServer = async () => {
       }
       return { isAuthError: true, errorMessage: "Please sign in" }
     }
-  }))
+  }
+  ))
 }
 startServer()
 
@@ -116,7 +118,7 @@ app.get("/", (req, res) => {
 })
 
 // Socket.IO logic
-const userSocketMap = {} // {userId: socketId}
+const userSocketMap = {} 
 const unreadMessageMap = {}
 
 const getReceiverSocketId = (receiverId) => {

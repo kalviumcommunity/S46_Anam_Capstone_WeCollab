@@ -1,11 +1,12 @@
 import { useRef, useEffect } from 'react';
-import { AlignCenter, AlignLeft, AlignRight, Bold, Heading1, Heading2, Heading3, Italic, List, ListOrdered, Pilcrow, Underline } from 'lucide-react';
+import { Bold, Heading1, Heading2, Heading3, Italic, List, ListOrdered, Pilcrow, Underline } from 'lucide-react';
 
 const RichTextEditor = ({handleAbout}) => {
   const editorRef = useRef(null);
 
   const handleContentChange = () => {
     if (editorRef.current) {
+      console.log(editorRef.current.contentDocument.body.innerHTML)
       handleAbout(editorRef.current.contentDocument.body.innerHTML)
     }
   };

@@ -1,13 +1,17 @@
+import { useMutation } from "@apollo/client";
 import { imageDB } from "./config"
-import { ref,uploadBytes } from "firebase/storage"
+import { getDownloadURL, ref,uploadBytes } from "firebase/storage"
 import { useState } from "react"
 import { toast } from 'sonner';
+import { UPDATE_USER } from "@/graphql/CRUD";
 
 export default function FirebaseImageUpload({handleCompletion,userId}) {
 
     const [image,setImage] = useState()
     const [uploaded,setUpload] = useState(false)
     const [loading,setLoading] = useState(false)
+    
+    const [updateProfile,{data,loading: updateLoading,error}] = useMutation(UPDATE_USER)
 
     const handleUpload = async () => {
         setLoading(true)
@@ -19,6 +23,8 @@ export default function FirebaseImageUpload({handleCompletion,userId}) {
         }
         try {
             await uploadBytes(imageRef, image)
+            const url = await getDownloadURL(imageRef)
+            await updateProfile({variables: { id: userId, property: "details.profileImage",operation: "add", userData: { details: { profileImage: url } } } })
             setUpload(true)
             setLoading(false)
             handleCompletion("photo")

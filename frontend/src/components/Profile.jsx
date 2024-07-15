@@ -103,7 +103,7 @@ export default function Profile() {
 
     const handleCompletion = (section) => {
         setCompletedSection((prevState) => [...prevState,section])
-        if(section.length < 5){
+        if(completedSection.length < 5){
             try{
                 updateUser({ variables: {id: data.user.id, property: "completedSection", userData: { section: section }} })
             }catch(error){
@@ -116,11 +116,7 @@ export default function Profile() {
         if(!getCookie("user")){
             navigate("/")
         }
-        showDownloadURL()
-        if (data) setCompletedSection(data.user.completedSection)
-        if(loading) console.log(loading)
-        else if(error) console.error(error)
-    },[isVisible,loading])
+    },[isVisible])
     
   return (
     <>
@@ -130,7 +126,7 @@ export default function Profile() {
         (<div className="flex flex-col items-center font-Poppins p-5 justify-center bg-[#fff3e6] pt-24 pb-10 lg:py-12">
             <div className="lg:w-1/2 md:w-2/3 flex flex-col w-full py-3 border-black border rounded-lg relative bg-white">
                 <div className="h-[20dvh] border-black border-b"></div>
-                <img className="absolute top-28 left-5 border-black border size-32 rounded-full bg-white" src={`${downloadURL ? downloadURL : "/assets/profile-placeholder.png"}`} alt="" />
+                <img className="absolute top-28 left-5 border-black border size-32 rounded-full bg-white" src={`${data.user.details.profileImage ? data.user.details.profileImage : "/assets/profile-placeholder.png"}`} alt="" />
                 <Edit onClick={() => handleEdit("Edit Profile")} className="self-end m-4 cursor-pointer" />
                 <div className="px-5">
                     <div className="flex items-center justify-between">
@@ -151,7 +147,7 @@ export default function Profile() {
                     <div className="font-semibold">
                         <h1 className="text-3xl py-5">Suggested for you</h1>
                         <p>Completed {completedSection.length}/5</p>
-                        <Progress value={(completedSection.length/5)*100 || 1} />
+                        <Progress value={(completedSection.length/5)*100 }/>
                     </div>
                     <div className="flex gap-5 text-[0.8rem] lg:text-[1.15rem] overflow-x-auto">
                         <div className={`${completedSection.includes("photo") ? "hidden" : ""} min-w-[50dvw] lg:min-w-[20vw] lg:max-w-[25vw] flex flex-col justify-center bg-blue-50 p-5 gap-3 font-semibold`}>

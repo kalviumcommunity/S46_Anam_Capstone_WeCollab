@@ -22,7 +22,7 @@ export default function SideNavbar() {
           </p>
         </div>
         <div
-          onClick={() => navigate("/ideas")}
+          onClick={() => navigate("/home/ideas")}
           className="flex hover:bg-slate-300 rounded-md cursor-pointer items-center"
         >
           <img
@@ -35,7 +35,7 @@ export default function SideNavbar() {
           </p>
         </div>
         <div
-          onClick={() => navigate("/showcase")}
+          onClick={() => navigate("/home/showcase")}
           className="flex hover:bg-slate-300 rounded-md cursor-pointer items-center"
         >
           <img
@@ -48,7 +48,7 @@ export default function SideNavbar() {
           </p>
         </div>
         <div
-          onClick={() => navigate("/chat")}
+          onClick={() => navigate("/home/chat")}
           className="flex hover:bg-slate-300 rounded-md cursor-pointer items-center"
         >
           <img
@@ -62,7 +62,7 @@ export default function SideNavbar() {
         </div>
         <div
           onClick={() => {
-            navigate("/settings");
+            navigate("/home/settings");
           }}
           className="flex hover:bg-slate-300 rounded-md cursor-pointer items-center"
         >

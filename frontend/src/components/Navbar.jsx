@@ -1,14 +1,17 @@
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
 import UserDropdown from "./UserDropdown"
 import ResponsiveNav from "./ResponsiveNav"
 import NotificationDropdown from "./NotificationDropdown"
+import { closeSocket } from "@/socket/socketManger"
+import { useState } from "react"
+import { useUserStore } from "@/zustand/store"
 
 export default function Navbar() {
 
     const {form} = useParams()
     const navigate = useNavigate()
     const {section} = useParams()
-    // const location = useLocation()
+    const [userData,setUserData] = useState(useUserStore((state) => state.userData))
 
     const setCookie = (cookieName,value,daysToLive) => {
         const date = new Date()
@@ -35,12 +38,14 @@ export default function Navbar() {
     
         return result
     }
-
+  
     const handleLogout = () => {
         deleteCookie("token")
         deleteCookie("user")
         navigate("/")
+        closeSocket()
     }
+
 
     return (
         <>

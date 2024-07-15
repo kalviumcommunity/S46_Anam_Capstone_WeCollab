@@ -18,16 +18,19 @@ import { useFormik } from "formik"
 import RichTextEditor from "./TextEditor"
 import Preview from "./Preview"
 import { useMutation } from "@apollo/client"
-import { POST_PROJECT, POST_IDEA } from "@/graphql/CRUD"
+import { POST_PROJECT, POST_IDEA, POST_SHOWCASE } from "@/graphql/CRUD"
+import { v4 } from 'uuid';
+import { useUserStore } from "@/zustand/store"
+import SelectCollaborator from "./SelectCollaborator"
 
 const initialValues = {
     title: '',
-    status: 'open',
+    status: 'Open',
     about: '',
     displayAbout: '',
     summary: '',
     thumbnail: null,
-    presentationLink: '',
+    link: '',
     collaborators: '',
     experience: '',
     experienceDuration: '',
@@ -56,7 +59,9 @@ export default function PostProject() {
     const [uploaded,setUpload] = useState(false)
     const [loading,setLoading] = useState(false)
     const [createProject,{data: projectData,loading: projectLoading,error: projectError}] = useMutation(POST_PROJECT)
+    const [userData,setUserData] = useState(useUserStore((state) => state.userData))
     const [createIdea,{data: ideaData, loading: ideaLoading, error: ideaError}] = useMutation(POST_IDEA)
+    const [createShowcase,{data: showcaseData,loading: showcaseLoading,error: showcaseError}] = useMutation(POST_SHOWCASE)
     
     const skillColors = [{bg: "#bbb2cf", text: "#33294e"},{bg: "#cb9ca2", text:"#35282a"},{bg:"#afbbbb", text:"#363b3b"},{bg:"#9ea7bb", text:"#353841"}] 
 
@@ -65,67 +70,98 @@ export default function PostProject() {
         onSubmit: async (values) => {
           try{
             if(section === "project"){
-              await createProject({ variables: { projectInput: {
-                userId:"1234",
-                title: values.title,
-                about: values.about,
-                thumbnail: values.thumbnail,
-                collaborators: values.collaborators,
-                budget: values.displayBudget,
-                timeline: values.timeline + " " + values.timelineDuration,
-                seeking: values.seeking
-              } } })
-              .then(async ({data}) => {
-                  await handleUpload(image,data.createProject.id)
-                })
+              const imageURL  = await handleUpload(image,section)
+              if(imageURL){
+                await createProject({ variables: { projectInput: {
+                  userId: userData.id,
+                  title: values.title,
+                  about: values.about,
+                  thumbnail: imageURL,
+                  collaborators: values.collaborators,
+                  budget: values.displayBudget,
+                  timeline: values.timeline + " " + values.timelineDuration,
+                  seeking: values.seeking
+                } } })
+              }
               toast.success("Post Successful", {
                 className: "text-green-600 text-[1rem] bg-white py-5 shadow-none border-black border-2",
                 position: "top-right"
               })
               navigate("/profile")
-            }else{
-              await createIdea({ variables: { ideaInput: {
-                userId: "1234",
-                title: values.title,
-                summary: values.summary,
-                description: values.about,
-                status: values.status,
-                category: values.category,
-                skills: values.skills,
-                tags: values.tags
-              } }})
-              toast.success("Post Successful", {
-                className: "text-green-600 text-[1rem] bg-white py-5 shadow-none border-black border-2",
-                position: "top-right"
-                })
-              navigate("/profile")
+            }else if(section == "idea"){
+              const imageURL  = await handleUpload(image,section)
+              console.log(imageURL)
+              if(imageURL){
+                await createIdea({ variables: { ideaInput: {
+                  userId: userData.id,
+                  title: values.title,
+                  summary: values.summary,
+                  description: values.about,
+                  status: values.status,
+                  category: values.category,
+                  skills: values.skills,
+                  tags: values.tags
+                } }})
+                toast.success("Post Successful", {
+                  className: "text-green-600 text-[1rem] bg-white py-5 shadow-none border-black border-2",
+                  position: "top-right"
+                  })
+                navigate("/profile")
+              }
+            }else if(section == "showcase"){
+              const imageURL  = await handleUpload(image,section)
+              console.log(imageURL)
+              if(imageURL){
+                await createShowcase({ variables: { showcaseInput: {
+                  userId: userData.id,
+                  title: values.title,
+                  thumbnail: imageURL,
+                  collaborators: [],
+                  summary: values.summary,
+                  description: values.about,
+                  category: values.category,
+                  showcaseLink: values.link
+                } }})
+                toast.success("Post Successful", {
+                  className: "text-green-600 text-[1rem] bg-white py-5 shadow-none border-black border-2",
+                  position: "top-right"
+                  })
+                navigate("/profile")
+              }
             }
           }catch(error){
             toast.error(error, {
               className: "text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border-2",
-          })
-            console.log(error)
+            })
+            console.error(error)
           }
         },
       });
     
-      const handleUpload = async (image,imageId) => {
+      const handleUpload = async (image,section) => {
         setLoading(true)
-        const imageRef = ref(imageDB, `project/thumbnail-${imageId}`);
+        let imageRef
+        if(section == "project"){
+          imageRef = ref(imageDB, `project/thumbnail-${v4()}`);
+        }else if(section == "idea"){
+          imageRef = ref(imageDB,`idea/thumbnail-${v4()}`)
+        }else if(section == "showcase"){
+          imageRef = ref(imageDB,`showcase/thumbnail-${v4()}`)
+        }
         if (!image) {
           toast.error('No image selected for upload', {
             position: 'top-right',
             className: 'text-red-600 text-[1rem] bg-white py-5 shadow-none border-black border',
           });
           setLoading(false);
-          return;
+          return null
         }
         try {
           await uploadBytes(imageRef, image);
           setUpload(true);
           const imageURL = await getDownloadURL(imageRef)
-          formik.setFieldValue('thumbnail', imageURL)
           setLoading(false);
+          return imageURL
         } catch (error) {
           console.error('Error uploading image:', error);
           toast.error(error, {
@@ -136,6 +172,7 @@ export default function PostProject() {
       };
     
       const handleAbout = async (value) => {
+        console.log(value)
         formik.setFieldValue('about', value);
         const parsedValue = await parse(value)
         formik.setFieldValue('displayAbout', parsedValue)
@@ -199,9 +236,13 @@ export default function PostProject() {
               }}
             className="flex flex-col gap-3 overflow-y lg:gap-5 bg-white py-10 lg:pb-20 lg:w-[30dvw] md:w-[30dvw] border-black lg:border-l md:border-l "
           >
-            {section === 'idea' ? (
+            {section === "idea" ? (
               <h1 className="font-semibold text-2xl lg:text-3xl px-10">Create Idea</h1>
-            ) : (
+            ) :
+            section === "showcase" ? (
+              <h1 className="font-semibold text-2xl lg:text-3xl px-10">Showcase your project</h1>
+            ) :
+             (
               <h1 className="font-semibold text-2xl lg:text-3xl px-10">Create project</h1>
             )}
             <div className="flex flex-col px-10">
@@ -210,14 +251,14 @@ export default function PostProject() {
               </label>
               <input
                 id="title"
-                placeholder="Project title"
+                placeholder="Title"
                 value={formik.values.title}
                 onChange={formik.handleChange}
                 className="border-black border p-2 rounded-md"
                 type="text"
               />
             </div>
-            {section === 'idea' ? (
+            {section === "idea" || section === "showcase" ? (
               <>
                 <div className="flex flex-col px-10">
                   <label className="text-xl pb-2 font-semibold" htmlFor="summary">
@@ -225,7 +266,7 @@ export default function PostProject() {
                   </label>
                   <input
                     id="summary"
-                    placeholder="Idea summary"
+                    placeholder="Summary"
                     value={formik.values.summary}
                     onChange={formik.handleChange}
                     className="border-black border p-2 rounded-md"
@@ -235,7 +276,11 @@ export default function PostProject() {
                 <div className="flex flex-col mx-10 justify-between items-center text-blue-600 border-blue-600 border p-10 lg:p-10 bg-blue-100 rounded-md">
                   <label htmlFor="thumbnail" className="cursor-pointer flex flex-col items-center">
                     <p className="text-2xl">+</p>
+                    {section === "idea" ? 
                     <p className="text-[1.1rem] text-center lg:text-xl">Add Idea Thumbnail</p>
+                    :
+                    <p className="text-[1.1rem] text-center lg:text-xl">Add Project Thumbnail</p>
+                    }
                   </label>
                   <input
                     id="thumbnail"
@@ -280,7 +325,7 @@ export default function PostProject() {
                     </Select>
                     <p className="text-sm"> <span className="font-semibold">Note:</span> Category won't be shown in the post and will be only used for internal filter</p>
                 </div>
-                <div className="flex flex-col gap-3 px-10">
+                { section === "idea" && <div className="flex flex-col gap-3 px-10">
                     <label className="font-semibold text-xl" htmlFor="">Status</label>
                     <Select
                         disabled
@@ -299,18 +344,19 @@ export default function PostProject() {
                         </SelectContent>
                     </Select>
                     <p className="text-sm"> <span className="font-semibold">Note:</span> The idea status will stay "open" after posting, you can later change the status</p>
-                </div>
+                </div>}
               </>
-            ) : (
+            ) :
+             (
               <>
                 <div className="flex flex-col px-10">
-                  <label className="text-xl pb-2 font-semibold" htmlFor="presentationLink">
+                  <label className="text-xl pb-2 font-semibold" htmlFor="link">
                     Presentation Link
                   </label>
                   <input
-                    id="presentationLink"
+                    id="link"
                     placeholder="Slide link"
-                    value={formik.values.presentationLink}
+                    value={formik.values.link}
                     onChange={formik.handleChange}
                     className="border-black border p-2 rounded-md"
                     type="text"
@@ -335,6 +381,32 @@ export default function PostProject() {
                 <div className="px-10">
                     <h1 className="text-xl font-semibold pb-2">About</h1>
                     <RichTextEditor handleAbout={handleAbout} />
+                </div>
+                <div className="flex flex-col gap-3 px-10">
+                    <label className="font-semibold text-xl" htmlFor="">Category</label>
+                    <Select
+                        value={formik.values.category}
+                        onValueChange={(value) =>
+                        formik.setFieldValue('category', value)
+                        }
+                        onBlur={formik.handleBlur}
+                    >
+                        <SelectTrigger className="w-[180px] border">
+                        <SelectValue placeholder="Select a category"/>
+                        </SelectTrigger>
+                        <SelectContent>
+                        <SelectItem value="tech">Technology</SelectItem>
+                        <SelectItem value="business">Business</SelectItem>
+                        <SelectItem value="art-design">Arts & Design</SelectItem>
+                        <SelectItem value="education">Education</SelectItem>
+                        <SelectItem value="science">Science</SelectItem>
+                        <SelectItem value="market-ad">Marketing & Advertising</SelectItem>
+                        <SelectItem value="non-profit">Non-profit</SelectItem>
+                        <SelectItem value="finance">Finance</SelectItem>
+                        <SelectItem value="health">Health</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <p className="text-sm"> <span className="font-semibold">Note:</span> Category won't be shown in the post and will be only used for internal filter</p>
                 </div>
                 <div className="flex flex-row flex-wrap gap-3 px-10">
                   <div className="flex flex-col gap-2">
@@ -387,7 +459,8 @@ export default function PostProject() {
                         </div>
                     </div>
               </>
-            )}
+            )
+            }
                 {section === "idea" ? 
                 <>
                     <div className="flex flex-col py-5 px-10">
@@ -434,6 +507,7 @@ export default function PostProject() {
                     </div>
                 </>
                 :
+                section === "project" ?
                 <>
                 <hr className="border my-4 mx-10" />
                 <h1 className="text-2xl lg:text-3xl font-semibold px-10">Seeking</h1>
@@ -501,6 +575,25 @@ export default function PostProject() {
                         <button onClick={handleAddRole} type="button" className="bg-orange-600 text-white p-2 font-semibold rounded-md mx-10">Add Role +</button>
                     </div>
                 </div>
+                </>
+                :
+                <>
+                  <div className="flex flex-col px-10">
+                    <SelectCollaborator/>
+                  </div>
+                  <div className="flex flex-col px-10">
+                    <label className="text-xl pb-2 font-semibold" htmlFor="link">
+                      Project Link
+                    </label>
+                    <input
+                      id="link"
+                      placeholder="Link to your project"
+                      value={formik.values.link}
+                      onChange={formik.handleChange}
+                      className="border-black border p-2 rounded-md"
+                      type="text"
+                      />
+                  </div>
                 </>
                 }
             <hr className="border mx-10" />

@@ -5,14 +5,21 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { GET_ALL_IDEAS } from "@/graphql/CRUD"
+import { useQuery } from "@apollo/client"
 import { Heart, CirclePlus, ListFilter } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 export default function Idea() {
 
     const navigate = useNavigate()
     const [isVisible,setVisible] = useState(false)
+    const {data,loading,error} = useQuery(GET_ALL_IDEAS)
+
+    useEffect(() =>{
+        if(!loading) console.log(data)
+    },[loading])
 
   return (
     <>
@@ -45,84 +52,39 @@ export default function Idea() {
                 </SelectContent>
             </Select>
         </div>
-        <div>
-            <div className="flex items-center gap-2 mb-3">
-                <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-8 w-8">
-                    <p>A</p>
+        {data && data.ideas.map((idea) => (
+            <div key={idea.id}>
+                <div className="flex items-center gap-2 mb-3">
+                {idea.user.details.profileImage ? 
+                    <img src={idea.user.details.profileImage} className="cursor-pointer font-raleway rounded-full bg-orange-600 h-10 w-10" alt="" />
+                    :
+                    <>
+                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-raleway font-semibold rounded-full bg-orange-600 h-10 w-10">
+                            <p>{idea.user.name[0]}</p>
+                        </div>
+                        <p>{idea.user.name}</p>
+                    </>
+                }
                 </div>
-                <div>
-                    <p>Anam Ashraf</p>
-                </div>
-            </div>
-            <p className="italic">Here is how you change your mind</p>
-            <div className="flex items-center gap-5">
-                <div className="rounded-xl bg-slate-200 min-w-[10rem] size-40 my-5"></div>
-                <div>
-                    <h1 onClick={() => navigate("/ideas/1")} className="text-3xl hover:underline cursor-pointer font-semibold">How to change your mind? </h1>
-                    <div className="flex items-center gap-2">
-                        <p>1k read</p>
-                        <p className="mb-2">.</p>
-                        <p className="border-green-600 inline-block border px-2 text-green-600 rounded-full">Open</p>
-                    </div>
-                    <div className="flex mt-3 gap-2">
-                        <Heart className="cursor-pointer"/>
-                        <span>2k likes</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div className="flex items-center gap-2 mb-3">
-                <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-8 w-8">
-                    <p>A</p>
-                </div>
-                <div>
-                    <p>Anam Ashraf</p>
-                </div>
-            </div>
-            <p className="italic">Meditate and transcend</p>
-            <div className="flex items-center gap-5">
-                <div className="rounded-xl bg-slate-200 min-w-[10rem] size-40 my-5"></div>
-                <div>
-                    <h1 className="text-3xl hover:underline cursor-pointer font-semibold">Transcend your mind and become liberated! </h1>
-                    <div className="flex items-center gap-2">
-                        <p>96 read</p>
-                        <p className="mb-2">.</p>
-                        <p className="border-red-600 border px-2 text-red-600 rounded-full">Closed</p>
-                    </div>
-                    <div className="flex mt-3 gap-2">
-                        <Heart className="cursor-pointer"/>
-                        <span>900 likes</span>
+                <p className="italic">{idea.summary}</p>
+                <div className="flex items-center gap-5">
+                    <img src={idea.thumbnail} className="rounded-xl bg-slate-200 min-w-[10rem] size-40 my-5"></img>
+                    <div>
+                        <h1 onClick={() => navigate(`/ideas/${idea.id}`)} className="text-3xl hover:underline cursor-pointer font-semibold">{idea.title}</h1>
+                        <div className="flex items-center gap-2">
+                            <p>1k read</p>
+                            <p className="mb-2">.</p>
+                            <p className={` ${idea.status == "Open"? "border-green-600 text-green-600" : "border-red-600 text-red-600"}  inline-block border px-2  rounded-full`}>{idea.status}</p>
+                        </div>
+                        <div className="flex mt-3 gap-2">
+                            <Heart className="cursor-pointer"/>
+                            <span>2k likes</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div>
-            <div className="flex items-center gap-2 mb-3">
-                <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-8 w-8">
-                    <p>A</p>
-                </div>
-                <div>
-                    <p>Anam Ashraf</p>
-                </div>
-            </div>
-            <p className="italic">Develop an engine</p>
-            <div className="flex items-center gap-5">
-                <div className="rounded-xl bg-slate-200 min-w-[10rem] size-40 my-5"></div>
-                <div>
-                    <h1 className="text-3xl hover:underline cursor-pointer font-semibold">AI Engine</h1>
-                    <div className="flex items-center gap-2">
-                        <p>96 read</p>
-                        <p className="mb-2">.</p>
-                        <p className="border-red-600 border px-2 text-red-600 rounded-full">Closed</p>
-                    </div>
-                    <div className="flex mt-3 gap-2">
-                        <Heart className="cursor-pointer"/>
-                        <span>164 likes</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+            ))
+        }
     </div>
     <div className="my-16 hidden lg:block font-Poppins font-medium">
         <Select>

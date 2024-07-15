@@ -6,14 +6,19 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { Bookmark, Heart } from "lucide-react"
+import { useQuery } from "@apollo/client"
+import { GET_ALL_SHOWCASE } from "@/graphql/CRUD"
+import { useEffect } from "react"
 
 export default function Showcase() {
 
     const navigate = useNavigate()
+    const {loading,error,data} = useQuery(GET_ALL_SHOWCASE)
 
-    const handleSelection = () => {
-        navigate("/project")
-    }
+    useEffect(() => {
+        if(!loading) console.log(data)
+    },[loading])
 
   return (
 
@@ -23,66 +28,47 @@ export default function Showcase() {
             {/* Projects  */}
 
             <div className="grid w-full">
-                <div onClick={handleSelection} className="min-h-[25rem] py-5 px-8 lg:px-12 w-full border-black border-b">
-                    <div className="flex items-center gap-3">
-                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-10 w-10">
-                            <p>A</p>
+                {data && data.showcases.map((showcase) => (
+                    <>
+                    <div onClick={() => navigate(`/showcase/${showcase.id}`)} className="min-h-[25rem] cursor-pointer py-5 px-8 lg:px-12 w-full border-black border-b">
+                        <div className="flex items-center gap-3">
+                        {showcase.user.details.profileImage ? 
+                                    <div className="flex items-center gap-3">
+                                        <img src={showcase.user.details.profileImage} className="cursor-pointer font-raleway rounded-full bg-orange-600 h-10 w-10" alt="" />
+                                        <div>
+                                            <p>{showcase.user.name}</p>
+                                            <p className="text-[0.8rem] text-gray-500">{showcase.user.details.currentPosition}</p>
+                                        </div>
+                                    </div>
+                                    :
+                                    <>
+                                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-10 w-10">
+                                            <p>{showcase.user.name[0]}</p>
+                                        </div>
+                                        <div>
+                                            <p>{showcase.user.name}</p>
+                                            <p className="text-[0.8rem] text-gray-500">{showcase.user.details.currentPosition}</p>
+                                        </div>
+                                    </>
+                                }
                         </div>
-                        <div>
-                            <p>Username</p>
-                            <p className="text-[0.8rem] text-gray-500">Profession</p>
+                        <div className="py-5">
+                             {showcase.summary}
                         </div>
-                    </div>
-                    <div className="py-5">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi minima reprehenderit inventore suscipit sapiente laudantium enim dolorem, veniam facilis eos saepe sit nulla itaque quas reiciendis quidem rem labore quam.
-                    </div>
-                    <div className="h-[22.5rem] bg-slate-200 rounded-xl"></div>
-                    <div className="flex gap-5 pt-5">
-                        <p>Likes</p>
-                        <p>Add to Collections</p>
-                    </div>
-                </div>
-                <div className="min-h-[25rem] py-5 px-8 lg:px-12 w-full border-black border-b">
-                    <div className="flex items-center gap-3">
-                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-10 w-10">
-                            <p>A</p>
-                        </div>
-                        <div>
-                            <p>Username</p>
-                            <p className="text-[0.8rem] text-gray-500">Profession</p>
-                        </div>
-                    </div>
-                    <div className="py-5">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi minima reprehenderit inventore suscipit sapiente laudantium enim dolorem, veniam facilis eos saepe sit nulla itaque quas reiciendis quidem rem labore quam.
-                    </div>
-                    <div className="h-[22.5rem] bg-slate-200 rounded-xl"></div>
-                    <div className="flex gap-5 pt-5">
-                        <p>Likes</p>
-                        <p>Add to Collections</p>
-                    </div>
-                </div>
-                <div className="h-[25rem] py-5 px-8 lg:px-12 w-full border-black border-b">
-                    <div className="flex items-center gap-3">
-                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-10 w-10">
-                            <p>A</p>
-                        </div>
-                        <div>
-                            <p>Username</p>
-                            <p className="text-[0.8rem] text-gray-500">Profession</p>
+                        <img src={showcase.thumbnail} className="h-[22.5rem] bg-slate-200 rounded-xl"></img>
+                        <div className="flex gap-5 pt-5">
+                            <div className="flex items-center gap-2">
+                                <Heart/>
+                                <p>2k</p>
+                            </div>
+                            <div>
+                                <Bookmark/>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="h-[25rem] py-5 px-8 lg:px-12 w-full border-black border-b">
-                    <div className="flex items-center gap-3">
-                        <div className="flex justify-center items-center text-xl cursor-pointer text-white font-semibold rounded-full bg-orange-600 h-10 w-10">
-                            <p>A</p>
-                        </div>
-                        <div>
-                            <p>Username</p>
-                            <p className="text-[0.8rem] text-gray-500">Profession</p>
-                        </div>
-                    </div>
-                </div>
+                    </>
+                )) 
+                }
             </div> 
         </div>
         <div className="p-10 hidden lg:pl-10 lg:block md:block md:p-5 font-Poppins">

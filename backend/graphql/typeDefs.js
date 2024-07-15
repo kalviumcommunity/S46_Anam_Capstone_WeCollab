@@ -1,37 +1,50 @@
 
 export const typeDefs = `#graphql
 type User {
-    id: ID!
-    name: String!
-    email: String!
-    password: String!
-    provider: String
-    token: String!
-    completedSection: [String]
-    details: Details
+  id: ID!
+  name: String!
+  email: String!
+  provider: String
+  token: String!
+  completedSection: [String]
+  details: Details
 }
 
 type Details {
-    currentPosition: String!
-    about: String!
-    status: String!
-    experience: [ExperienceType!]!
-    skills: [String!]!
-    projects: [String!]!
+  profileImage: String!
+  currentPosition: String!
+  about: String!
+  status: String!
+  experience: [ExperienceType!]!
+  skills: [String!]!
+  projects: [String!]!
 }
 
 type ExperienceType {
-    role: String!
-    duration: String!
-    company: String!
+  role: String!
+  duration: String!
+  company: String!
 }
 
 type Showcase {
+  id: ID!
+  userId: String!
   title: String!
+  collaborators: [String!]!
+  summary: String
   thumbnail: String!
   description: String!
+  feedback: [Feedback!]!
   category: String!
-  link: String
+  showcaseLink: String!
+  user: User!
+}
+
+type Feedback {
+  userId: String!
+  rating: Int!
+  comment: String!
+  user: User!
 }
 
 type Project {
@@ -46,6 +59,8 @@ type Project {
   carousel: [String!]
   presentation: String
   seeking: [Seeking!]!
+  createdAt: String!
+  user: User!
 }
 
 type Seeking {
@@ -57,14 +72,17 @@ type Seeking {
 }
 
 type Idea {
+  id: ID!
   userId: String!
   title: String!
+  thumbnail: String!
   summary: String!
   description: String!
   status: String!
   category: String!
   skills: [String!]!
   tags: [String!]!
+  user: User!
 }
 
 type Query {
@@ -73,6 +91,7 @@ type Query {
   showcases: [Showcase]
   users: [User]
   user(email: String!): User!
+  userById(id:ID!): User!
   project(id: ID!): Project
   showcase(id: ID!): Showcase
   idea(id: ID!): Idea
@@ -97,7 +116,7 @@ type Mutation {
   deleteShowcase(id: ID!): Boolean
   createIdea(ideaInput: addIdea!): Idea!
   createProject(projectInput: addProject!): Project!
-  createShowcase(id: ID!,showcase: addShowcase): Showcase!
+  createShowcase(showcaseInput: addShowcase): Showcase!
   updateUser(id: ID!, property: String!, operation: String, matchItem: MatchItem, userData: updateUser): User
   updateProject(id: ID!, projectData: updateProject): Project
   updateShowcase(id: ID!, showcaseData: updateShowcase): Showcase
@@ -162,11 +181,21 @@ input addSeeking {
 }
 
 input addShowcase {
+  userId: String!
   title: String!
   thumbnail: String!
+  collaborators: [String!]
+  summary: String!
   description: String!
   category: String!
-  link: String
+  showcaseLink: String!
+  feedback: [addFeedback]
+}
+
+input addFeedback {
+  userId: String!
+  rating: Int!
+  comment: String
 }
 
 input updateUser {
@@ -178,6 +207,7 @@ input updateUser {
 }
 
 input updateDetails {
+  profileImage: String
   currentPosition: String
   about: String
   status: String
