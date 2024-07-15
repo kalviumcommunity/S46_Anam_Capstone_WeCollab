@@ -37,13 +37,6 @@ export const resolvers = {
                 return err
             }
         },
-        async userById(_,{id}){
-            try {
-                return await userModel.findById(id)
-            }catch (err) {
-                return err
-            }
-        },
         async projects() {
             try{
                 const projects = await projectModel.find()
