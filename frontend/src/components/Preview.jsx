@@ -64,6 +64,7 @@ export default function Preview({values,handleRemoveRole}) {
                 </div>
                 </>
                 :
+                section === "project" ?
                 <>
                 <h1 className="text-3xl lg:text-5xl font-semibold pt-10">{values.title}</h1>
                 {values.thumbnail && <img className="border mb-5 w-full rounded-xl" src={values.thumbnail} alt="not uploaded" />}
@@ -106,6 +107,20 @@ export default function Preview({values,handleRemoveRole}) {
                         </div>
                     )}
                 </div>
+                </>
+                :
+                <>
+                    <h1 className="text-3xl lg:text-5xl font-semibold pt-10">{values.title}</h1>
+                    {values.thumbnail && <img className="border mb-5 w-full rounded-xl" src={values.thumbnail} alt="not uploaded" />}
+                    {values.displayAbout.length > 0 && <div> 
+                        <h1 className="text-3xl font-semibold pt-5">About</h1>
+                        <p className="whitespace-pre-wrap">{values.displayAbout}</p>
+                    </div>}
+                    {values.link &&
+                    <div className="flex items-center gap-2">
+                        <p>Check out the project</p>
+                         <a href={values.link}>here!</a>
+                    </div>}
                 </>
                 }
             </div>

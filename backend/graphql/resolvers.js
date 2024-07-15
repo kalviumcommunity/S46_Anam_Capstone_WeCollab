@@ -6,7 +6,7 @@ import projectModel from "../models/project.js"
 import ideaModel from "../models/idea.js"
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-import { GraphQLError } from 'graphql';
+import { GraphQLError, GraphQLScalarType, Kind } from 'graphql';
 
 function generateToken(payload){
     const accessToken = jwt.sign(payload,process.env.ACCESS_TOKEN,{expiresIn: "1h"})
@@ -30,20 +30,32 @@ export const resolvers = {
                 return err
             }
         },
-        async user(_,{email,_id}){
+        async user(_,{email}){
             try{
-                if(email){
-                    return await userModel.findOne({email})
-                }else{
-                    return await userModel.findById({_id})
-                }
+                return await userModel.findOne({email})
             }catch(err){
+                return err
+            }
+        },
+        async userById(_,{id}){
+            try {
+                return await userModel.findById(id)
+            }catch (err) {
                 return err
             }
         },
         async projects() {
             try{
-                return await projectModel.find()
+                const projects = await projectModel.find()
+                return projects.map(project => ({
+                    id: project._id,
+                    ...project._doc,
+                    createdAt: project.toObject().createdAt.toLocaleDateString('en-IN', {
+                        day: 'numeric',
+                        year: 'numeric',
+                        month: 'long'
+                    })
+                  }));
             }catch(err){
                 return err
             }
@@ -64,7 +76,16 @@ export const resolvers = {
         },
         async project(_,args) {
             try{
-                return await projectModel.findById(args.id)
+                const project = await projectModel.findById(args.id)
+                return {
+                    id: project._id,
+                    ...project._doc,
+                    createdAt: project.toObject().createdAt.toLocaleDateString('en-IN', {
+                        day: 'numeric',
+                        year: 'numeric',
+                        month: 'long'
+                    })
+                }
             }catch(err){
                 return err
             }
@@ -77,6 +98,38 @@ export const resolvers = {
             }
         }
     },
+    Project: {
+        async user (parent){
+        try {
+            const user = await userModel.findById(parent.userId);
+            if (!user) {
+                console.error(`User not found for userId: ${parent.userId}`);
+                return null;
+              }
+      
+            return user;
+        } catch (err) {
+            console.error('Error fetching user:', err);
+            throw new Error('Failed to fetch user');
+        }
+        }
+  },
+  Idea: {
+    async user (parent){
+        try {
+            const user = await userModel.findById(parent.userId);
+            if (!user) {
+                console.error(`User not found for userId: ${parent.userId}`);
+                return null;
+              }
+      
+            return user;
+        } catch (err) {
+            console.error('Error fetching user:', err);
+            throw new Error('Failed to fetch user');
+        }
+        }
+  },
     Mutation: {
         async deleteProject(_,args,contextValue){
             if (contextValue.isAuthError){
@@ -193,6 +246,23 @@ export const resolvers = {
                 return err
             }
         },
+        async createShowcase(_,{showcaseInput},contextValue){
+            if (contextValue.isAuthError){
+                throw new GraphQLError(contextValue.errorMessage, {
+                    extensions: { code: 'AUTHENTICATION_ERROR' },
+                  });
+            }
+            try{
+                const newShowcase = new showcaseModel(showcaseInput)
+                const res = await newShowcase.save()
+                if(contextValue.token){
+                    return {id:res.id,...res._doc, token: contextValue.token}
+                }
+                return{id:res.id,...res._doc}
+            }catch(err){
+                return err
+            }
+        },
         async updateUser(_,{id,property,operation,matchItem,userData},contextValue){
             if (contextValue.isAuthError){
                 throw new GraphQLError(contextValue.errorMessage, {
@@ -224,7 +294,7 @@ export const resolvers = {
                 } else if(property === "account") {
                     updateObject = { name: userData.name, email: userData.email }
                 } else {
-                    updateObject = { [property]: userData.details.about || userData.details.status || userData.details.currentPosition }
+                    updateObject = { [property]: userData.details.about || userData.details.status || userData.details.currentPosition || userData.details.profileImage }
                 }
                 const res = await userModel.findByIdAndUpdate(
                     id,
@@ -271,5 +341,35 @@ export const resolvers = {
                 return err
             }
         }
-    }
+    },
+    Showcase: {
+        async user (parent){
+            try {
+                const user = await userModel.findById(parent.userId);
+                if (!user) {
+                    console.error(`User not found for userId: ${parent.userId}`);
+                    return null;
+                  }
+                return user;
+            } catch (err) {
+                console.error('Error fetching user:', err);
+                throw new Error('Failed to fetch user');
+            }
+            }
+      },
+      Feedback: {
+        async user (parent){
+            try {
+                const user = await userModel.findById(parent.userId);
+                if (!user) {
+                    console.error(`User not found for userId: ${parent.userId}`);
+                    return null;
+                  }
+                return user;
+            } catch (err) {
+                console.error('Error fetching user:', err);
+                throw new Error('Failed to fetch user');
+            }
+            }
+      },
 }

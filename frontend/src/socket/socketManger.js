@@ -27,7 +27,7 @@ export const initializeSocket = (userId) => {
       unreadMessages = message
   })
 
-    socket.on("disconnect", () => {
+  socket.on("disconnect", () => {
       console.log("Socket disconnected");
     });
   }
@@ -36,7 +36,7 @@ export const initializeSocket = (userId) => {
 
 export const getSocket = () => {
   if (!socket) {
-    throw new Error("Socket not initialized. Call initializeSocket first.");
+    return null
   }
   return socket;
 };

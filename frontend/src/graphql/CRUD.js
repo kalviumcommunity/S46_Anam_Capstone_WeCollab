@@ -7,17 +7,7 @@ export const GET_ALL_USERS = gql `
             name
             email
             details{
-                currentPosition
-            }
-        }
-    }
-`
-
-export const GET_USER_BY_ID = gql `
-    query userById($id: String!){
-        userById(id: $id){
-            name
-            details{
+                profileImage
                 currentPosition
             }
         }
@@ -33,6 +23,7 @@ export const GET_USER = gql `
             provider
             completedSection
             details{
+                profileImage
                 currentPosition
                 about
                 status
@@ -75,6 +66,7 @@ export const UPDATE_USER = gql `
             email
             completedSection
             details{
+                profileImage
                 currentPosition
                 about
                 status
@@ -121,6 +113,207 @@ export const POST_IDEA = gql `
             category
             skills
             tags
+        }
+    }
+`
+
+export const POST_SHOWCASE = gql `
+    mutation CreateShowcase($showcaseInput: addShowcase) {
+        createShowcase(showcaseInput: $showcaseInput) {
+            id
+            userId
+            title
+            collaborators
+            summary
+            thumbnail
+            description
+            feedback {
+                userId
+                rating
+                comment
+            }
+            category
+            showcaseLink
+            user {
+            id
+            name
+            details {
+                profileImage
+            }
+        }
+    }
+}
+`
+
+export const GET_PROJECT = gql `
+    query Project($projectId: ID!) {
+        project(id: $projectId) {
+            id
+            userId
+            title
+            about
+            thumbnail
+            collaborators
+            budget
+            timeline
+            carousel
+            presentation
+            seeking {
+            role
+            vacancy
+            skills
+            responsibility
+            experience
+            }
+            createdAt
+            user {
+                id
+                name
+                details{
+                    profileImage
+                }
+            }
+        }
+    }
+`
+
+export const GET_ALL_PROJECTS = gql `
+    query Projects {
+        projects {
+            id
+            userId
+            title
+            about
+            thumbnail
+            collaborators
+            budget
+            timeline
+            carousel
+            presentation
+            createdAt
+            seeking {
+                role
+                vacancy
+                skills
+                responsibility
+                experience
+            }
+            user {
+                id
+                name
+                details{
+                    profileImage
+                }
+            }
+        }
+    }
+`
+export const GET_ALL_IDEAS = gql `
+    query Ideas{
+        ideas{
+            id
+            userId
+            title
+            thumbnail
+            summary
+            description
+            status
+            category
+            skills
+            tags
+            user {
+                id
+                name
+                details{
+                    profileImage
+                }
+            }
+        }
+    }
+`
+
+export const GET_IDEA = gql `
+    query Idea($ideaId: ID!) {
+        idea(id: $ideaId) {
+            id
+            userId
+            title
+            thumbnail
+            summary
+            description
+            status
+            category
+            skills
+            tags
+            user {
+                id
+                name
+                details{
+                    profileImage
+                }
+            }
+        }
+    }
+`
+export const GET_ALL_SHOWCASE = gql ` 
+    query Showcases {
+        showcases {
+            id
+            userId
+            title
+            collaborators
+            summary
+            thumbnail
+            description
+            feedback {
+                userId
+                rating
+                comment
+            }
+            category
+            showcaseLink
+            user {
+                id
+                name
+                details {
+                    currentPosition
+                    profileImage
+                }
+            }
+        }
+    }
+`
+export const GET_SHOWCASE = gql `
+    query Showcase($showcaseId: ID!) {
+        showcase(id: $showcaseId) {
+            id
+            userId
+            title
+            collaborators
+            summary
+            thumbnail
+            description
+            feedback {
+                userId
+                rating
+                comment
+                user{
+                    id
+                    name
+                    details{
+                        profileImage
+                    }
+                }
+            }
+            category
+            showcaseLink
+            user {
+                id
+                name
+                details {
+                    profileImage
+                }
+            }
         }
     }
 `

@@ -120,7 +120,7 @@ const handleSave = (operationFor) => {
                         <FirebaseImageUpload handleCompletion={handleCompletion} userId={userId} />
                         :
                     section === "Add your profession" ?
-                        <div className="flex gap-5 py-3">
+                        <div className="flex flex-col gap-5 py-3">
                             <p className="text-xl font-semibold">Collaborators would love to know your profession</p>
                             <input value={profession} onChange={(e) => setProfession(e.target.value)} className="border-black border-2 p-2 rounded-md" type="text" placeholder="Profession" />
                             <div className="text-right">

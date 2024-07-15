@@ -1,6 +1,27 @@
 import mongoose from "mongoose"
 
+const feedbackSchema = new mongoose.Schema({
+    userId: {
+        type: String,
+        required: true
+    },
+    rating: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 5
+    },
+    comment: {
+        type: String,
+        required: true
+    }
+}, { timestamps: true })
+
 const showcaseSchema = new mongoose.Schema({
+    userId: {
+        type:String,
+        required: true
+    },
     title: {
         type: String,
         required: true
@@ -9,16 +30,29 @@ const showcaseSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    collaborators: {
+        type: [String],
+        required: true
+    },  
+    summary: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
         required: true
+    },
+    feedback: {
+        type: [feedbackSchema],
+        default: []
     },
     category: {
         type: String,
         required: true
     },
-    link: {
-        type: String
+    showcaseLink: {
+        type: String,
+        required: true
     }
 },{timestamps: true})
 

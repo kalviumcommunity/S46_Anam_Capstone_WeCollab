@@ -46,12 +46,17 @@ const userSchema = new mongoose.Schema({
     details: {
         type: Object,
         default: {
+            profileImage: "",
             currentPosition: "",
             about: "",
             status: "Open to collaborate",
             experience: [],
             skills: [],
             projects: []
+        },
+        profileImage:{
+            type: String,
+            required: true
         },
         currentPosition: {
             type: String,

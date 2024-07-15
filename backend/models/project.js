@@ -21,7 +21,7 @@ const seekingSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-},{timestamps: true})
+})
 
 const projectSchema = new mongoose.Schema({
     default: {
@@ -65,7 +65,7 @@ const projectSchema = new mongoose.Schema({
         type:[seekingSchema],
         required: true
     }
-})
+},{timestamps: true})
 
 const projectModel = mongoose.model("projects", projectSchema)
 
